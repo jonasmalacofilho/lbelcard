@@ -1,3 +1,30 @@
 {
-  "dependencies": []
+  "dependencies": [
+    {
+      "name": "assertion",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/protocubo/assertion.hx"
+    },
+    {
+      "name": "eweb",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/jonasmalacofilho/eweb.hx"
+    },
+    {
+      "name": "record-macros",
+      "type": "git",
+      "dir": null,
+      "ref": "bundle",
+      "url": "https://github.com/jonasmalacofilho/record-macros"
+    },
+    {
+      "name": "tora",
+      "type": "haxelib",
+      "version": null
+    }
+  ]
 }

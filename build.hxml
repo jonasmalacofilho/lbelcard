@@ -1,4 +1,9 @@
--main Main
 -cp src
+-lib assertion
+-lib record-macros
+-lib eweb
+-lib tora  # to enable the ManagedModule
+
+-main Server
 -neko serve/index.n
 
