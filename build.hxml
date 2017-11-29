@@ -1,0 +1,4 @@
+-main Main
+-cp src
+-neko serve/index.n
+
