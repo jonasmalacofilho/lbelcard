@@ -25,13 +25,10 @@ class Server {
 		haxe.Log.trace = function (msg, ?pos) ctrace(shortId, msg, pos);
 		ManagedModule.log = function (msg, ?pos) ctrace("mmgr", msg, pos);
 		ManagedModule.addModuleFinalizer(crypto.Random.global.close, "random");
+		weakAssert(Environment.ACESSO_TOKEN != null);  // FIXME: strong assert
 
-#if dev
-		sys.db.Manager.cnx = sys.db.Sqlite.open(":memory:");
-#else
 		assert(Environment.MAIN_DB != null && Environment.MAIN_DB.indexOf("sqlite3://") == 0, Environment.MAIN_DB);
-		sys.db.Manager.cnx = sys.db.Sqlite.open(Environment.MAIN_DB.substr(0, "sqlite3://".length));
-#end
+		sys.db.Manager.cnx = sys.db.Sqlite.open(Environment.MAIN_DB.substr("sqlite3://".length));
 		// TODO init tables
 		ManagedModule.addModuleFinalizer(sys.db.Manager.cnx.close, "db/main");
 
@@ -47,15 +44,15 @@ class Server {
 			requestId = crypto.Random.global.readHex(16);
 			shortId = requestId.substr(0, 4);
 			var method = Web.getMethod().toUpperCase();
+			var params = Web.getParams();
 			var uri = Web.getURI();
 			if (uri == "")
 				uri = "/";
 			trace('begin: $method $uri ($requestId)');
 
 			Web.setHeader("X-Request-ID", requestId);
-			// TODO replace with dynamic dispatch
-			Web.setReturnCode(200);
-			Sys.println("Hello!");
+			var d = new eweb.Dispatch(uri, params, method);
+			d.dispatch(new route.Index());
 			trace('done: ${since(req_t)} ms to $method $uri');
 
 		} catch (err:Dynamic) {
