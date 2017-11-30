@@ -10,7 +10,8 @@ class Index {
 	public function get()
 	{
 		Web.setReturnCode(200);
-		Sys.println("Hello!");
+		Sys.println(views.Base.render("Index", views.Index.render));
+		//Sys.println("Hello!");
 	}
 
 	public function getNovo(d:Dispatch)
