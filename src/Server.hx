@@ -28,9 +28,28 @@ class Server {
 		weakAssert(Environment.ACESSO_TOKEN != null);  // FIXME: strong assert
 
 		assert(Environment.MAIN_DB != null && Environment.MAIN_DB.indexOf("sqlite3://") == 0, Environment.MAIN_DB);
-		sys.db.Manager.cnx = sys.db.Sqlite.open(Environment.MAIN_DB.substr("sqlite3://".length));
-		// TODO init tables
-		ManagedModule.addModuleFinalizer(sys.db.Manager.cnx.close, "db/main");
+		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(Environment.MAIN_DB.substr("sqlite3://".length));
+		ManagedModule.addModuleFinalizer(cnx.close, "db/main");
+
+		assert(cnx.dbName() == "SQLite");
+		var journalMode = cnx.request("PRAGMA journal_mode").getResult(0);
+		if (journalMode == "delete") {
+			cnx.request("PRAGMA page_size=4096");
+			cnx.request("VACUUM");
+			cnx.request("PRAGMA journal_mode=wal");
+			trace('sqlite: page_size and journal_mode set');
+		}
+
+		var allTables:Array<sys.db.Manager<Dynamic>> = [
+			db.AcessoApiLog.manager,
+			db.BelUser.manager,
+			db.CardRequest.manager
+		];
+		for (m in allTables) {
+			if (sys.db.TableCreate.exists(m))
+				continue;  // TODO assert the schema somehow
+			sys.db.TableCreate.create(m);
+		}
 
 		trace('time: ${since(ini_t)} ms on module initialization');
 	}
