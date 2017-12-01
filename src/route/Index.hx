@@ -18,5 +18,12 @@ class Index {
 	{
 		d.dispatch(new Novo());
 	}
+
+	#if dev
+	public function getContrate()
+	{
+		Sys.println(views.Base.render("Contrate Já!", views.CardReq.render));
+	}
+	#end
 }
 

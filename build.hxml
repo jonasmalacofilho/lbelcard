@@ -3,7 +3,9 @@
 -lib assertion
 -lib record-macros
 -lib eweb
--lib tora  # to enable the ManagedModule
+# to enable the ManagedModule
+-lib tora  
+
 
 -main Server
 -neko serve/index.n
