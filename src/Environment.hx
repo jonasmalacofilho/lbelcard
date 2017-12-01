@@ -9,10 +9,18 @@ class Environment {
 	public static var MAIN_DB:String;
 
 	/**
-	GUID Token for the Acesso API
-
-	Should have been previously generated with a remote call to Acesso's CriarToken API.
+	Username for AcessoCard's API
 	**/
-	public static var ACESSO_TOKEN:String;
+	public static var ACESSO_USERNAME:String;
+
+	/**
+	Password for AcessoCard's API
+	**/
+	public static var ACESSO_PASSWORD:String;
+
+	/**
+	Desired card product code
+	**/
+	public static var ACESSO_PRODUCT:String;
 }
 

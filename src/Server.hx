@@ -25,7 +25,10 @@ class Server {
 		haxe.Log.trace = function (msg, ?pos) ctrace(shortId, msg, pos);
 		ManagedModule.log = function (msg, ?pos) ctrace("mmgr", msg, pos);
 		ManagedModule.addModuleFinalizer(crypto.Random.global.close, "random");
-		weakAssert(Environment.ACESSO_TOKEN != null);  // FIXME: strong assert
+
+		assert(Environment.ACESSO_USERNAME != null);
+		assert(Environment.ACESSO_PASSWORD != null);
+		assert(Environment.ACESSO_PRODUCT != null);
 
 		assert(Environment.MAIN_DB != null && Environment.MAIN_DB.indexOf("sqlite3://") == 0, Environment.MAIN_DB);
 		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(Environment.MAIN_DB.substr("sqlite3://".length));
