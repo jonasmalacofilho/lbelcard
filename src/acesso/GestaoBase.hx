@@ -29,7 +29,7 @@ class GestaoBase {
 		var log = new db.AcessoApiLog(url, "POST");
 
 		req.addHeader("Content-Type", "application/json");
-		req.addHeader("User-Agent", "belcorp, haxe/neko");
+		req.addHeader("User-Agent", "haxe/neko");
 		// TODO set timeout
 
 		var requestData = haxe.Json.stringify(params);
@@ -39,7 +39,7 @@ class GestaoBase {
 		req.onStatus = function (code) statusCode = code;
 		req.onError = function (msg) {
 			trace('acesso: call FAILED with $msg');
-			weakAssert(statusCode == null, "statusCode != null  =>  must update the error value");
+			weakAssert(statusCode == null, "statusCode available, must update the code to log it");
 			var err = TransportError(msg);
 			log.responseData = Std.string(err);
 			log.update();
