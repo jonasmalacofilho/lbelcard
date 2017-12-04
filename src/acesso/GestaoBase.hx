@@ -6,14 +6,14 @@ class GestaoBase {
 
 	public function new() {}
 
-	public function CriarToken(params:{ Email:String, Senha:String }):AccessToken
+	public function CriarToken(params:{ Email:String, Senha:String }):TokenAcesso
 	{
 		var email = StringTools.urlEncode(params.Email);
 		var senha = StringTools.urlEncode(params.Senha);
 		var res:Response = request(URL, 'criar-token/$email/$senha', params);
 		switch res.ResultCode {
 		case 0:
-			return (res.Data:AccessToken);
+			return (res.Data:TokenAcesso);
 		case 5 | 99:
 			throw TemporaryError(res.Message, res.ResultCode);
 		case _:
