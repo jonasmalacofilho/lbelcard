@@ -1,3 +1,4 @@
 runtime
 serve/index.n
+serve/haxe.js
 .haxelib/

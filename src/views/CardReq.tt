@@ -1,6 +1,13 @@
 (:static function render() :)
+<!-- semantic calendar stylesheet -->
+<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/b54ebdbe/dist/calendar.min.css" rel="stylesheet" type="text/css">
+<!-- semantic calendar js -->
+<script src="https://cdn.rawgit.com/lehonma/Semantic-UI-Calendar/01933d0c/dist/calendar.js"></script>
+<script>
+    js.CardReq.init();
+</script>
 <div class="ui text container">
-<form method="POST" action="foo" class="ui form">
+<form method="POST" action="foo" class="ui form error">
     
     <div class="ui segment">
         <h3 class="ui dividing header">Dados Pessoais</h3>
@@ -26,19 +33,15 @@
                 <!-- TODO: Implement Semantic Calendar -->
                 <div class="field">
                     <label>Data de Nascimento</label>
-                    <div class="ui input left icon">
-                        <i class="time icon"></i>
-                        <input type="text" name="DtNascimento">
-                    </div>                   
+                    <div class="ui calendar">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="text" name="DtNascimento">
+                        </div>                   
+                    </div>
                 </div>
             </div>
             
-            <!-- Father's name -->
-            <div class="field">
-                <label>Nome completo de seu Pai</label>
-                <input type="text" name="NomePai" placeholder="Nome do pai" maxlength="100" required/>
-            </div>
-
             <!-- Mom's name -->
             <div class="field">
                 <label>Nome completo de sua Mãe</label>
@@ -55,29 +58,23 @@
         <div class="fields">
            
 
-            <div class="two field wide">
+            <div class="three two field wide">
                 <label>DDI</label>
                 <input type="number" name="DDI" value="55" maxlength="3">
             </div>
-            <div class="two field wide">
+            <div class="three field wide">
                 <label>DDD</label>
-                <input type="number" placeholder="DDD" maxlength="2"/>
+                <input type="number" name="DDD" placeholder="DDD" maxlength="2"/>
             </div>
 
-            <div class="seven field wide">
-                <label>Número de Telefone</label>
-                <input type="text" name="NumeroTel" placeholder="99999-9999" maxlength="10"/>
+            <div class="ten field wide">
+                <label>Número de Celular</label>
+                <input type="text" name="NumeroTel" placeholder="999999999" maxlength="10"/>
             </div>
-
-            <div class="five field wide">
-                <label>Tipo de Telefone</label>
-                <select name="TpTelefone>
-                    <option value="Celular">Celular</option>
-                    <option value="Residencial">Residencial</option>
-                    <option value="Comercial">Comercial</option>
-                    <option value="Pessoal">Pessoal</option>
-                </select>
-            </div>
+            
+            <!-- foo --> 
+            <input type='hidden' name='TpTelefone' value='0'/>
+            
         </div>
 
         <h4 class="ui">Endereço de Residencial</h4>
@@ -114,17 +111,17 @@
                 <input type="text" name="Logradouro"/>
             </div>
 
-            <div class="three wide field">
+            <div class="two wide field">
                 <label>Número</label>
                 <input type="number" name="NumeroRes" maxlength="10"/>
             </div>
 
-            <div class="three wide field">
+            <div class="two wide field">
                 <label>Complemento</label>
                 <input type="text" name="Complemento" maxlength="20"/>
             </div>
 
-            <div class="three wide field">
+            <div class="five wide field">
                 <label>Tipo de Endereço</label>
                 <select name="TpEndereco">
                     <option value="0" selected>Residencial</option>
@@ -163,9 +160,11 @@
 
             <div class="field">
                 <label>Data de Emissão do Documento</label>
+                <div class="ui calendar">
                 <div class="ui input left icon">
                     <i class="time icon"></i>
                     <input type="text" name="DtExpedicao">
+                </div>
                 </div>
             </div>
         </div>

@@ -13,3 +13,9 @@
 acesso.GestaoBase
 acesso.GestaoAquisicaoCartao
 
+--next 
+
+-cp src
+-lib assertion
+-main MainJS
+-js serve/haxe.js
