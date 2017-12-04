@@ -1,8 +1,13 @@
 package acesso;
 
-typedef ApiResponse = {
-	ResultCode:String,
+typedef FieldError = {
+	Message:String
+}
+
+typedef Response = {
+	ResultCode:Int,
 	Message:String,
+	FieldErrors:Null<Array<FieldError>>,
 	Data:Null<String>
 }
 

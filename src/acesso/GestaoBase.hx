@@ -10,14 +10,14 @@ class GestaoBase {
 	{
 		var email = StringTools.urlEncode(params.Email);
 		var senha = StringTools.urlEncode(params.Senha);
-		var res:ApiResponse = request(URL, 'criar-token/$email/$senha', params);
+		var res:Response = request(URL, 'criar-token/$email/$senha', params);
 		switch res.ResultCode {
-		case "00":
+		case 0:
 			return (res.Data:AccessToken);
-		case "05" | "99":
-			throw TemporaryError(res.ResultCode, res.ResultCode);
+		case 5 | 99:
+			throw TemporaryError(res.Message, res.ResultCode);
 		case _:
-			throw PermanentError(res.ResultCode, res.ResultCode);
+			throw PermanentError(res.Message, res.ResultCode);
 		}
 	}
 
