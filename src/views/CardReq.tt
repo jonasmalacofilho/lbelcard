@@ -8,14 +8,14 @@
             <!-- Full name -->
             <div class="field">
                 <label>Nome Completo</label>
-                <input type="text" name="fullname" placeholder="Nome Completo" maxlength="100" required/>
+                <input type="text" name="NomeCompleto" placeholder="Nome Completo" maxlength="100" required/>
             </div>
 
             <div class="two fields">
                 <!-- Sex -->
                 <div class="field">
                     <label>Sexo</label>
-                    <select name="sex" required>
+                    <select name="TpSexo">
                         <option value="0">Não Informado</option>
                         <option value="1">Masculino</option>
                         <option value="2">Feminino</option>
@@ -28,7 +28,7 @@
                     <label>Data de Nascimento</label>
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" name="birth_date">
+                        <input type="text" name="DtNascimento">
                     </div>                   
                 </div>
             </div>
@@ -36,13 +36,13 @@
             <!-- Father's name -->
             <div class="field">
                 <label>Nome completo de seu Pai</label>
-                <input type="text" name="father" placeholder="Nome do pai" maxlength="100" required/>
+                <input type="text" name="NomePai" placeholder="Nome do pai" maxlength="100" required/>
             </div>
 
             <!-- Mom's name -->
             <div class="field">
                 <label>Nome completo de sua Mãe</label>
-                <input type="text" name="mother" placeholder="Nome da mãe" maxlength="100" required/>
+                <input type="text" name="NomeMae" placeholder="Nome da mãe" maxlength="100" required/>
             </div>
     </div>
 
@@ -57,7 +57,7 @@
 
             <div class="two field wide">
                 <label>DDI</label>
-                <input type="number" value="55" maxlength="3">
+                <input type="number" name="DDI" value="55" maxlength="3">
             </div>
             <div class="two field wide">
                 <label>DDD</label>
@@ -66,7 +66,7 @@
 
             <div class="seven field wide">
                 <label>Número de Telefone</label>
-                <input type="text" placeholder="99999-9999" maxlength="10"/>
+                <input type="text" name="NumeroTel" placeholder="99999-9999" maxlength="10"/>
             </div>
 
             <div class="five field wide">
@@ -116,7 +116,7 @@
 
             <div class="three wide field">
                 <label>Número</label>
-                <input type="number" name="Numero" maxlength="10"/>
+                <input type="number" name="NumeroRes" maxlength="10"/>
             </div>
 
             <div class="three wide field">
@@ -144,13 +144,13 @@
                 <label>E-Mail pessoal</label>
                 <div class="ui input left icon">
                     <i class="mail outline icon"></i>
-                    <input type="email" name="email" placeholder="E-Mail" maxlength="125"/>
+                    <input type="email" name="Email" placeholder="E-Mail" maxlength="125"/>
                 </div>
             </div>
 
             <div class="field">
                 <label>CPF</label>
-                <input type="text" name="cpf" placeholder="XXX.XXX.XXX-XX" required>
+                <input type="text" name="CodCliente" placeholder="XXX.XXX.XXX-XX" required>
             </div>
         </div>
 
@@ -158,14 +158,14 @@
         <div class="two fields">
             <div class="field">
                 <label>Documento de identificação</label>
-                <input type="text" name="document" required/>
+                <input type="text" name="NumDocumento" required/>
             </div>
 
             <div class="field">
                 <label>Data de Emissão do Documento</label>
                 <div class="ui input left icon">
                     <i class="time icon"></i>
-                    <input type="text" name="doc_date">
+                    <input type="text" name="DtExpedicao">
                 </div>
             </div>
         </div>
@@ -174,7 +174,7 @@
             <!-- DOC TYPE (RG;RNE;Pass) -->
             <div class="five wide field">
                 <label>Tipo de Documento</label>
-                <select name="doc_type">
+                <select name="TpDocumento">
                     <option value="0" selected>RG</option>
                     <option value="1">RNE</option>
                     <option value="2">Passaporte</option>
@@ -185,18 +185,18 @@
             <!-- not required, but eh... the other fields are, so -->
             <div class="three wide field">
                 <label>Órgão expeditor </label>
-                <input type="text" name="doc_emitter" placeholder="SSP" maxlength="20"/>
+                <input type="text" name="OrgaoExpedidor" placeholder="SSP" maxlength="20"/>
             </div>
 
             <!-- TODO: Make Select -->
             <div class="four wide field">
                 <label>UF do Órgão Expeditor</label>
-                <input type="text" name="doc_uf" maxlength="2" placeholder="SP ou MG"/>
+                <input type="text" name="UFOrgao" maxlength="2" placeholder="SP ou MG"/>
             </div>
 
             <div class="four wide field">
                 <label>País do Órgão Emissor</label>
-                <input type="text" name="doc_country" value="Brasil" maxlength="30"/>
+                <input type="text" name="PaisOrgao" value="Brasil" maxlength="30"/>
             </div>
         </div>
 
