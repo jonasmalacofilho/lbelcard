@@ -8,13 +8,16 @@ class GestaoBase {
 
 	public function CriarToken(params:{ Email:String, Senha:String }):AccessToken
 	{
-		var res:{ Data:String, ResultCode:String } = request(URL, "CriarToken", params);
-		assert(res.Data != null && res.ResultCode != null, res);
+		var email = StringTools.urlEncode(params.Email);
+		var senha = StringTools.urlEncode(params.Senha);
+		var res:ApiResponse = request(URL, 'criar-token/$email/$senha', params);
 		switch res.ResultCode {
-		case "00": return (res.Data:AccessToken);
-		case "05": throw TemporaryError("Não foi possível gerar o Token", res.ResultCode);
-		case "99": throw TemporaryError("Erro interno", res.ResultCode);
-		case err: throw PermanentError("Other", res.ResultCode);
+		case "00":
+			return (res.Data:AccessToken);
+		case "05" | "99":
+			throw TemporaryError(res.ResultCode, res.ResultCode);
+		case _:
+			throw PermanentError(res.ResultCode, res.ResultCode);
 		}
 	}
 
