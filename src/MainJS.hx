@@ -10,21 +10,16 @@ class MainJS
     // From http://www.receita.fazenda.gov.br/Aplicacoes/ATCTA/CPF/funcoes.js
     public static function validaCPF (e : String) : Bool
     {
-        var reg = ~/\D/g;
-        
-        //Should be numbers only
-        if(!reg.match(e))
-            return false;
-        
         var sum : Int = 0;
         var rest : Int = 0;
 
         if(e == '00000000000')
             return false;
 
-        for (i in 1...9)
+        for (i in 1...10)
             sum = sum + Std.parseInt(e.substring(i-1,i)) * (11 - i);
         
+        trace(sum);
         rest = (sum*10) % 11;
         if(rest == 10 || rest == 11)
             rest = 0;
@@ -34,10 +29,10 @@ class MainJS
         
         sum = 0;
 
-        for(i in 1...10)
+        for(i in 1...11)
             sum = sum + Std.parseInt(e.substring(i-1,i)) * (12 - i);
         
-        rest = sum % 11;
+        rest = (sum*10) % 11;
 
         if(rest == 10 || rest == 11)
             rest = 0;

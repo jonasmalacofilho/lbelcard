@@ -1,5 +1,6 @@
 package js;
 import js.jquery.JQuery;
+import webmaniabr.*;
 
 @:keep @:expose
 class CardReq
@@ -7,14 +8,43 @@ class CardReq
     public static function init()
     {
         new JQuery('document').ready(function(_){
-            untyped $.fn.form.settings.rules.validCPF = function(val){
+            untyped $.fn.form.settings.rules.validaCPF = function(val){
                 return MainJS.validaCPF(val);
             }
 
             untyped $('select').dropdown();
             calendar();
             validate();
+            
+            //TODO: Check if should fire change or blur evt
+            new JQuery('#CEP').blur(function(_){
+                //fuck this ( forgot how to $(this) )
+                var cur = new JQuery('#CEP');
+                var api = new Correios("PxQtu0NJd0v6B2sPBUR0leTE8Eryi1ZN", "KffqAXnZIz6Wmb9pYWYkCFag0qHw1z4jsKHeKw3IpKF39Qur");
+                api.queryCep(cur.val(), response);
+            });
         });
+    }
+    
+    static function response (d : Correios.Response<Correios.Address>)
+    {
+        switch(d)
+        {
+            case Some(addr):
+                new JQuery('#uf').val(addr.uf);
+                new JQuery('#cidade').val(addr.cidade);
+                new JQuery('#bairro').val(addr.bairro);
+                new JQuery('#logradouro').val(addr.endereco);
+            case None:
+                //TODO: Handle invalid CEP
+            case Failure(e):
+                trace('error @webmania : $e');
+        }
+    }
+
+    public static function onSubmit()
+    {
+        new JQuery('form').submit();
     }
 
     static function calendar()
@@ -127,13 +157,13 @@ class CardReq
                 UF : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Selecione um Estado'
+                        prompt : 'Preencha o campo de CEP'
                     }]
                 },
                 Cidade : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite uma cidade, ou preencha o campo de CEP'
+                        prompt : 'Preencha o campo de CEP'
                     }]
                 },
                 Bairro : {
@@ -177,7 +207,7 @@ class CardReq
                 },
                 CodCliente : {
                     rules : [{
-                        type : 'emtpy',
+                        type : 'empty',
                         prompt : 'Digite seu CPF'
                     },
                     {

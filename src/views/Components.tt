@@ -1,0 +1,31 @@
+(: static function UF() :)
+<select name="UF" class="ui fluid dropdown search">
+    <option value="SP">São Paulo</option>
+    <option value="MG">Minas Gerais</option>
+    <option value="RJ">Rio de Janeiro</option>
+    <option value="BA">Bahia</option>
+    <option value="RS">Rio Grande do Sul</option>
+    <option value="PR">Paraná</option>
+    <option value="PE">Pernambuco</option>
+    <option value="CE">Ceará</option>
+    <option value="PA">Pará</option>
+    <option value="MA">Maranhão</option>
+    <option value="SC">Santa Catarina</option>
+    <option value='GO'>Goiás</option>
+    <option value='PB'>Paraíba</option>
+    <option value="ES">Espírito Santo</option>
+    <option value="AM">Amazonas</option>
+    <option value="RN">Rio Grande do Norte</option>
+    <option value="AL">Alagoas</option>
+    <option value="MT">Mato Grosso</option>
+    <option value="PI">Piauí</option>
+    <option value="DF">Distrito Federal</option>
+    <option value="MS">Mato Grosso do Sul</option>
+    <option value="SE">Sergipe</option>
+    <option value="RO">Rondônia</option>
+    <option value="TO">Tocantins</option>
+    <option value="AC">Acre</option>
+    <option value="AP">Amapá</option>
+    <option value="RR">Roraima</option>
+</select>
+(: end :)

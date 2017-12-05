@@ -1,10 +1,17 @@
 (:static function render() :)
+<!-- recaptcha -->
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <!-- semantic calendar stylesheet -->
 <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/b54ebdbe/dist/calendar.min.css" rel="stylesheet" type="text/css">
 <!-- semantic calendar js -->
 <script src="https://cdn.rawgit.com/lehonma/Semantic-UI-Calendar/01933d0c/dist/calendar.js"></script>
 <script>
     js.CardReq.init();
+    //TODO: Fix this
+    function onSubmit()
+    {
+        $('form').submit();
+    }
 </script>
 <div class="ui text container">
 <form method="POST" action="/novo/dados" class="ui form error">
@@ -82,33 +89,31 @@
         <div class="two fields">
             <div class="field">
                 <label>CEP</label>
-                <input type="number" name="CEP" maxlength="8" placeholder="Digite apenas os números" title="Preencha este campo primeiro para autocompletar as informações">
+                <input type="number" name="CEP" id="CEP" maxlength="8" placeholder="Digite apenas os números" title="Preencha este campo primeiro para autocompletar as informações">
             </div>
 
             <div class="field">
                 <label>UF</label>
-                <select name="UF">
-                <!-- TODO:dump stuff here -->
-                </select>
+                <input type="text" name="UF" id="uf" readonly/>
             </div>
         </div>
 
         <div class="two fields">
             <div class="field">
                 <label>Cidade</label>
-                <input type="text" name="Cidade"/>
+                <input type="text" name="Cidade" id="cidade" readonly/>
             </div>
 
             <div class="field">
                 <label>Bairro</label>
-                <input type="text" name="Bairro"/>
+                <input type="text" name="Bairro" id="bairro"/>
             </div>
         </div>
 
         <div class="fields">
             <div class="seven wide field">
                 <label>Rua</label>
-                <input type="text" name="Logradouro"/>
+                <input type="text" name="Logradouro" id="logradouro"/>
             </div>
 
             <div class="two wide field">
@@ -190,7 +195,7 @@
             <!-- TODO: Make Select -->
             <div class="four wide field">
                 <label>UF do Órgão Expeditor</label>
-                <input type="text" name="UFOrgao" maxlength="2" placeholder="SP ou MG"/>
+                (: views.Components.UF() :)
             </div>
 
             <div class="four wide field">
@@ -198,9 +203,15 @@
                 <input type="text" name="PaisOrgao" value="Brasil" maxlength="30"/>
             </div>
         </div>
-
+        <button
+            class="g-recaptcha ui purple button"
+            data-sitekey="6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4"
+            data-callback="onSubmit">
+            Enviar
+            </button>
         
     </div>
 </form>
+
 </div>
 (:end:)

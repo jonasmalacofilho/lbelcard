@@ -13,6 +13,7 @@
 
 -cp src
 -lib assertion
+-lib webmaniabr-correios
 
 -main MainJS
 -js serve/haxe.js

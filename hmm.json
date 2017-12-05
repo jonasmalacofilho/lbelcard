@@ -30,6 +30,13 @@
       "name": "tora",
       "type": "haxelib",
       "version": null
+    },
+    {
+      "name": "webmaniabr-correios",
+      "type":"git",
+      "dir": null,
+      "ref": "master",
+      "url" : "https://github.com/protocubo/webmaniabr-correios.hx"
     }
   ]
 }
