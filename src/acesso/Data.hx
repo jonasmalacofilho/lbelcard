@@ -38,6 +38,10 @@ abstract CodCliente(String) from String to String {}
 	public var REST = 0;
 }
 
+@:enum abstract NomeCanal(String) {
+	public var Webservice = "WEBSERVICE";
+}
+
 @:enum abstract Sexo(Int) {
 	public var Nao_informado = 0;
 	public var Masculino = 1;
@@ -74,8 +78,8 @@ Intermidiate data types supplied by the API client
 */
 
 typedef Meta = {
-	Language : String,
-	NomeCanal : String,
+	Language : Language,
+	NomeCanal : NomeCanal,
 	RecId : Int,
 	TokenAcesso : TokenAcesso
 }

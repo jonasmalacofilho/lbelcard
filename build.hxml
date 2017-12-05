@@ -4,18 +4,16 @@
 -lib record-macros
 -lib eweb
 # to enable the ManagedModule
--lib tora  
-
+-lib tora
 
 -main Server
 -neko serve/index.n
 
-acesso.GestaoBase
-acesso.GestaoAquisicaoCartao
-
---next 
+--next
 
 -cp src
 -lib assertion
+
 -main MainJS
 -js serve/haxe.js
+
