@@ -1,0 +1,17 @@
+<div class='ui text container'>
+    <form class='ui form' method="POST" action="FOO">
+    <div class='ui segment'>
+        <h3 class="ui dividing header">Login</h3>
+
+        <div class="field">
+            <label>Número de Consultor L'BEL</label>
+            <input type='number' name='n_consultor'>
+        </div>
+
+        <div class="field">
+            <label>CPF (Digite apenas os números)</label>
+            <input type="text" name="CPF"/>
+        </div>
+    </div>
+    </form>
+</div>

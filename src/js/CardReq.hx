@@ -8,7 +8,7 @@ class CardReq
     {
         new JQuery('document').ready(function(_){
             untyped $.fn.form.settings.rules.validCPF = function(val){
-                return validaCPF(val);
+                return MainJS.validaCPF(val);
             }
 
             untyped $('select').dropdown();
@@ -36,45 +36,7 @@ class CardReq
 			});
     }
 
-    // From http://www.receita.fazenda.gov.br/Aplicacoes/ATCTA/CPF/funcoes.js
-    static function validaCPF (e : String) : Bool
-    {
-        var reg = ~/\D/g;
-        
-        //Should be numbers only
-        if(!reg.match(e))
-            return false;
-        
-        var sum : Int = 0;
-        var rest : Int = 0;
-
-        if(e == '00000000000')
-            return false;
-
-        for (i in 1...9)
-            sum = sum + Std.parseInt(e.substring(i-1,i)) * (11 - i);
-        
-        rest = (sum*10) % 11;
-        if(rest == 10 || rest == 11)
-            rest = 0;
-        
-        if (rest != Std.parseInt(e.substring(9,10)))
-            return false;
-        
-        sum = 0;
-
-        for(i in 1...10)
-            sum = sum + Std.parseInt(e.substring(i-1,i)) * (12 - i);
-        
-        rest = sum % 11;
-
-        if(rest == 10 || rest == 11)
-            rest = 0;
-        if(rest != Std.parseInt(e.substring(10,11)))
-            return false;
-
-        return true;
-    }
+    
 
     static function validate()
     {
@@ -223,7 +185,7 @@ class CardReq
                         prompt : 'Digite apenas os números'
                     },
                     {
-                        type : 'validCPF',
+                        type : 'validaCPF',
                         prompt : 'CPF Inválido'
                     }]
                 },
