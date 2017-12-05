@@ -7,7 +7,7 @@
     js.CardReq.init();
 </script>
 <div class="ui text container">
-<form method="POST" action="foo" class="ui form error">
+<form method="POST" action="/novo/dados" class="ui form error">
     
     <div class="ui segment">
         <h3 class="ui dividing header">Dados Pessoais</h3>

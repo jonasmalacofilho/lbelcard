@@ -1,0 +1,48 @@
+(: static function render () :)
+<div class="ui vertical segment">
+    <div class="ui container">
+        <div class="ui ordered steps">
+            <div class="step completed">
+                <div class="content">
+                    <div class="title">Dados Pessoais</div>
+                    <div class="description">Entre com seus dados</div>
+                </div>
+            </div>
+
+            <div class="step active">
+                <div class="content">
+                    <div class="title">Confirmação dos Dados</div>
+                    <div class="description">Análise pelo emissor do cartão</div>
+                </div>
+            </div>
+        
+
+            <div class="step disabled">
+                <div class="content">
+                <div class="title">Dados aprovados!</div>
+                <div class="description">Seus dados foram aprovados!</div>
+                </div>
+            </div>
+            <div class="step disabled">
+                <div class="content">
+                    <div class="title">Sucesso!</div>
+                    <div class="description">Pedido feito com sucesso!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+(:* if error *:)
+<div class="ui segment">
+    <div class="ui container">
+        <div class="ui red message">
+            <div class="header">Ocorreu um erro nesta etapa</div>
+            Lorem ipsum dolor sit amet, 
+            consectetur adipiscing elit. 
+            Cras a posuere ex. 
+        </div>
+    </div>
+</div>
+
+(:end:)

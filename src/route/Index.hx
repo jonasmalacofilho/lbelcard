@@ -17,5 +17,12 @@ class Index {
 	{
 		d.dispatch(new Novo());
 	}
+
+	#if dev
+	public function doStatus()
+	{
+		Sys.println(views.Base.render("Status", views.Status.render));
+	}
+	#end
 }
 
