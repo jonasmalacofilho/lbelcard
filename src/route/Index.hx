@@ -11,19 +11,11 @@ class Index {
 	{
 		Web.setReturnCode(200);
 		Sys.println(views.Base.render("Index", views.Index.render));
-		//Sys.println("Hello!");
 	}
 
-	public function getNovo(d:Dispatch)
+	public function doNovo(d:Dispatch)
 	{
 		d.dispatch(new Novo());
 	}
-
-	#if dev
-	public function getContrate()
-	{
-		Sys.println(views.Base.render("Contrate Já!", views.CardReq.render));
-	}
-	#end
 }
 

@@ -1,17 +1,24 @@
+(:static function render():)
 <div class='ui text container'>
-    <form class='ui form' method="POST" action="FOO">
+    <form class='ui form' method="post">
     <div class='ui segment'>
         <h3 class="ui dividing header">Login</h3>
 
         <div class="field">
             <label>Número de Consultor L'BEL</label>
-            <input type='number' name='n_consultor'>
+            <input type='number' name='belNumber'>
         </div>
 
         <div class="field">
             <label>CPF (Digite apenas os números)</label>
-            <input type="text" name="CPF"/>
+            <input type="text" name="cpf"/>
         </div>
+
+        <button class="ui button fluid large submit" type="submit">
+          <i class="sign in icon"></i> Continuar
+        </button>
     </div>
     </form>
 </div>
+(:end:)
+

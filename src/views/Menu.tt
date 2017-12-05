@@ -2,5 +2,5 @@
 <a class="item fontgp2 (:if hideCel :)escondecelular(:end:)" href="#inicio">O Cartão L'Bel</a>
 <a class="item fontgp2 (:if hideCel :)escondecelular(:end:)" href="#vantagens">Vantagens</a>
 <a class="item fontgp2 (:if hideCel :)escondecelular(:end:)" href="#facilidades">Facilidades</a>
-<a class="item fontgp2 (:if hideCel :)escondecelular(:end:)" href="/contrate">Peça Já!</a>
+<a class="item fontgp2 (:if hideCel :)escondecelular(:end:)" href="/novo">Peça Já!</a>
 (:end:)

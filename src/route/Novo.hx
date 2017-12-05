@@ -11,17 +11,21 @@ class Novo {
 
 	public function new() {}
 
-	public function getInicio()
+	public function getDefault()
 	{
 		Web.setReturnCode(200);
-		Sys.println("Digite seu número de colaborador");
+		Sys.println(views.Base.render("Peça seu cartão", views.Login.render));
 	}
 
-	public function postInicio(args:{ belNumber:Int })
+	public function postDefault(args:{ belNumber:Int, cpf:String })
 	{
+		show(args);
 		// FIXME replace with check for belNumber and cpf|name match
-		var user = new db.BelUser(args.belNumber);
-		user.insert();
+		var user = db.BelUser.manager.select($belNumber == args.belNumber);
+		if (user == null) {
+			user = new db.BelUser(args.belNumber);
+			user.insert();
+		}
 
 		var card = db.CardRequest.manager.select($bearer == user);
 		if (card == null) {
@@ -29,14 +33,20 @@ class Novo {
 			card.insert();
 		}
 
-		Web.setCookie(CARD_COOKIE, card.clientKey);
+		Web.setCookie(CARD_COOKIE, card.clientKey, DateTools.delta(Date.now(), DateTools.days(1)));
 		Web.redirect(moveForward(card));
 	}
 
 	public function getDados()
 	{
+		var card = getCardRequest();
+		if (card == null) {
+			Web.redirect(moveForward(null));
+			return;
+		}
+		
 		Web.setReturnCode(200);
-		Sys.println("Insira seus dados pessoais");
+		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render));
 	}
 
 	public function postDados(args:PersonalData)
@@ -88,10 +98,12 @@ class Novo {
 
 	function moveForward(card:db.CardRequest):String
 	{
+		if (card == null)
+			return "/novo";
 		return switch card.state {
-		case AwaitingBearerData: "dados";
-		case AwaitingBearerConfirmation: "confirma";
-		case _: "status";
+		case AwaitingBearerData: "/novo/dados";
+		case AwaitingBearerConfirmation: "/novo/confirma";
+		case _: "/novo/status";
 		}
 	}
 

@@ -43,7 +43,7 @@
         <link rel="manifest" href="https://www.acessocard.com.br/wp-content/themes/acesso-card/ghost/assets/images/favicon/manifest.json">
         <link rel="mask-icon" href="https://www.acessocard.com.br/wp-content/themes/acesso-card/ghost/assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
 
-        <link rel="stylesheet" type="text/css" href="./custom.css">
+        <link rel="stylesheet" type="text/css" href="/custom.css">
 
         <script>
         $(document)
@@ -80,7 +80,7 @@
                 </a>
                 (:views.Menu.render(true):)
                 <div class="right item">
-                    <img src="img/lbel_img_logo_branco.png" style="height: 20px; width: 96px" />
+                    <img src="/img/lbel_img_logo_branco.png" style="height: 20px; width: 96px" />
                 </div>
             </div>
         </div>
@@ -102,7 +102,7 @@
                         </a>
                         (:views.Menu.render(true):)
                         <div class="right item">
-                            <img src="img/lbel_img_logo_254.png" style="height: 20px; width: 96px" />
+                            <img src="/img/lbel_img_logo_254.png" style="height: 20px; width: 96px" />
                         </div>
                     </div> <!--secondary menu-->
                 </div> <!--id=inicio-->
