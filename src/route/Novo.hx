@@ -66,7 +66,7 @@ class Novo {
 	public function getConfirma()
 	{
 		Web.setReturnCode(200);
-		Sys.println("As informações estão corredas?  Você confirma o pedido?");
+		Sys.println("As informações estão corretas?  Você confirma o pedido?");
 	}
 
 	public function postConfirma()
@@ -77,9 +77,10 @@ class Novo {
 			Sys.println("Nenhum cartão encontrado");
 			return;
 		}
-		card.state = AwaitingAcessoMembershipRequest;
+		card.state = Queued(SolicitarAdesaoCliente);
 		card.update();
-		// TODO communicate with Acesso
+		var q = new ProcessingQueue();
+		q.addTask(new AcessoProcessor(card.clientKey).execute);  // FIXME
 		Web.redirect(moveForward(card));
 	}
 

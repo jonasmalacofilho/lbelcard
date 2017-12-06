@@ -1,11 +1,24 @@
 package db;
 
+enum AcessoStep {
+	SolicitarAdesaoCliente;
+	AlterarEnderecoPortador;
+	SolicitarAlteracaoEmailPortador;
+	ConfirmarSolicitacaoAlteracaoEmailPortador;
+	EfetivarAlteracaoEmailPortador;
+	SolicitarAlteracaoTelefonePortador;
+	ConfirmarAlteracaoTelefonePortador;
+	ComplementarDadosPrincipais;
+	SolicitarCartaoIdentificado;
+	ConfirmarPagamento;
+}
+
 enum CardRequestState {
 	AwaitingBearerData;
 	AwaitingBearerConfirmation;
-	AwaitingAcessoMembershipRequest;
-	AwaitingAcessoEmissionRequest;
-	AwaitingAcessoPaymentConfirmationRequest;
+	Queued(step:AcessoStep);
+	Processing(step:AcessoStep);
+	Failed(userError:Bool, msg:String, onState:CardRequestState);
 	CardRequested;
 }
 
