@@ -10,12 +10,13 @@ class Server {
 	static function main()
 	{
 		initModule();
-		if (ManagedModule.cacheAvailable) {
-			ManagedModule.runAndCache(handleRequest);
-		} else {
-			handleRequest();
+		if (ProcessingQueue.control()) {
 			ManagedModule.callFinalizers();
+			return;
 		}
+
+		assert(ManagedModule.cacheAvailable, "tora required for the ProcessingQueue");
+		ManagedModule.runAndCache(handleRequest);
 	}
 
 	static function initModule()
@@ -53,6 +54,8 @@ class Server {
 				continue;  // TODO assert the schema somehow
 			sys.db.TableCreate.create(m);
 		}
+
+		var queue = ProcessingQueue.getGlobal();
 
 		trace('time: ${since(ini_t)} ms on module initialization');
 	}
