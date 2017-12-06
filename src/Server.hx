@@ -16,7 +16,7 @@ class Server {
 			return;
 		}
 
-		assert(ManagedModule.cacheAvailable, "tora required for the ProcessingQueue");
+		assert(ManagedModule.cacheAvailable, "queue assumes tora (although we can fix this)");
 		ManagedModule.runAndCache(handleRequest);
 	}
 

@@ -13,9 +13,8 @@ class ProcessingQueue {
 		trace('queue: add task');
 		lock.acquire();
 		queue.push(task);
-		if (worker == null) {
+		if (worker == null)
 			worker = Thread.create(initWorker);
-		}
 		lock.release();
 	}
 
