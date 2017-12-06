@@ -24,10 +24,12 @@ enum CardRequestState {
 
 @:id(clientKey)
 class CardRequest extends sys.db.Object {
-	public var clientKey:String;
+	//FIXME - 512 is a placeholder and this can't be a pure string...
+	//b/c ...record-macros!
+	public var clientKey:SString<512>;
 	@:relation(bearerId) public var bearer:BelUser;
 	public var state:SData<CardRequestState>;
-
+	
 	public function new(bearer)
 	{
 		super();

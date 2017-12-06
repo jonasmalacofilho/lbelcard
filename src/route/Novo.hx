@@ -3,8 +3,8 @@ package route;
 import Sys;
 import eweb.Dispatch;
 import eweb.Web;
-
-typedef PersonalData = { foo:String }  // FIXME
+// FIXME (add g-recaptcha-response later)
+typedef PersonalData = { NomeCompleto:String , TpSexo : Int, DtNascimento : String, NomeMae : String, DDI : Int, DDD : Int, NumeroTel : String, TpTelefone : Int, CEP : String, UF : String, Cidade : String, Bairro : String, Logradouro : String, NumeroRes : Int, TpEndereco : Int, Email : String, CodCliente : String,NumDocumento : String, DtExpedicao : String, TpDocumento : Int, ?OrgaoExpedidor : String, OrgaoUF : String, PaisOrgao : String }  
 
 class Novo {
 	static inline var CARD_COOKIE = "CARD_REQUEST";
@@ -46,6 +46,7 @@ class Novo {
 		}
 		
 		Web.setReturnCode(200);
+		
 		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render));
 	}
 
@@ -60,6 +61,30 @@ class Novo {
 		// TODO store the data
 		card.state = AwaitingBearerConfirmation;
 		card.update();
+
+		var datenow = Date.now();
+
+		//TODO:I should diff between curObj with actual
+		var d = new db.CardData();
+		d.cardReq = card;
+		d.CodEspecieProduto = "FOO"; //FIXME
+		d.lastedit = datenow;
+		d.last_update = datenow;
+		d.last_check = datenow;
+
+		//hm...this is a POG b/c i'm lazy 
+		//(Fiels should have the same name, soo..)
+		for(f in Reflect.fields(args))
+		{
+			//TODO: Check other fields =S
+			if(f == "g-recaptcha-response")
+				continue;
+
+			Reflect.setField(d, f, Reflect.field(args, f));
+		}
+
+		d.insert();
+
 		Web.redirect(moveForward(card));
 	}
 

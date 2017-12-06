@@ -1,5 +1,5 @@
 (: static function UF() :)
-<select name="UF" class="ui fluid dropdown search">
+<select name="UFOrgao" class="ui fluid dropdown search">
     <option value="SP">São Paulo</option>
     <option value="MG">Minas Gerais</option>
     <option value="RJ">Rio de Janeiro</option>
