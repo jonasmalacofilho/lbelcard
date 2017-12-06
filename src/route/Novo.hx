@@ -4,7 +4,7 @@ import Sys;
 import eweb.Dispatch;
 import eweb.Web;
 // FIXME (add g-recaptcha-response later)
-typedef PersonalData = { NomeCompleto:String , TpSexo : Int, DtNascimento : String, NomeMae : String, DDI : Int, DDD : Int, NumeroTel : String, TpTelefone : Int, CEP : String, UF : String, Cidade : String, Bairro : String, Logradouro : String, NumeroRes : Int, TpEndereco : Int, Email : String, CodCliente : String,NumDocumento : String, DtExpedicao : String, TpDocumento : Int, ?OrgaoExpedidor : String, OrgaoUF : String, PaisOrgao : String }  
+typedef PersonalData = { NomeCompleto:String , TpSexo : Int, DtNascimento : String, NomeMae : String, DDI : Int, DDD : Int, NumeroTel : String, TpTelefone : Int, CEP : String, UF : String, Cidade : String, Bairro : String, Logradouro : String, NumeroRes : Int, TpEndereco : Int, Email : String, CodCliente : String,NumDocumento : String, DtExpedicao : String, TpDocumento : Int, ?OrgaoExpedidor : String, UFOrgao : String, PaisOrgao : String }  
 
 class Novo {
 	static inline var CARD_COOKIE = "CARD_REQUEST";
@@ -47,7 +47,7 @@ class Novo {
 		
 		Web.setReturnCode(200);
 		
-		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render));
+		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render.bind(null)));
 	}
 
 	public function postDados(args:PersonalData)
@@ -71,7 +71,7 @@ class Novo {
 		d.lastedit = datenow;
 		d.last_update = datenow;
 		d.last_check = datenow;
-
+		trace("G-RECAPTCHA "+ Web.getParams().get('g-recaptcha-response'));
 		//hm...this is a POG b/c i'm lazy 
 		//(Fiels should have the same name, soo..)
 		for(f in Reflect.fields(args))
