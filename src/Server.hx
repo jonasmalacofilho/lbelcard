@@ -11,6 +11,11 @@ class Server {
 	{
 		initModule();
 
+		if (ProcessingQueue.handOver()) {
+			ManagedModule.callFinalizers();
+			return;
+		}
+
 		assert(ManagedModule.cacheAvailable, "tora required for the ProcessingQueue");
 		ManagedModule.runAndCache(handleRequest);
 	}

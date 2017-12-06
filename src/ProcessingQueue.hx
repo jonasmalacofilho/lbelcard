@@ -14,10 +14,18 @@ class ProcessingQueue {
 		lock.acquire();
 		queue.push(task);
 		if (worker == null) {
-			trace('queue: init worker thread');
-			worker = Thread.create(workerLoop);
+			worker = Thread.create(initWorker);
 		}
 		lock.release();
+	}
+
+	function initWorker()
+	{
+		trace('queue: init worker thread');
+		var self = Module.local();
+		var module = Module.readPath(self.name + ".n", [], self.loader());
+		module.setExport(NAME, workerLoop);
+		module.execute();
 	}
 
 	function workerLoop()
@@ -34,7 +42,29 @@ class ProcessingQueue {
 			lock.release();
 			task();
 		}
-		trace('queue: terminate worker loop');
+		trace('queue: terminate worker');
 	}
+
+	/**
+		Allow the processing queue to take control of the module, if applicable
+
+		Returns true if control was taken, in which case the module is no longer
+		needed anymore; all resources should be freed and the module should be
+		terminated.
+
+		Otherwise return false, and normal execution of the module can be resumed.
+	 **/
+	public static function handOver():Bool
+	{
+		var loop = Module.local().getExports()[NAME];
+		if (loop != null) {
+			trace('queue: init worker module');
+			loop();
+			return true;
+		}
+		return false;
+	}
+
+	static inline var NAME = "processing-queue-worker-loop";
 }
 
