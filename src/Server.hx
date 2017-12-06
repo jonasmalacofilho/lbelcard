@@ -10,10 +10,15 @@ class Server {
 	static function main()
 	{
 		initModule();
-		if (ProcessingQueue.control()) {
+		if (ProcessingQueue.isWorkerInstance()) {
+			ProcessingQueue.handleControl();
 			ManagedModule.callFinalizers();
 			return;
 		}
+
+		// use the queue for something
+		ProcessingQueue.addTask(Sys.sleep.bind(3));
+		ProcessingQueue.addTask(function () trace("Hello from the processing queue"));
 
 		assert(ManagedModule.cacheAvailable, "tora required for the ProcessingQueue");
 		ManagedModule.runAndCache(handleRequest);
@@ -54,8 +59,6 @@ class Server {
 				continue;  // TODO assert the schema somehow
 			sys.db.TableCreate.create(m);
 		}
-
-		var queue = ProcessingQueue.getGlobal();
 
 		trace('time: ${since(ini_t)} ms on module initialization');
 	}
