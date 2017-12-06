@@ -10,15 +10,6 @@ class Server {
 	static function main()
 	{
 		initModule();
-		if (ProcessingQueue.isWorkerInstance()) {
-			ProcessingQueue.handleControl();
-			ManagedModule.callFinalizers();
-			return;
-		}
-
-		// use the queue for something
-		ProcessingQueue.addTask(Sys.sleep.bind(3));
-		ProcessingQueue.addTask(function () trace("Hello from the processing queue"));
 
 		assert(ManagedModule.cacheAvailable, "tora required for the ProcessingQueue");
 		ManagedModule.runAndCache(handleRequest);
@@ -65,6 +56,12 @@ class Server {
 
 	static function handleRequest()
 	{
+		// use the queue for something
+		var q = new ProcessingQueue();
+		q.addTask(function () trace("Hello from the processing queue"));
+		q.addTask(Sys.sleep.bind(3));
+		q.addTask(function () trace("Waited for three seconds... all good, bye"));
+
 		var req_t = Sys.time();
 
 		try {
