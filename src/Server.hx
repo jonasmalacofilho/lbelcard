@@ -33,8 +33,11 @@ class Server {
 		assert(Environment.ACESSO_PRODUCT != null);
 
 		assert(Environment.MAIN_DB != null && Environment.MAIN_DB.indexOf("sqlite3://") == 0, Environment.MAIN_DB);
-		
-		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(Environment.MAIN_DB.substr("sqlite3://".length));
+
+		var dbPath = Environment.MAIN_DB.substr("sqlite3://".length);
+		show(Sys.getCwd(), Web.getCwd());
+		trace('sqlite: open $dbPath');
+		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(dbPath);
 		ManagedModule.addModuleFinalizer(cnx.close, "db/main");
 
 		assert(cnx.dbName() == "SQLite");
