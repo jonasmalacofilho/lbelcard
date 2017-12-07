@@ -214,7 +214,8 @@
                 <input type="text" name="PaisOrgao" value="Brasil" maxlength="30" (:if d != null:)value="(:d.PaisOrgao:)"(:end:)/>
             </div>
         </div>
-        <button class="ui button fundo3 inverted">Enviar</button>
+        
+        <button class="ui button fundo3 inverted fluid">Enviar</button>
         
     </div>
 </form>
