@@ -1,7 +1,7 @@
 import Environment.*;
 import acesso.*;
-import acesso.AcessoError;
 import acesso.Data;
+import db.Types.AcessoError;
 
 class AcessoProcessor {
 	var key:String;
@@ -62,14 +62,19 @@ class AcessoProcessor {
 			}
 
 		} catch (err:AcessoError) {
+			card.state = Failed(err, card.state);
+			card.update();
 			switch err {
 			case TransportError(msg):
-				neko.Lib.rethrow(err);  // FIXME reenqueue
-			case TemporaryError(msg, code):
-				neko.Lib.rethrow(err);  // FIXME reenqueue
-			case PermanentError(msg, code):
-				card.state = Failed(false, msg, card.state);
-				card.update();
+				Sys.sleep(60);
+				// FIXME reenqueue
+			case TemporarySystemError({ Message:msg, ResultCode: 99 }) if (msg.indexOf("ValidarToken") > 0):
+				// token must have expired
+				Sys.sleep(3);
+				token = null;
+				// FIXME reenqueue
+			case _:
+				// nothing to do for user/data or other system errors
 			}
 		}
 	}

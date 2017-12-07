@@ -12,8 +12,10 @@ class GestaoAquisicaoCartao extends GestaoBase {
 			return { newUser:true, client:(res.Data:ClientGuid) };
 		case 1:
 			return { newUser:false, client:(res.Data:ClientGuid) };
+		case 99:
+			throw TemporarySystemError(res);
 		case err:
-			throw PermanentError("Other", res.ResultCode);
+			throw PermanentSystemError(res);
 		}
 	}
 
@@ -22,7 +24,7 @@ class GestaoAquisicaoCartao extends GestaoBase {
 		var res:Response = request(ENDPOINT, "SolicitarCartaoIdentificado", params);
 		switch res.ResultCode {
 		case 0: return (res.Data:CardGuid);
-		case err: throw PermanentError("Other", res.ResultCode);
+		case err: throw PermanentSystemError(res);
 		}
 	}
 }

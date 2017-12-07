@@ -5,7 +5,8 @@ Upstream API reponse types.
 */
 
 typedef FieldError = {
-	Message:String
+	Message:String,
+	ResultCode:Int
 }
 
 typedef Response = {

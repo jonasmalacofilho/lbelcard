@@ -14,10 +14,10 @@ class GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			return (res.Data:TokenAcesso);
-		case 5 | 99:
-			throw TemporaryError(res.Message, res.ResultCode);
+		case 5 /* unspecified */ | 99 /* internal */:
+			throw TemporarySystemError(res);
 		case _:
-			throw PermanentError(res.Message, res.ResultCode);
+			throw PermanentSystemError(res);
 		}
 	}
 
