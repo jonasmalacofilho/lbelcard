@@ -3,6 +3,8 @@ import sys.db.Object;
 import sys.db.Types;
 import haxe.Json;
 
+using StringTools;
+
 //TODO: Sort this stuff as a readable (reasonable) stuff (aka... this order is a mess!)
 class CardData extends Object
 {
@@ -23,7 +25,7 @@ class CardData extends Object
     //CPF
     public var CodCliente : SString<11>;
     //Convert that mess to MS Style!
-    public var DtExpedicao : SDateTime;
+    public var DtExpedicao : SFloat;
 
     public var NumDocumento : SString<20>;
     //NOT Required, but they ask for Country + UF, soo..
@@ -33,13 +35,14 @@ class CardData extends Object
     public var UFOrgao : SString<2>;
 
     /****  Personal Info    ****/
-    public var DtNascimento : SDateTime;
+    public var DtNascimento : SFloat;
     public var Email : SString<125>;
     public var Bairro : SString<30>;
     public var CEP : SString<8>;
     public var Cidade : SString<60>;
+    
     //Optional
-    public var Complemento : SString<20>;
+    public var Complemento : Null<SString<20>>;
 
     public var Logradouro : SString<100>;
     public var NumeroRes : SString<10>;
@@ -47,7 +50,7 @@ class CardData extends Object
     public var UF : SString<2>;
     public var NomeCompleto : SString<100>;
     public var NomeMae : SString<100>;
-    public var TpCliente : SInt;
+    public var TpCliente : SString<2>;
     public var TpSexo : SInt;
 
     /****   Other stuff     ****/

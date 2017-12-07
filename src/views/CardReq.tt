@@ -142,8 +142,8 @@
     <div class="ui segment">
 
         <h3 class="ui dividing header">Informações Complementares</h3>
-        <div class="two fields">
-            <div class="field">
+        <div class="fields">
+            <div class="six wide field">
                 <label>E-Mail pessoal</label>
                 <div class="ui input left icon">
                     <i class="mail outline icon"></i>
@@ -151,9 +151,19 @@
                 </div>
             </div>
 
-            <div class="field">
+            <div class="five wide field">
                 <label>CPF</label>
                 <input type="text" name="CodCliente" placeholder="XXX.XXX.XXX-XX" (:if d != null:)value="(:d.CodCliente:)"(:end:) >
+            </div>
+
+            <div class="five wide field">
+                <label>Tipo de Cliente</label>
+                <select name="TpCliente">
+                    <option value="00">Pessoa Física</option>
+                    <option value="01">Pessoa Jurídica</option>
+                    <option value="02">Estrangeiro</option>
+                </select>
+
             </div>
         </div>
 

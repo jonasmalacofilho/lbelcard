@@ -1,10 +1,9 @@
 package route;
-
 import Sys;
 import eweb.Dispatch;
 import eweb.Web;
 // FIXME (add g-recaptcha-response later)
-typedef PersonalData = { NomeCompleto:String , TpSexo : Int, DtNascimento : String, NomeMae : String, DDI : Int, DDD : Int, NumeroTel : String, TpTelefone : Int, CEP : String, UF : String, Cidade : String, Bairro : String, Logradouro : String, NumeroRes : Int, TpEndereco : Int, Email : String, CodCliente : String,NumDocumento : String, DtExpedicao : String, TpDocumento : Int, ?OrgaoExpedidor : String, UFOrgao : String, PaisOrgao : String }  
+typedef PersonalData = { NomeCompleto:String , TpSexo : Int, DtNascimento : String, NomeMae : String, DDI : Int, DDD : Int, NumeroTel : String, TpTelefone : Int, CEP : String, UF : String, Cidade : String, Bairro : String, Logradouro : String, NumeroRes : Int, ?Complemento : Int, TpEndereco : Int, Email : String, CodCliente : String,NumDocumento : String, DtExpedicao : String, TpDocumento : Int, ?OrgaoExpedidor : String, UFOrgao : String, PaisOrgao : String, TpCliente : String }  
 
 class Novo {
 	static inline var CARD_COOKIE = "CARD_REQUEST";
@@ -71,7 +70,7 @@ class Novo {
 		d.lastedit = datenow;
 		d.last_update = datenow;
 		d.last_check = datenow;
-		trace("G-RECAPTCHA "+ Web.getParams().get('g-recaptcha-response'));
+		
 		//hm...this is a POG b/c i'm lazy 
 		//(Fiels should have the same name, soo..)
 		for(f in Reflect.fields(args))
@@ -80,7 +79,20 @@ class Novo {
 			if(f == "g-recaptcha-response")
 				continue;
 
-			Reflect.setField(d, f, Reflect.field(args, f));
+			//I pass dates as MM/DD/YYYY which is a nono
+			if(f == 'DtNascimento' || f == 'DtExpedicao')
+			{
+				var split :Array<String> = Reflect.field(args, f).split('/');
+				
+				var p = [];
+				for(s in split)
+					p.push(Std.parseInt(s));
+
+				var data = new Date(p[2], p[1]-1, p[0],0,0,0).getTime();
+				Reflect.setField(d,f,data);
+			}
+			else
+				Reflect.setField(d, f, Reflect.field(args, f));
 		}
 
 		d.insert();
@@ -91,7 +103,9 @@ class Novo {
 	public function getConfirma()
 	{
 		Web.setReturnCode(200);
-		Sys.println("As informações estão corretas?  Você confirma o pedido?");
+		var card = getCardRequest();
+		var data = db.CardData.manager.select($cardReq == card);
+		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(data)));
 	}
 
 	public function postConfirma()
