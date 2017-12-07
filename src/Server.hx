@@ -34,7 +34,7 @@ class Server {
 
 		assert(Environment.MAIN_DB != null && Environment.MAIN_DB.indexOf("sqlite3://") == 0, Environment.MAIN_DB);
 		
-		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(Web.getCwd() + Environment.MAIN_DB.substr("sqlite3://".length));
+		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(Environment.MAIN_DB.substr("sqlite3://".length));
 		ManagedModule.addModuleFinalizer(cnx.close, "db/main");
 
 		assert(cnx.dbName() == "SQLite");
