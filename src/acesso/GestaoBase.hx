@@ -1,7 +1,7 @@
 package acesso;
 
 class GestaoBase {
-	static inline var URL =
+	static inline var ENDPOINT =
 			"https://servicos.acessocard.com.br/api2.0/Services/rest/GestaoAquisicaoCartao.svc";
 
 	public function new() {}
@@ -10,7 +10,7 @@ class GestaoBase {
 	{
 		var email = StringTools.urlEncode(params.Email);
 		var senha = StringTools.urlEncode(params.Senha);
-		var res:Response = request(URL, 'criar-token/$email/$senha', params);
+		var res:Response = request(ENDPOINT, 'criar-token/$email/$senha', params);
 		switch res.ResultCode {
 		case 0:
 			return (res.Data:TokenAcesso);
