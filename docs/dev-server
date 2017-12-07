@@ -1,4 +1,14 @@
 #!/bin/bash -e
+
+# Standalone(ish) development server
+#
+# For Linux based systems.  Use from the project root.
+#
+# Start with:
+#    docs/dev-server
+#
+# Temporary files are stored on `runtime`.
+
 echo "Preparing the development server (tora)"
 
 echo -n "Enter the password to AcessoCard's API (and press <Enter>): "
