@@ -3,9 +3,13 @@
 # Standalone(ish) development server
 #
 # For Linux based systems.  Use from the project root.
+# Requires a tora binary in the path.
 #
 # Start with:
 #    docs/dev-server
+#
+# To get a tora binary in the path:
+#    haxe tora.hxml && cp tora.n /tmp && nekotools boot /tmp/tora.n && _ cp /tmp/tora /usr/local/bin/
 #
 # Temporary files are stored on `runtime`.
 
