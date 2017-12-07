@@ -12,7 +12,8 @@ haxe dev.hxml
 #
 # Notes:
 #  - asks for the password to AcessoCard's API
-#  - currently implemented with (and, thus, requires) nekotools
+#  - starts nginx automatically (nginx is required)
+#  - expectes a tora to be in the path (instrucutions in the script)
 docs/dev-server
 ```
 
