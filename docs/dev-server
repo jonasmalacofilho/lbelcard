@@ -26,6 +26,10 @@ mkdir -p runtime
 export MAIN_DB=sqlite3://runtime/main.db3
 export ACESSO_USERNAME=user.belcorp.acesso@gmail.com
 export ACESSO_PRODUCT=CBLBELSQID12V
-nginx -c docs/nginx.conf -p '' -s stop ; nginx -c docs/nginx.conf -p ''
+if [ -f runtime/nginx.pid ]; then
+	nginx -c docs/nginx.conf -p '' -s reload
+else
+	nginx -c docs/nginx.conf -p ''
+fi
 tora -fcgi -p 6666
 
