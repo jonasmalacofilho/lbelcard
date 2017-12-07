@@ -1,5 +1,6 @@
 ::!/bin/bash -e
-echo "Preparing the development server (nekotools)"
+echo "DEPRECATED script; check/fix before using it"
+:: echo "Preparing the development server (nekotools)"
 
 :: Not testing this kinda of stuff from Windows..
 SET ACESSO_PASSWORD=FOO
