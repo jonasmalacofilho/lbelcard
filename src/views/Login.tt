@@ -1,4 +1,14 @@
 (:static function render():)
+<!-- recaptcha -->
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<!-- TODO: Fix this: -->
+<script>
+    function onSubmit()
+    {
+        $('form').submit();
+    }
+</script>
 <div class='ui text container'>
     <form class='ui form' method="post">
     <div class='ui segment'>
@@ -14,7 +24,10 @@
             <input type="text" name="cpf"/>
         </div>
 
-        <button class="ui button fluid large submit" type="submit">
+        
+        <button class="g-recaptcha ui purple buttonui button fluid large submit"
+            data-sitekey="6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4"
+            data-callback="onSubmit">
           <i class="sign in icon"></i> Continuar
         </button>
     </div>

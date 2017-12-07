@@ -2,11 +2,16 @@ package route;
 import Sys;
 import eweb.Dispatch;
 import eweb.Web;
-// FIXME (add g-recaptcha-response later)
+import haxe.Json;
 typedef PersonalData = { NomeCompleto:String , TpSexo : Int, DtNascimento : String, NomeMae : String, DDI : Int, DDD : Int, NumeroTel : String, TpTelefone : Int, CEP : String, UF : String, Cidade : String, Bairro : String, Logradouro : String, NumeroRes : Int, ?Complemento : Int, TpEndereco : Int, Email : String, CodCliente : String,NumDocumento : String, DtExpedicao : String, TpDocumento : Int, ?OrgaoExpedidor : String, UFOrgao : String, PaisOrgao : String, TpCliente : String }  
+
 
 class Novo {
 	static inline var CARD_COOKIE = "CARD_REQUEST";
+
+	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";
+	static inline var RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
+
 
 	public function new() {}
 
@@ -16,9 +21,18 @@ class Novo {
 		Sys.println(views.Base.render("Peça seu cartão", views.Login.render));
 	}
 
-	public function postDefault(args:{ belNumber:Int, cpf:String })
+	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
 		show(args);
+		var recaptcha = Web.getParams().get("g-recaptcha-response");
+		
+		//TODO: Write a nice message..for a bot =)
+		if(!recapChallenge(recaptcha))
+		{
+			Web.redirect("/");
+			return;
+		}	
+
 		// FIXME replace with check for belNumber and cpf|name match
 		var user = db.BelUser.manager.select($belNumber == args.belNumber);
 		if (user == null) {
@@ -153,6 +167,29 @@ class Novo {
 		if (key == null)
 			return null;
 		return db.CardRequest.manager.select($clientKey == key);
+	}
+
+	function recapChallenge(challenge : String)
+	{
+		var ret = false;
+
+		var http = new haxe.Http(RECAPTCHA_URL);
+		http.addParameter('secret', RECAPTCHA_SECRET);
+		http.addParameter('response', challenge);
+		http.addParameter('remoteip', Web.getClientIP());
+		
+		http.onError = function(msg : String){
+			trace(msg);
+			throw 'Unexpected Http error $msg';
+		};
+		http.onData = function(d : String)
+		{
+			var res = Json.parse(d);
+			ret = res.success;
+		};
+		http.request(true);
+
+		return ret;
 	}
 }
 

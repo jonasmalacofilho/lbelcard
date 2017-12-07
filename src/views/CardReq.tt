@@ -1,17 +1,12 @@
 (:static function render(?d : db.CardData) :)
-<!-- recaptcha -->
-<script src='https://www.google.com/recaptcha/api.js'></script>
+
 <!-- semantic calendar stylesheet -->
 <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/b54ebdbe/dist/calendar.min.css" rel="stylesheet" type="text/css">
 <!-- semantic calendar js -->
 <script src="https://cdn.rawgit.com/lehonma/Semantic-UI-Calendar/01933d0c/dist/calendar.js"></script>
 <script>
     js.CardReq.init();
-    //TODO: Fix this
-    function onSubmit()
-    {
-        $('form').submit();
-    }
+   
 </script>
 <div class="ui text container">
 <form method="POST" action="/novo/dados" class="ui form error">
@@ -219,12 +214,7 @@
                 <input type="text" name="PaisOrgao" value="Brasil" maxlength="30" (:if d != null:)value="(:d.PaisOrgao:)"(:end:)/>
             </div>
         </div>
-        <button
-            class="g-recaptcha ui purple button"
-            data-sitekey="6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4"
-            data-callback="onSubmit">
-            Enviar
-            </button>
+        <button class="ui button fundo3 inverted">Enviar</button>
         
     </div>
 </form>
