@@ -14,7 +14,8 @@
 # Temporary files are stored on `runtime`.
 
 echo "Preparing the development server (tora)"
-
+echo "    http://localhost:8080"
+echo
 echo -n "Enter the password to AcessoCard's API (and press <Enter>): "
 read -s ACESSO_PASSWORD
 echo
