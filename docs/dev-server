@@ -32,5 +32,6 @@ if [ -f runtime/nginx.pid ]; then
 else
 	nginx -c docs/nginx.conf -p ''
 fi
+xdg-open http://localhost:8080 2>/dev/null >/dev/null
 tora -fcgi -p 6666
 
