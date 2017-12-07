@@ -4,12 +4,12 @@
     <div class="ui segments borderless">
         
         <div class="ui segment">
-            <h3 class="ui header cor3">Por favor, confirme se suas informações estão corretas</h3>
+            <h2 class="ui header cor3">Por favor, confirme se suas informações estão corretas</h2>
         </div>
 
         <div class="ui segments">
             <div class="ui segment">
-                <h4 class="ui sub header cor3">Informações Pessoais</h4>
+                <h3 class="ui sub header cor3">Informações Pessoais</h3>
             </div>
 
             <div class="ui segment">
@@ -24,7 +24,7 @@
                     <p><b>Sexo:</b> (: switch d.TpSexo :) (:case 0:) Não Informado (: case 1 :) Masculino (: case 2 :) Feminino (:end:)
                 </div>
                 <div class="ui segment">
-                    <p><b>Data de Nascimento:</b> d.DtNascimento.format("%d-%m-%Y");
+                    <p><b>Data de Nascimento:</b> (:Date.fromTime(d.DtNascimento).format("%d-%m-%Y"):)</p>
                 </div>
             </div>
         </div>
@@ -32,80 +32,46 @@
         <div class="ui segments">
             
             <div class="ui segment">
-                <h4 class="ui sub header cor3">Informações de Contato</h4>
+                <h3 class="ui sub header cor3">Informações de Contato</h3>
             </div>
             
             <div class="ui segment">
-                <h5 class="ui sub header cor3">Telefone</h5>
+                <p><b>Telefone:</b> +(:d.DDI:) ((:d.DDD:)) (:d.NumeroTel:)</p>
             </div>
-            
 
-            <div class="ui horizontal segments">
-                <div class="ui segment">
-                    <p><b>DDI:</b>(:d.DDI:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>DDD:</b>(:d.DDD:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>Telefone:</b>(:d.NumeroTel:)</p>
-                </div>
-            </div>
-            
             <div class="ui segment">
-                <h5 class="ui sub header cor3">Endereço Residencial</h5>
+                <h3 class="ui sub header cor3">Endereço (:switch d.TpEndereco:)(:case 0:)Residencial(:case 1:)Comercial(:case 2:)Outros(:end:):</h3>
             </div>
 
+            <div class="ui segment">
+                <p>(:d.Logradouro:) , (:d.NumeroRes:) (:if d.Complemento != null && d.Complemento != "":),(:d.Complemento:)(:end:)</p>
+            </div>
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>CEP:</b> (:d.CEP:)</p>
+                <p>(:d.Bairro:), (:d.Cidade:),(:d.UF:)<span style="float:right">
                 </div>
                 <div class="ui segment">
-                    <p><b>UF:</b> (:d.UF:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>Cidade:</b> (:d.Cidade:)  </p>
-                </div>
-                <div class="ui segment">
-                    <p><b>Bairro: </b> (:d.Bairro:)  </p>
+                    <b>CEP:</b> (:d.CEP:)</span></p>                
                 </div>
             </div>
-
-            <div class="ui horizontal segments">
-                <div class="ui segment">
-                    <p><b>Rua: </b> (:d.Logradouro:) </p>
-                </div>
-                <div class="ui segment">
-                <p><b>Número:</b> (:d.NumeroRes:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>Complemento:</b> (: if d.Complemento != null :) (:d.Complemento:)(:end:)  </p>
-                </div>
-                <div class="ui segment">
-                    <p><b>Tipo de Endereço:</b> (:switch d.TpEndereco:)(:case 0:)Residencial(:case 1:)Comercial(:case 2:)Outros(:end:)</p>
-                </div>
-            </div>
-            
-
         </div>
 
         <div class="ui segments">
 
             <div class="ui segment">
-                <h5 class="ui sub header cor3">Informações Complementares</h5>
+                <h3 class="ui sub header cor3">Informações Complementares</h3>
             </div>
             
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>E-mail Pessoal:</b> (:d.Email:)</p>
+                    <p><b>E-mail:</b>(:d.Email:)</p>
                 </div>
                 <div class="ui segment">
                     <p><b>CPF:</b> (:d.CodCliente:)</p>
                 </div>
-                <div class="ui segment">
-                    <p><b>Tipo de Cliente:</b> (: switch d.TpCliente:)(:case '00':)Pessoa Física(:case '01':)Pessoa Jurídica(:case '02':)Estrangeiro(:end:)</p>
-                </div>
-                
+            </div>
+            <div class="ui segment">
+                <p><b>Tipo de Cliente:</b> (: switch d.TpCliente:)(:case '00':)Pessoa Física(:case '01':)Pessoa Jurídica(:case '02':)Estrangeiro(:end:)</p>
             </div>
 
             <div class="ui horizontal segments">
@@ -113,28 +79,42 @@
                     <p><b>Documento:</b> (:d.NumDocumento:)</p>
                 </div>
                 <div class="ui segment">
+                    <p><b>Tipo de Documento:</b> (:switch d.TpDocumento:)(:case 0:)RG(:case 1:)RNE(:case 2:)Passaporte(:end:)</p>
+                </div>
+            </div>
+            <div class="ui horizontal segments">
+                <div class="ui segment">
                     <!-- TODO: Fix -->
-                    <p><b>Data de Emissão:</b> (: Date.fromTime(d.DtExpedicao).format('%d-%m-%Y'):)</p>
+                    <p><b>Data de Emissão:</b> (: Date.fromTime(d.DtExpedicao).format('%d/%m/%Y'):)</p>
+                </div>
+            
+                <div class="ui segment">
+                    <p><b>Órgao Emissor:</b> (:d.OrgaoExpedidor:)</p>
+                </div>
+            </div>
+            <div class="ui horizontal segments">
+                <div class="ui segment">
+                    <p><b>UF do Órgão:</b> (:d.UFOrgao:)</p>
                 </div>
                 <div class="ui segment">
-                    <p><b>Tipo de Documento:</b>(:switch d.TpDocumento:)(:case 0:)RG(:case 1:)RNE(:case 2:)Passaporte(:end:)</p>
+                    <p><b>País do Órgão:</b> (:d.PaisOrgao:)</p>
                 </div>
-
-                <div class="ui segment">
-                    <p><b>Órgao Expeditor</b> (:d.OrgaoExpedidor:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>UF do Órgão</b> (:d.UFOrgao:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>País do Órgão</b> (:d.PaisOrgao:)</p>
-                </div>
-
             </div>
         </div>
     </div>
+
     <form method="POST" class='ui form'>
-        <button type='submit' class="ui button inverted fundo3">Confirmar</button>
+        <div class="ui two buttons">
+            <button type="button" class="ui button labeled icon" onclick="window.history.back();">
+                <i class="arrow left icon"></i>
+                Voltar
+            </button>
+
+            <button type="submit" class="ui button inverted fundo3 right labeled icon" style="box-shadow:0 0 0 0 #FFF !important">
+                <i class="save icon"></i>
+                Confirmar
+            </button>
+        </div>
     </form>
 </div>
 
