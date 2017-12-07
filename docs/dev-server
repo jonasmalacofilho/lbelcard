@@ -9,7 +9,7 @@
 #    docs/dev-server
 #
 # To get a tora binary in the path:
-#    haxe tora.hxml && cp tora.n /tmp && nekotools boot /tmp/tora.n && _ cp /tmp/tora /usr/local/bin/
+#    haxe tora.hxml && cp tora.n /tmp && nekotools boot /tmp/tora.n && sudo cp /tmp/tora /usr/local/bin/
 #
 # Temporary files are stored on `runtime`.
 
