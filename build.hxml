@@ -2,6 +2,7 @@
 -lib tink_template
 -lib assertion
 -lib record-macros
+-D RECORD_MACROS_USE_ENUM_NAME
 -lib eweb
 # to enable the ManagedModule
 -lib tora
