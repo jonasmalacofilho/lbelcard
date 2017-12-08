@@ -20,7 +20,7 @@
 			"haxelib list",
 			"haxe build.hxml",
 
-			"cp -r serve/. $ROBRT_OUTPUT_DIR/"
+			"echo 'Deployment disabled for now.'"
 		]
 	}
 }
