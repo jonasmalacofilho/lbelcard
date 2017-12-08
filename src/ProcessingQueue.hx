@@ -4,13 +4,10 @@ import neko.vm.*;
 class ProcessingQueue {
 	var queue:Array<Null<Void->Void>> = [];
 	var lock:Mutex = new Mutex();
-	var master:Module;
+	var master:Module = Module.local();
 	var worker:Thread;
 
-	public function new()
-	{
-		master = Module.local();
-	}
+	function new() {}
 
 	public function addTask(task:Null<Void->Void>)
 	{
@@ -26,9 +23,11 @@ class ProcessingQueue {
 	{
 		lock.acquire();
 		if (this.master.codeSize() != master.codeSize()) {  // FIXME use load time and check name
+			trace('queue: refresh code');
 			// update the master module
 			this.master = master;
 			if (worker != null) {
+				trace('queue: restart the worker');
 				// update the worker code
 				//  - ask the current worker to terminate itself before executing any more tasks
 				//  - switch to a new instance of the queue (that the old worker wont see)
@@ -45,7 +44,7 @@ class ProcessingQueue {
 	{
 		trace('queue: init worker thread');
 		var module = Module.readPath(master.name + ".n", [], master.loader());
-		module.setExport(NAME, workerLoop);
+		module.setExport(NAME, this);
 		module.execute();
 	}
 
@@ -78,15 +77,42 @@ class ProcessingQueue {
 	 **/
 	public static function handOver():Bool
 	{
-		var loop = Module.local().getExports()[NAME];
-		if (loop != null) {
+		var inst = Module.local().getExports()[NAME];
+		if (inst != null) {
 			trace('queue: init worker module');
-			loop();
+			inst.workerLoop();
 			return true;
 		}
 		return false;
 	}
 
-	static inline var NAME = "processing-queue-worker-loop";
+	/**
+		Access the global processing queue
+
+		If no queue exists, one will be created.
+	**/
+	public static function global():ProcessingQueue
+	{
+		// don't lock the share initially
+		// if where calling from a queue module, we can't using this lock
+		var share = new ToraRawShare(NAME);
+		var inst = share.get(false);
+		show(inst != null);
+		if (inst != null)
+			return inst;
+
+		// if there was no global queue, we can't possibly be running from a queue module
+		// thus, it's safe to lock the share now, so that we can initialize a queue
+		inst = share.get(true);
+		show(inst != null);
+		if (inst == null) {
+			inst = new ProcessingQueue();
+			share.set(inst);
+		}
+		share.commit();
+		return inst;
+	}
+
+	static inline var NAME = "global-processing-queue";
 }
 

@@ -132,7 +132,7 @@ class Novo {
 		}
 		card.state = Queued(SolicitarAdesaoCliente);
 		card.update();
-		var q = new ProcessingQueue();
+		var q = ProcessingQueue.global();
 		q.addTask(new AcessoProcessor(card.clientKey).execute);  // FIXME
 		Web.redirect(moveForward(card));
 	}

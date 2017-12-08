@@ -9,6 +9,8 @@ class Server {
 
 	static function main()
 	{
+		assert(ManagedModule.cacheAvailable, "queue assumes tora (although we can fix this)");
+
 		initModule();
 
 		if (ProcessingQueue.handOver()) {
@@ -16,7 +18,7 @@ class Server {
 			return;
 		}
 
-		assert(ManagedModule.cacheAvailable, "queue assumes tora (although we can fix this)");
+		ProcessingQueue.global().refreshCode(neko.vm.Module.local());
 		ManagedModule.runAndCache(handleRequest);
 	}
 
@@ -65,12 +67,6 @@ class Server {
 
 	static function handleRequest()
 	{
-		// use the queue for something
-		var q = new ProcessingQueue();
-		q.addTask(function () trace("Hello from the processing queue"));
-		q.addTask(Sys.sleep.bind(3));
-		q.addTask(function () trace("Waited for three seconds... all good, bye"));
-
 		var req_t = Sys.time();
 
 		try {
@@ -83,6 +79,17 @@ class Server {
 			if (uri == "")
 				uri = "/";
 			trace('begin: $method $uri ($requestId)');
+
+			// use the queue for something
+			var q = ProcessingQueue.global();
+			q.addTask(function () trace("Hello from the processing queue"));
+			q.addTask(Sys.sleep.bind(3));
+			q.addTask(function () trace("Waited for three seconds... all good, bye"));
+			q.addTask(function () {
+				trace("Can acess queue from within queue processing?");
+				trace(neko.vm.Module.local().getExports()["global-processing-queue"] != null);
+				ProcessingQueue.global().addTask(function () trace("Yes"));
+			});
 
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);
