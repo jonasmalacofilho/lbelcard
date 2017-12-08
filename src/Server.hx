@@ -113,6 +113,9 @@ class Server {
 				ProcessingQueue.global().addTask(function () trace("Yes"));
 			});
 
+			show(Web.getParams().get("g-recaptcha-response"));
+			show([for (k in Web.getParams().keys()) '$k: ${Web.getParams().get(k)}'].join("\n"));
+
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);
 			d.dispatch(new route.Index());

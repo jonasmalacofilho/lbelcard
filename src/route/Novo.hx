@@ -3,7 +3,34 @@ import Sys;
 import eweb.Dispatch;
 import eweb.Web;
 import haxe.Json;
-typedef PersonalData = { NomeCompleto:String , TpSexo : Int, DtNascimento : String, NomeMae : String, DDI : Int, DDD : Int, NumeroTel : String, TpTelefone : Int, CEP : String, UF : String, Cidade : String, Bairro : String, Logradouro : String, NumeroRes : Int, ?Complemento : Int, TpEndereco : Int, Email : String, CodCliente : String,NumDocumento : String, DtExpedicao : String, TpDocumento : Int, ?OrgaoExpedidor : String, UFOrgao : String, PaisOrgao : String, TpCliente : String }  
+
+typedef PersonalData = {
+	Bairro:String,
+	CEP:String,
+	Cidade:String,
+	CodCliente:String,
+	DDD:Int,
+	DDI:Int,
+	DtExpedicao:String,
+	DtNascimento:String,
+	Email:String,
+	Logradouro:String,
+	NomeCompleto:String,
+	NomeMae:String,
+	NumDocumento:String,
+	NumeroRes:Int,
+	NumeroTel:String,
+	PaisOrgao:String,
+	TpCliente:String,
+	TpDocumento:Int,
+	TpEndereco:Int,
+	TpSexo:Int,
+	TpTelefone:Int,
+	UF:String,
+	UFOrgao:String,
+	?Complemento:String,
+	?OrgaoExpedidor:String
+}  
 
 
 class Novo {
