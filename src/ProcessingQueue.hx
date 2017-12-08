@@ -97,14 +97,12 @@ class ProcessingQueue {
 		// if where calling from a queue module, we can't using this lock
 		var share = new ToraRawShare(NAME);
 		var inst = share.get(false);
-		show(inst != null);
 		if (inst != null)
 			return inst;
 
 		// if there was no global queue, we can't possibly be running from a queue module
 		// thus, it's safe to lock the share now, so that we can initialize a queue
 		inst = share.get(true);
-		show(inst != null);
 		if (inst == null) {
 			inst = new ProcessingQueue();
 			share.set(inst);

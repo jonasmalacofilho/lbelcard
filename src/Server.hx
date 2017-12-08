@@ -17,8 +17,9 @@ class Server {
 			ManagedModule.callFinalizers();
 			return;
 		}
-
 		ProcessingQueue.global().refreshCode(neko.vm.Module.local());
+
+		attemptRecovery();
 		ManagedModule.runAndCache(handleRequest);
 	}
 
@@ -65,6 +66,28 @@ class Server {
 		trace('time: ${since(ini_t)} ms on module initialization');
 	}
 
+	static function attemptRecovery()
+	{
+		var share = new eweb._impl.ToraRawShare("recovery-has-run");
+		var hasRun:Bool = share.get(true);
+		try {
+			if (!hasRun) {
+				trace('recovery: reenqueue requests');
+				var q = ProcessingQueue.global();
+				for (card in db.CardRequest.manager.all()) {  // FIXME must have a better query
+					if (!card.state.match(Queued(_) | Processing(_) | Failed(TransportError(_)|TemporarySystemError(_), _)))  // FIXME remove Processing
+						continue;
+					q.addTask(new AcessoProcessor(card.clientKey).execute);
+				}
+				share.set(true);
+			}
+			share.commit();
+		} catch (err:Dynamic) {
+			share.commit();
+			neko.Lib.rethrow(err);
+		}
+	}
+
 	static function handleRequest()
 	{
 		var req_t = Sys.time();
@@ -87,7 +110,6 @@ class Server {
 			q.addTask(function () trace("Waited for three seconds... all good, bye"));
 			q.addTask(function () {
 				trace("Can acess queue from within queue processing?");
-				trace(neko.vm.Module.local().getExports()["global-processing-queue"] != null);
 				ProcessingQueue.global().addTask(function () trace("Yes"));
 			});
 
