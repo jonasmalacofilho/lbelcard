@@ -1,0 +1,27 @@
+{
+	"prepare" : {
+		"dockerfile" : {
+			"type" : "path",
+			"data" : ".robrt.Dockerfile"
+		}
+	},
+	"build" : {
+		"cmds" : [
+			"dpkg -l haxe neko | tee",
+
+			"cd $ROBRT_REPOSITORY_DIR",
+			"cp docs/fakesudo.sh /usr/bin/sudo",
+
+			"haxelib --global install hmm",
+			"haxelib --global run hmm setup",
+			"haxelib --global list",
+
+			"hmm install",
+			"haxelib list",
+			"haxe build.hxml",
+
+			"cp -r serve/. $ROBRT_OUTPUT_DIR/"
+		]
+	}
+}
+
