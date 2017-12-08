@@ -4,9 +4,13 @@ import neko.vm.*;
 class ProcessingQueue {
 	var queue:Array<Null<Void->Void>> = [];
 	var lock:Mutex = new Mutex();
+	var master:Module;
 	var worker:Thread;
 
-	public function new() {}
+	public function new()
+	{
+		master = Module.local();
+	}
 
 	public function addTask(task:Null<Void->Void>)
 	{
@@ -18,11 +22,29 @@ class ProcessingQueue {
 		lock.release();
 	}
 
+	public function refreshCode(master:Module)
+	{
+		lock.acquire();
+		if (this.master.codeSize() != master.codeSize()) {  // FIXME use load time and check name
+			// update the master module
+			this.master = master;
+			if (worker != null) {
+				// update the worker code
+				//  - ask the current worker to terminate itself before executing any more tasks
+				//  - switch to a new instance of the queue (that the old worker wont see)
+				//  - start a new worker (that will only see the new queue)
+				queue.unshift(null);
+				queue = queue.slice(1);
+				worker = Thread.create(initWorker);
+			}
+		}
+		lock.release();
+	}
+
 	function initWorker()
 	{
 		trace('queue: init worker thread');
-		var self = Module.local();
-		var module = Module.readPath(self.name + ".n", [], self.loader());
+		var module = Module.readPath(master.name + ".n", [], master.loader());
 		module.setExport(NAME, workerLoop);
 		module.execute();
 	}
@@ -30,9 +52,10 @@ class ProcessingQueue {
 	function workerLoop()
 	{
 		trace('queue: init worker loop');
+		var localQueue = queue;  // make the worker blind to queue replacement (for worker updates)
 		while (true) {
 			lock.acquire();
-			var task = queue.shift();
+			var task = localQueue.shift();
 			if (task == null) {
 				worker = null;
 				lock.release();
