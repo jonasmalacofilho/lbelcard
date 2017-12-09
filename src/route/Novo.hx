@@ -35,6 +35,7 @@ typedef PersonalData = {
 
 class Novo {
 	static inline var CARD_COOKIE = "CARD_REQUEST";
+	static inline var RECAPTCHA_SITE_KEY = "6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4";
 	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";
 	static inline var RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
 
@@ -43,23 +44,35 @@ class Novo {
 	public function getDefault()
 	{
 		Web.setReturnCode(200);
-		Sys.println(views.Base.render("Peça seu cartão", views.Login.render));
+#if dev
+		trace('dev-build: recaptcha installation skipped');
+		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind(null)));
+#else
+		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind({ siteKey:RECAPTCHA_SITE_KEY })));
+#end
 	}
 
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
+#if dev
+		trace('dev-build: recaptcha validation skipped');
+#else
 		var recaptcha = Web.getParams().get("g-recaptcha-response");
 		weakAssert(recaptcha != null);
 		if(recaptcha == null || !recapChallenge(recaptcha))
 			throw "A verificação do reCAPTCHA falhou";  // FIXME error type
+#end
 
-		var user = db.BelUser.manager.select($belNumber == args.belNumber && $cpf == args.cpf);
-		if (user == null) {
+		var user = db.BelUser.manager.select($belNumber == args.belNumber);
+		if (user == null || user.cpf != args.cpf) {
 #if dev
+			assert(user == null, args.belNumber);
+			trace('dev-build: ignoring missing assossiation to L\'Bel');
 			user = new db.BelUser(args.belNumber, args.cpf);
 			user.insert();
 #else
-			throw "Consultor não encontrado";  // FIXME error type
+			show(args);
+			throw "Consultor não encontrado ou CPF não bate";  // FIXME error type
 #end
 		}
 

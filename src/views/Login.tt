@@ -1,6 +1,8 @@
-(:static function render():)
-<!-- recaptcha -->
+(:static function render(recaptcha:{ siteKey:String }):)
+<!-- reCAPTCHA -->
+(:if recaptcha != null:)
 <script src='https://www.google.com/recaptcha/api.js'></script>
+(:end:)
 
 <!-- TODO: Fix this: -->
 <script>
@@ -16,18 +18,17 @@
 
         <div class="field">
             <label>Número de Consultor L'BEL</label>
-            <input type='number' name='belNumber'>
+            <input type='number' name='belNumber' tabindex=1>
         </div>
 
         <div class="field">
             <label>CPF (Digite apenas os números)</label>
-            <input type="text" name="cpf"/>
+            <input type="text" name="cpf" tabindex=2>
         </div>
 
-        
         <button class="g-recaptcha ui purple buttonui button fluid large submit"
-            data-sitekey="6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4"
-            data-callback="onSubmit">
+            (:if recaptcha != null:)data-sitekey="(:recaptcha.siteKey:)"(:end:)
+            data-callback="onSubmit" tabindex=3>
           <i class="sign in icon"></i> Continuar
         </button>
     </div>

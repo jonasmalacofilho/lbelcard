@@ -14,7 +14,7 @@ class CardData extends Object
     @:relation(cardReq_id) public var cardReq : CardRequest;
 
     public var CodEspecieProduto : SString<255>; //TODO: Add Cte
-    
+
     /****   CEL Data Block   ****/
     public var DDD : SString<2>;
     //There is a MAX number (should be around 5 tbh)
@@ -22,7 +22,7 @@ class CardData extends Object
     public var NumeroTel : SString<9>;
     //Assuming this is cte.
     public var TpTelefone : SString<1> = "0";
-    
+
     /****   Document Block  ****/
     //CPF
     public var CodCliente : SString<11>;
@@ -42,7 +42,7 @@ class CardData extends Object
     public var Bairro : SString<30>;
     public var CEP : SString<8>;
     public var Cidade : SString<60>;
-    
+
     //Optional
     public var Complemento : Null<SString<20>>;
 
@@ -58,7 +58,7 @@ class CardData extends Object
     /****   Other stuff     ****/
     public var Language : SInt = 0;
     public var NomeCanal : SString<15> = "WEBSERVICE";
-    
+
     //public var RecId : Float;
     //public var Token : SString<100>;
 
@@ -90,7 +90,7 @@ class CardData extends Object
                         Numero : NumeroTel,
                         TpTelefone : Std.parseInt(TpTelefone)
                     },
-                    
+
                     Documento : {
                          //TODO: Format
                         DtExpedicao : DtExpedicao,
