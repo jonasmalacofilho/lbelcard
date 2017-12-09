@@ -41,6 +41,7 @@ class Server {
 		trace('sqlite: open $dbPath');
 		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(dbPath);
 		ManagedModule.addModuleFinalizer(cnx.close, "db/main");
+		sys.db.Manager.initialize();
 
 		assert(cnx.dbName() == "SQLite");
 		var journalMode = cnx.request("PRAGMA journal_mode").getResult(0);
@@ -119,6 +120,7 @@ class Server {
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);
 			d.dispatch(new route.Index());
+			sys.db.Manager.cleanup();
 			trace('done: ${since(req_t)} ms to $method $uri');
 
 		} catch (err:Dynamic) {
