@@ -1,5 +1,6 @@
 package route;
 
+import acesso.Data;
 import eweb.Dispatch;
 import eweb.Web;
 import haxe.Json;
@@ -9,8 +10,8 @@ typedef PersonalData = {
 	CEP:String,
 	Cidade:String,
 	CodCliente:String,
-	DDD:Int,
-	DDI:Int,
+	DDD:String,
+	DDI:String,
 	DtExpedicao:String,
 	DtNascimento:String,
 	Email:String,
@@ -18,10 +19,10 @@ typedef PersonalData = {
 	NomeCompleto:String,
 	NomeMae:String,
 	NumDocumento:String,
-	NumeroRes:Int,
+	NumeroRes:String,
 	NumeroTel:String,
 	PaisOrgao:String,
-	TpCliente:String,
+	TpCliente:Int,
 	TpDocumento:Int,
 	TpEndereco:Int,
 	TpSexo:Int,
@@ -31,7 +32,6 @@ typedef PersonalData = {
 	?Complemento:String,
 	?OrgaoExpedidor:String
 }
-
 
 class Novo {
 	static inline var CARD_COOKIE = "CARD_REQUEST";
@@ -54,6 +54,8 @@ class Novo {
 
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
+		assert(~/^[0-9]+$/.match(args.cpf), args.cpf);
+
 #if dev
 		trace('dev-build: recaptcha validation skipped');
 #else
@@ -80,6 +82,7 @@ class Novo {
 			throw "Atingido o limite de solicitação de cartões para esse consultor";  // FIXME error type
 
 		var card = new db.CardRequest(user);
+		card.product = Environment.ACESSO_PRODUCT;
 		card.insert();
 
 		Web.setCookie(CARD_COOKIE, card.requestId, DateTools.delta(Date.now(), DateTools.days(1)));
@@ -99,53 +102,71 @@ class Novo {
 
 	public function postDados(args:PersonalData)
 	{
+		assert(~/^[0-9]+$/.match(args.NumDocumento), args.NumDocumento);
+		assert(~/^[0-9]+$/.match(args.CodCliente), args.CodCliente);
+
 		var card = getCardRequest();
 		if (card == null)
 			throw "Nenhum cartão encontrado";  // FIXME error type
+		if (card.bearer.cpf != args.CodCliente)
+			throw "O CPF informado não pertence ao consultor";
 		assert(!limitReached(card.bearer));  // might happen because we don't lock the BelUser while creating a CardRequest
 
-		// TODO store the data
+		// FIXME dates: they actually this depend on the client locale; thus it
+		//       would be best to avoid touching dates on the server due to the
+		//       existance of locale, timezone and other corner cases that are
+		//       (very) hard to handle correctly
+
+		// leaving this here for it can be usefull
+		// 	//I pass dates as MM/DD/YYYY which is a nono
+		// 	if(f == 'DtNascimento' || f == 'DtExpedicao')
+		// 	{
+		// 		var split :Array<String> = Reflect.field(args, f).split('/');
+    //
+		// 		var p = [];
+		// 		for(s in split)
+		// 			p.push(Std.parseInt(s));
+    //
+		// 		var data = new Date(p[2], p[1]-1, p[0],0,0,0).getTime();
+		// 		Reflect.setField(d,f,data);
+
+		var userData:DadosDoUsuario = {
+			Documento : {
+				TpDocumento : args.TpDocumento,
+				NumDocumento : args.NumDocumento,
+				DtExpedicao : null,  // FIXME,
+				OrgaoExpedidor : args.OrgaoExpedidor,
+				UFOrgao : args.UFOrgao,
+				PaisOrgao : args.PaisOrgao
+			},
+			DtNascimento : null,  // FIXME,
+			NomeMae : args.NomeMae,
+			TpSexo : args.TpSexo,
+			Celular : {
+				TpTelefone : args.TpTelefone,
+				DDI : args.DDI,
+				DDD : args.DDD,
+				Numero : args.NumeroTel
+			},
+			CodCliente : args.CodCliente,
+			Email : args.Email,
+			Endereco : {
+				TpEndereco : args.TpEndereco,
+				CEP : args.CEP,
+				Logradouro : args.Logradouro,
+				Numero : args.NumeroRes,  // FIXME rename
+				Complemento : args.Complemento,
+				Bairro : args.Bairro,
+				Cidade : args.Cidade,
+				UF : args.UF
+			},
+			NomeCompleto : args.NomeCompleto,
+			TpCliente : args.TpCliente
+		};
+
 		card.state = AwaitingBearerConfirmation;
+		card.userData = userData;
 		card.update();
-
-		var datenow = Date.now();
-
-		//TODO:I should diff between curObj with actual
-		var d = new db.CardData();
-		d.cardReq = card;
-		d.CodEspecieProduto = "FOO"; //FIXME
-		d.lastedit = datenow;
-		d.last_update = datenow;
-		d.last_check = datenow;
-
-		//hm...this is a POG b/c i'm lazy
-		//(Fiels should have the same name, soo..)
-		for(f in Reflect.fields(args))
-		{
-			//TODO: Check other fields =S
-			if(f == "g-recaptcha-response")
-				continue;
-
-			//I pass dates as MM/DD/YYYY which is a nono
-			// FIXME actually this depends on the client locale; avoid touching dates
-			//       on the server due to the existance of locale, timezone and other
-			//       corner cases
-			if(f == 'DtNascimento' || f == 'DtExpedicao')
-			{
-				var split :Array<String> = Reflect.field(args, f).split('/');
-
-				var p = [];
-				for(s in split)
-					p.push(Std.parseInt(s));
-
-				var data = new Date(p[2], p[1]-1, p[0],0,0,0).getTime();
-				Reflect.setField(d,f,data);
-			}
-			else
-				Reflect.setField(d, f, Reflect.field(args, f));
-		}
-
-		d.insert();
 
 		Web.redirect(moveForward(card));
 	}
@@ -154,8 +175,7 @@ class Novo {
 	{
 		Web.setReturnCode(200);
 		var card = getCardRequest();
-		var data = db.CardData.manager.select($cardReq == card);
-		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(data)));
+		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(card.userData)));
 	}
 
 	public function postConfirma()

@@ -1,4 +1,5 @@
-(:static function render(?d : db.CardData) :)
+(:static function render(?d : Dynamic) :)
+(:*FIXME maybe remove this hard/server-side edit function?*:)
 
 <!-- semantic calendar stylesheet -->
 <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/b54ebdbe/dist/calendar.min.css" rel="stylesheet" type="text/css">
@@ -154,9 +155,9 @@
             <div class="five wide field">
                 <label>Tipo de Cliente</label>
                 <select name="TpCliente">
-                    <option value="00">Pessoa Física</option>
-                    <option value="01">Pessoa Jurídica</option>
-                    <option value="02">Estrangeiro</option>
+                    <option value="0">Pessoa Física</option>
+                    <option value="1">Pessoa Jurídica</option>
+                    <option value="2">Estrangeiro</option>
                 </select>
 
             </div>

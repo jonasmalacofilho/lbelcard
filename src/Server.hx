@@ -55,8 +55,7 @@ class Server {
 		var allTables:Array<sys.db.Manager<Dynamic>> = [
 			db.AcessoApiLog.manager,
 			db.BelUser.manager,
-			db.CardRequest.manager,
-			db.CardData.manager
+			db.CardRequest.manager
 		];
 		for (m in allTables) {
 			if (sys.db.TableCreate.exists(m))

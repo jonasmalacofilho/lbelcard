@@ -1,5 +1,5 @@
 (:using DateTools:)
-(:static function render(d : db.CardData) :)
+(:static function render(d : acesso.Data.DadosDoUsuario) :)
 <div class="ui text container">
     <div class="ui segments borderless">
         
@@ -21,10 +21,10 @@
 
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>Sexo:</b> (: switch d.TpSexo :) (:case 0:) Não Informado (: case 1 :) Masculino (: case 2 :) Feminino (:end:)
+                    <p><b>Sexo:</b> (: switch d.TpSexo :) (:case Nao_informado:) Não Informado (: case Masculino :) Masculino (: case Feminino :) Feminino (:end:)
                 </div>
                 <div class="ui segment">
-                    <p><b>Data de Nascimento:</b> (:Date.fromTime(d.DtNascimento).format("%d-%m-%Y"):)</p>
+                    (:* <p><b>Data de Nascimento:</b> (:Date.fromTime(d.DtNascimento).format("%d-%m-%Y"):)</p> *:)
                 </div>
             </div>
         </div>
@@ -36,22 +36,22 @@
             </div>
             
             <div class="ui segment">
-                <p><b>Telefone:</b> +(:d.DDI:) ((:d.DDD:)) (:d.NumeroTel:)</p>
+                <p><b>Telefone:</b> +(:d.Celular.DDI:) ((:d.Celular.DDD:)) (:d.Celular.Numero:)</p>
             </div>
 
             <div class="ui segment">
-                <h3 class="ui sub header cor3">Endereço (:switch d.TpEndereco:)(:case 0:)Residencial(:case 1:)Comercial(:case 2:)Outros(:end:):</h3>
+                <h3 class="ui sub header cor3">Endereço (:switch d.Endereco.TpEndereco:)(:case Residencial:)Residencial(:case Comercial:)Comercial(:case Outros:)Outros(:end:):</h3>
             </div>
 
             <div class="ui segment">
-                <p>(:d.Logradouro:) , (:d.NumeroRes:) (:if d.Complemento != null && d.Complemento != "":),(:d.Complemento:)(:end:)</p>
+                <p>(:d.Endereco.Logradouro:) , (:d.Endereco.Numero:) (:if d.Endereco.Complemento != null && d.Endereco.Complemento != "":),(:d.Endereco.Complemento:)(:end:)</p>
             </div>
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                <p>(:d.Bairro:), (:d.Cidade:),(:d.UF:)<span style="float:right">
+                <p>(:d.Endereco.Bairro:), (:d.Endereco.Cidade:),(:d.Endereco.UF:)<span style="float:right">
                 </div>
                 <div class="ui segment">
-                    <b>CEP:</b> (:d.CEP:)</span></p>                
+                    <b>CEP:</b> (:d.Endereco.CEP:)</span></p>                
                 </div>
             </div>
         </div>
@@ -71,33 +71,33 @@
                 </div>
             </div>
             <div class="ui segment">
-                <p><b>Tipo de Cliente:</b> (: switch d.TpCliente:)(:case '00':)Pessoa Física(:case '01':)Pessoa Jurídica(:case '02':)Estrangeiro(:end:)</p>
+                <p><b>Tipo de Cliente:</b> (: switch d.TpCliente:)(:case Nacional_pessoa_fisica:)Pessoa Física(:case Nacional_pessoa_juridica:)Pessoa Jurídica(:case Estrangeiro:)Estrangeiro(:end:)</p>
             </div>
 
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>Documento:</b> (:d.NumDocumento:)</p>
+                    <p><b>Documento:</b> (:d.Documento.NumDocumento:)</p>
                 </div>
                 <div class="ui segment">
-                    <p><b>Tipo de Documento:</b> (:switch d.TpDocumento:)(:case 0:)RG(:case 1:)RNE(:case 2:)Passaporte(:end:)</p>
+                    <p><b>Tipo de Documento:</b> (:switch d.Documento.TpDocumento:)(:case RG:)RG(:case RNE:)RNE(:case Passaporte:)Passaporte(:end:)</p>
                 </div>
             </div>
             <div class="ui horizontal segments">
                 <div class="ui segment">
                     <!-- TODO: Fix -->
-                    <p><b>Data de Emissão:</b> (: Date.fromTime(d.DtExpedicao).format('%d/%m/%Y'):)</p>
+                    (:* <p><b>Data de Emissão:</b> (: Date.fromTime(d.Documento.DtExpedicao).format('%d/%m/%Y'):)</p> *:)
                 </div>
             
                 <div class="ui segment">
-                    <p><b>Órgao Emissor:</b> (:d.OrgaoExpedidor:)</p>
+                    <p><b>Órgao Emissor:</b> (:d.Documento.OrgaoExpedidor:)</p>
                 </div>
             </div>
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>UF do Órgão:</b> (:d.UFOrgao:)</p>
+                    <p><b>UF do Órgão:</b> (:d.Documento.UFOrgao:)</p>
                 </div>
                 <div class="ui segment">
-                    <p><b>País do Órgão:</b> (:d.PaisOrgao:)</p>
+                    <p><b>País do Órgão:</b> (:d.Documento.PaisOrgao:)</p>
                 </div>
             </div>
         </div>

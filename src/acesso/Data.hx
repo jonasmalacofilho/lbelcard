@@ -47,12 +47,24 @@ abstract CodCliente(String) from String to String {}
 	public var Nao_informado = 0;
 	public var Masculino = 1;
 	public var Feminino = 2;
+
+	@:from static function fromInt(v:Int):Sexo
+	{
+		assert(v >= 0 && v <= 2, v);
+		return cast v;
+	}
 }
 
 @:enum abstract TpDocumento(Int) {
 	public var RG = 0;
 	public var RNE = 1;
 	public var Passaporte = 2;
+
+	@:from static function fromInt(v:Int):TpDocumento
+	{
+		assert(v >= 0 && v <= 2, v);
+		return cast v;
+	}
 }
 
 @:enum abstract TpTelefone(Int) {
@@ -60,18 +72,36 @@ abstract CodCliente(String) from String to String {}
 	public var Residencial = 1;
 	public var Comercial = 2;
 	public var Pessoal = 3;
+
+	@:from static function fromInt(v:Int):TpTelefone
+	{
+		assert(v >= 0 && v <= 3, v);
+		return cast v;
+	}
 }
 
 @:enum abstract TpEndereco(Int) {
 	public var Residencial = 0;
 	public var Comercial = 1;
 	public var Outros = 2;
+
+	@:from static function fromInt(v:Int):TpEndereco
+	{
+		assert(v >= 0 && v <= 2, v);
+		return cast v;
+	}
 }
 
 @:enum abstract TpCliente(Int) {
 	public var Nacional_pessoa_fisica = 0;
 	public var Nacional_pessoa_juridica = 1;
 	public var Estrangeiro = 2;
+
+	@:from static function fromInt(v:Int):TpCliente
+	{
+		assert(v >= 0 && v <= 2, v);
+		return cast v;
+	}
 }
 
 /*
@@ -93,6 +123,7 @@ typedef Documento = {
 	TpDocumento : TpDocumento,
 	NumDocumento : String,
 	DtExpedicao : SerializedDate,
+	OrgaoExpedidor: String,
 	UFOrgao : String,
 	PaisOrgao : String
 }
@@ -122,6 +153,16 @@ typedef DadosPrincipais = {
 	TpSexo : Sexo
 }
 
+typedef DadosDoUsuario = {
+	> DadosPrincipais,
+	Celular : Telefone,
+	CodCliente : CodCliente,
+	Email : String,
+	Endereco : Endereco,
+	NomeCompleto : String,
+	TpCliente : TpCliente
+}
+
 /*
 Data types sent to the upstream APIs
 */
@@ -130,15 +171,7 @@ typedef SolicitarAdesaoClienteParams = {
 	> Meta,
 	Data : {
 		CodEspecieProduto : CodEspecieProduto,
-		Usuario : {
-			> DadosPrincipais,
-			Celular : Telefone,
-			CodCliente : CodCliente,
-			Email : String,
-			Endereco : Endereco,
-			NomeCompleto : String,
-			TpCliente : TpCliente
-		}
+		Usuario : DadosDoUsuario
 	}
 }
 
