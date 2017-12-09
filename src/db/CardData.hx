@@ -6,6 +6,8 @@ import haxe.Json;
 using StringTools;
 
 //TODO: Sort this stuff as a readable (reasonable) stuff (aka... this order is a mess!)
+// FIXME simplify
+// FIXME don't store dates as strings
 class CardData extends Object
 {
     public var id : SId;

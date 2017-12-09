@@ -1,5 +1,5 @@
 package route;
-import Sys;
+
 import eweb.Dispatch;
 import eweb.Web;
 import haxe.Json;
@@ -30,15 +30,13 @@ typedef PersonalData = {
 	UFOrgao:String,
 	?Complemento:String,
 	?OrgaoExpedidor:String
-}  
+}
 
 
 class Novo {
 	static inline var CARD_COOKIE = "CARD_REQUEST";
-
 	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";
 	static inline var RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
-
 
 	public function new() {}
 
@@ -50,30 +48,28 @@ class Novo {
 
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
-		show(args);
 		var recaptcha = Web.getParams().get("g-recaptcha-response");
-		
-		//TODO: Write a nice message..for a bot =)
-		if(!recapChallenge(recaptcha))
-		{
-			Web.redirect("/");
-			return;
-		}	
+		weakAssert(recaptcha != null);
+		if(recaptcha == null || !recapChallenge(recaptcha))
+			throw "A verificação do reCAPTCHA falhou";  // FIXME error type
 
-		// FIXME replace with check for belNumber and cpf|name match
-		var user = db.BelUser.manager.select($belNumber == args.belNumber);
+		var user = db.BelUser.manager.select($belNumber == args.belNumber && $cpf == args.cpf);
 		if (user == null) {
-			user = new db.BelUser(args.belNumber);
+#if dev
+			user = new db.BelUser(args.belNumber, args.cpf);
 			user.insert();
+#else
+			throw "Consultor não encontrado";  // FIXME error type
+#end
 		}
 
-		var card = db.CardRequest.manager.select($bearer == user);
-		if (card == null) {
-			card = new db.CardRequest(user);
-			card.insert();
-		}
+		if (limitReached(user))
+			throw "Atingido o limite de solicitação de cartões para esse consultor";  // FIXME error type
 
-		Web.setCookie(CARD_COOKIE, card.clientKey, DateTools.delta(Date.now(), DateTools.days(1)));
+		var card = new db.CardRequest(user);
+		card.insert();
+
+		Web.setCookie(CARD_COOKIE, card.requestId, DateTools.delta(Date.now(), DateTools.days(1)));
 		Web.redirect(moveForward(card));
 	}
 
@@ -84,20 +80,17 @@ class Novo {
 			Web.redirect(moveForward(null));
 			return;
 		}
-		
 		Web.setReturnCode(200);
-		
 		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render.bind(null)));
 	}
 
 	public function postDados(args:PersonalData)
 	{
 		var card = getCardRequest();
-		if (card == null) {
-			Web.setReturnCode(404);
-			Sys.println("Nenhum cartão encontrado");
-			return;
-		}
+		if (card == null)
+			throw "Nenhum cartão encontrado";  // FIXME error type
+		assert(!limitReached(card.bearer));  // might happen because we don't lock the BelUser while creating a CardRequest
+
 		// TODO store the data
 		card.state = AwaitingBearerConfirmation;
 		card.update();
@@ -111,8 +104,8 @@ class Novo {
 		d.lastedit = datenow;
 		d.last_update = datenow;
 		d.last_check = datenow;
-		
-		//hm...this is a POG b/c i'm lazy 
+
+		//hm...this is a POG b/c i'm lazy
 		//(Fiels should have the same name, soo..)
 		for(f in Reflect.fields(args))
 		{
@@ -121,10 +114,13 @@ class Novo {
 				continue;
 
 			//I pass dates as MM/DD/YYYY which is a nono
+			// FIXME actually this depends on the client locale; avoid touching dates
+			//       on the server due to the existance of locale, timezone and other
+			//       corner cases
 			if(f == 'DtNascimento' || f == 'DtExpedicao')
 			{
 				var split :Array<String> = Reflect.field(args, f).split('/');
-				
+
 				var p = [];
 				for(s in split)
 					p.push(Std.parseInt(s));
@@ -160,7 +156,7 @@ class Novo {
 		card.state = Queued(SolicitarAdesaoCliente);
 		card.update();
 		var q = ProcessingQueue.global();
-		q.addTask(new AcessoProcessor(card.clientKey).execute);  // FIXME
+		q.addTask(new AcessoProcessor(card.requestId).execute);  // FIXME
 		Web.redirect(moveForward(card));
 	}
 
@@ -177,7 +173,17 @@ class Novo {
 		Sys.println(Type.enumConstructor(card.state));
 	}
 
-	function moveForward(card:db.CardRequest):String
+	static function limitReached(user:db.BelUser)
+	{
+		var cards = db.CardRequest.manager.search($bearer == user);
+		for (i in cards) {
+			if (i.state.match(Queued(_) | Processing(_) | CardRequested))
+				return true;
+		}
+		return false;
+	}
+
+	static function moveForward(card:db.CardRequest):String
 	{
 		if (card == null)
 			return "/novo";
@@ -188,12 +194,12 @@ class Novo {
 		}
 	}
 
-	function getCardRequest()
+	static function getCardRequest()
 	{
 		var key = Web.getCookies().get(CARD_COOKIE);
 		if (key == null)
 			return null;
-		return db.CardRequest.manager.select($clientKey == key);
+		return db.CardRequest.manager.select($requestId == key);
 	}
 
 	function recapChallenge(challenge : String)
@@ -204,7 +210,7 @@ class Novo {
 		http.addParameter('secret', RECAPTCHA_SECRET);
 		http.addParameter('response', challenge);
 		http.addParameter('remoteip', Web.getClientIP());
-		
+
 		http.onError = function(msg : String){
 			trace(msg);
 			throw 'Unexpected Http error $msg';

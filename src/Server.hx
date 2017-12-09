@@ -78,7 +78,7 @@ class Server {
 				for (card in db.CardRequest.manager.all()) {  // FIXME must have a better query
 					if (!card.state.match(Queued(_) | Processing(_) | Failed(TransportError(_)|TemporarySystemError(_), _)))  // FIXME remove Processing
 						continue;
-					q.addTask(new AcessoProcessor(card.clientKey).execute);
+					q.addTask(new AcessoProcessor(card.requestId).execute);
 				}
 				share.set(true);
 			}

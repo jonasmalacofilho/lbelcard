@@ -15,7 +15,7 @@ class AcessoProcessor {
 
 	public function execute()
 	{
-		card = db.CardRequest.manager.select($clientKey == key);
+		card = db.CardRequest.manager.select($requestId == key);
 		assert(card != null, key);
 
 		try {

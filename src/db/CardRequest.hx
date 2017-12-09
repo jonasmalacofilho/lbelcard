@@ -1,19 +1,19 @@
 package db;
 
-@:id(clientKey)
+@:id(requestId)
 class CardRequest extends sys.db.Object {
-	//FIXME - 512 is a placeholder and this can't be a pure string...
-	//b/c ...record-macros!
-	public var clientKey:SString<512>;
+	public var requestId:SString<64>;
 	@:relation(bearerId) public var bearer:BelUser;
 	public var state:SData<CardRequestState>;
-	
+	public var submitting:Bool;  // overlaps with state but required for fast recovery
+
 	public function new(bearer)
 	{
 		super();
-		this.clientKey = crypto.Random.global.readHex(32);
+		this.requestId = crypto.Random.global.readHex(32);  // 256 bits
 		this.bearer = bearer;
 		this.state = AwaitingBearerData;
+		this.submitting = false;
 	}
 }
 
