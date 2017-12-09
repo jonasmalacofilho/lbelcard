@@ -3,18 +3,12 @@
 
 <!-- Holy wall of text -->
 
-
-
 <div class="ui container">
-     <div class="ui vertical stripe segment">
-          <div class="ui text container">
-               <img class="ui image fluid" src="img/seu-cartao-de-negocios.jpg">		 
-          </div> <!--ui container-->
-     </div> <!--ui vertical stripe segment-->
-</div> <!--ui container-->
-
-</div> <!--masthead  this was open in the base.tt  -->
-
+    <div class="ui vertical stripe segment">
+        <!-- TODO: fix this -->
+        <img class="ui image fluid" src="img/3.png">		 
+    </div> <!--ui vertical stripe segment-->
+</div>
 
 <div class="ui vertical stripe segment">
     <div class="ui text container">
@@ -34,22 +28,17 @@
           <li> o único que tem a marca L'BEL</li>
           <li> mais uma opção para recebimento de suas bonificações</li>
       </ul>
-      <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
-          <a class="ui massive button fundo3 cor0" href="/novo">Peça já o seu<i class="right arrow icon"></i></a>
-      </div>
-   <!--ui text container-->
 </div> <!--ui vertical stripe segment-->
 
 
     
-<div class="ui vertical stripe segment" id="vantagens">
+<div class="ui vertical stripe segment" id="detalhes">
     <div class="ui container">
         <div class="ui horizontal divider fontc3 cor3">
         DETALHES
         </div>
     </div>
-</div>
-<div class="ui vertical stripe segment">
+
     <div class="ui container text">
          
      <img class="ui medium right floated image rounded" src="img/card-front.jpg">
@@ -85,7 +74,9 @@
         <ul class="fontgp2">
             <li> é entregue em aproximandamente 10 dias úteis</li>
             <li> a manutenção custa 5 reais por mês, apenas se houver crédito</li>
+            <!-- Removed for space
             <li> em algumas ocasiões, como saques nacionais e internacionais taxas de serviço podem ser cobradas</li>
+            -->
         </ul>
       <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
           <a class="ui massive button fundo3 cor0" href="/novo">Peça seu cartão L'BEL<i class="right arrow icon"></i></a>
@@ -100,8 +91,6 @@
             FACILIDADES
         </div>
     </div>
-</div>    
-<div class="ui vertical stripe segment">
 
     <div class="ui container text">
          <p class="fontgp2">
@@ -128,12 +117,13 @@
             <a class="ui massive button fundo3 cor0" href="/novo">Solicite o seu!<i class="right arrow icon"></i></a>
          </div>
 
+        <!--
          <div class="ui vertical stripe segment">
              <div class="ui vertical center aligned segment" style="margin: 0 0 2em">
                  <img class="medium center float image" src="img/card-front.jpg">		 
               </div> <!--ui container-->
          </div> <!--ui vertical stripe segment-->
-
+        --> 
     </div>
 </div>
 

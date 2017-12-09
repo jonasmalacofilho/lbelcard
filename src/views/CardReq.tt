@@ -1,5 +1,4 @@
-(:static function render(?d : Dynamic) :)
-(:*FIXME maybe remove this hard/server-side edit function?*:)
+(:static function render() :)
 
 <!-- semantic calendar stylesheet -->
 <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/b54ebdbe/dist/calendar.min.css" rel="stylesheet" type="text/css">
@@ -18,7 +17,7 @@
             <!-- Full name -->
             <div class="field">
                 <label>Nome Completo</label>
-                <input type="text" name="NomeCompleto" placeholder="Nome Completo" maxlength="100" (:if d != null :)value="d.NomeCompleto(:end:) required/>
+                <input type="text" name="NomeCompleto" placeholder="Nome Completo" maxlength="100" required/>
             </div>
 
             <div class="two fields">
@@ -26,9 +25,9 @@
                 <div class="field">
                     <label>Sexo</label>
                     <select name="TpSexo">
-                        <option value="0" (:if d != null && d.TpSexo == 0 :) selected(:end:)>Não Informado</option>
-                        <option value="1" (:if d != null && d.TpSexo == 1 :) selected(:end:)>Masculino</option>
-                        <option value="2" (:if d != null && d.TpSexo == 2 :) selected(:end:)>Feminino</option>
+                        <option value="0">Não Informado</option>
+                        <option value="1">Masculino</option>
+                        <option value="2">Feminino</option>
                     </select>
                 </div>
 
@@ -49,7 +48,7 @@
             <!-- Mom's name -->
             <div class="field">
                 <label>Nome completo de sua Mãe</label>
-                <input type="text" name="NomeMae" placeholder="Nome da mãe" maxlength="100" (:if d != null:) value="(:d.NomeMae:)" (:end:) required/>
+                <input type="text" name="NomeMae" placeholder="Nome da mãe" maxlength="100" required/>
             </div>
     </div>
 
@@ -64,16 +63,16 @@
 
             <div class="three two field wide">
                 <label>DDI</label>
-                <input type="number" name="DDI" value="55" maxlength="3" (:if d != null :)value="(:d.DDI:)"(:end:)(:if d != null:)value="(:d.NumDocumento:)"(:end:)>
+                <input type="number" name="DDI" value="55" maxlength="3">
             </div>
             <div class="three field wide">
                 <label>DDD</label>
-                <input type="number" name="DDD" placeholder="DDD" (:if d != null :)value="(:d.DDD:)"(:end:) maxlength="2"/>
+                <input type="number" name="DDD" placeholder="DDD" maxlength="2"/>
             </div>
 
             <div class="ten field wide">
                 <label>Número de Celular</label>
-                <input type="text" name="NumeroTel" placeholder="999999999" (:if d != null:) value="(:d.NumeroTel:)"(:end:) maxlength="10"/>
+                <input type="text" name="NumeroTel" placeholder="999999999" maxlength="10"/>
             </div>
             
             <!-- TODO: Override this? (It can bite me in the ass later) --> 
@@ -86,49 +85,49 @@
         <div class="two fields">
             <div class="field">
                 <label>CEP</label>
-                <input type="number" name="CEP" id="CEP" maxlength="8" placeholder="Digite apenas os números" (:if d != null:)value="(:d.CEP:)"(:end:) title="Preencha este campo primeiro para autocompletar as informações">
+                <input type="number" name="CEP" id="CEP" maxlength="8" placeholder="Digite apenas os números" title="Preencha este campo primeiro para autocompletar as informações">
             </div>
 
             <div class="field">
                 <label>UF</label>
-                <input type="text" name="UF" id="uf" (:if d != null :)value="(:d.UF:)"(:end:) readonly/>
+                <input type="text" name="UF" id="uf" readonly/>
             </div>
         </div>
 
         <div class="two fields">
             <div class="field">
                 <label>Cidade</label>
-                <input type="text" name="Cidade" id="cidade" (:if d != null :)value="(:d.Cidade:)"(:end:) readonly/>
+                <input type="text" name="Cidade" id="cidade" readonly/>
             </div>
 
             <div class="field">
                 <label>Bairro</label>
-                <input type="text" name="Bairro" id="bairro" (:if d != null:)value="(:d.Bairro:)"(:end:)/>
+                <input type="text" name="Bairro" id="bairro"/>
             </div>
         </div>
 
         <div class="fields">
             <div class="seven wide field">
                 <label>Rua</label>
-                <input type="text" name="Logradouro" id="logradouro" (:if d != null:)value="(:d.Logradouro:)"(:end:)/>
+                <input type="text" name="Logradouro" id="logradouro"/>
             </div>
 
             <div class="two wide field">
                 <label>Número</label>
-                <input type="number" name="NumeroRes" maxlength="10" (:if d != null:)value="(:d.NumeroRes:)"(:end:)/>
+                <input type="number" name="NumeroRes" maxlength="10" />
             </div>
 
             <div class="two wide field">
                 <label>Complemento</label>
-                <input type="text" name="Complemento" maxlength="20" (:if d != null:)value="(:d.Complemento:)"(:end:)/>
+                <input type="text" name="Complemento" maxlength="20" />
             </div>
 
             <div class="five wide field">
                 <label>Tipo de Endereço</label>
                 <select name="TpEndereco">
-                    <option value="0" (:if d != null && d.TpEndereco == 0:)selected(:end:)>Residencial</option>
-                    <option value="1" (:if d != null && d.TpEndereco == 1:) selected(:end:)>Comercial</option>
-                    <option value="2" (:if d != null && d.TpEndereco == 2:)selected(:end:)>Outros</option>
+                    <option value="0">Residencial</option>
+                    <option value="1">Comercial</option>
+                    <option value="2">Outros</option>
                 </select>
             </div>
 
@@ -143,13 +142,13 @@
                 <label>E-Mail pessoal</label>
                 <div class="ui input left icon">
                     <i class="mail outline icon"></i>
-                    <input type="email" name="Email" placeholder="E-Mail" maxlength="125" (:if d != null:)value="(:d.Email:)"(:end:) />
+                    <input type="email" name="Email" placeholder="E-Mail" maxlength="125"/>
                 </div>
             </div>
 
             <div class="five wide field">
                 <label>CPF</label>
-                <input type="text" name="CodCliente" placeholder="XXX.XXX.XXX-XX" (:if d != null:)value="(:d.CodCliente:)"(:end:) >
+                <input type="text" name="CodCliente" placeholder="XXX.XXX.XXX-XX">
             </div>
 
             <div class="five wide field">
@@ -167,14 +166,13 @@
         <div class="two fields">
             <div class="field">
                 <label>Documento de identificação</label>
-                <input type="text" name="NumDocumento" (:if d != null:)value="(:d.NumDocumento:)"(:end:)/>
+                <input type="text" name="NumDocumento"/>
             </div>
 
             <div class="field">
                 <label>Data de Emissão do Documento</label>
                 <div class="ui calendar">
                 <div class="ui input left icon">
-                    <!-- TODO: Set this using JS -->
                     <i class="time icon"></i>
                     <input type="text" name="DtExpedicao">
                 </div>
@@ -187,9 +185,9 @@
             <div class="five wide field">
                 <label>Tipo de Documento</label>
                 <select name="TpDocumento">
-                    <option value="0" (:if d != null && d.TpDocumento == 0:)selected(:end:)>RG</option>
-                    <option value="1" (:if d != null && d.TpDocumento == 1:)selected(:end:)>RNE</option>
-                    <option value="2" (:if d != null && d.TpDocumento == 2:)selected(:end:)>Passaporte</option>
+                    <option value="0">RG</option>
+                    <option value="1">RNE</option>
+                    <option value="2">Passaporte</option>
                 </select>
             </div>
 
@@ -197,22 +195,18 @@
             <!-- not required, but eh... the other fields are, so -->
             <div class="three wide field">
                 <label>Órgão expeditor </label>
-                <input type="text" name="OrgaoExpedidor" placeholder="SSP" maxlength="20" (:if d != null && d.OrgaoExpedidor != "":)value="(:d.OrgaoExpedidor:)"(:end:)/>
+                <input type="text" name="OrgaoExpedidor" placeholder="SSP" maxlength="20"/>
             </div>
 
             <!-- TODO: Make Select -->
             <div class="four wide field">
                 <label>UF do Órgão Expeditor</label>
-                (: if d != null :)
-                    (: views.Components.UF(d.UFOrgao) :)
-                (:else:)
                     (: views.Components.UF() :)
-                (:end:)
             </div>
 
             <div class="four wide field">
                 <label>País do Órgão Emissor</label>
-                <input type="text" name="PaisOrgao" value="Brasil" maxlength="30" (:if d != null:)value="(:d.PaisOrgao:)"(:end:)/>
+                <input type="text" name="PaisOrgao" value="Brasil" maxlength="30"/>
             </div>
         </div>
         

@@ -50,7 +50,7 @@
             .ready(function() {
 
             // fix menu when passed
-            $('.masthead')
+            $('#inicio')
                 .visibility({
                 once: false,
                 onBottomPassed: function() {
@@ -80,7 +80,7 @@
                 </a>
                 (:views.Menu.render(true):)
                 <div class="right item">
-                    <img src="/img/lbel_img_logo_branco.png" style="height: 20px; width: 96px" />
+                    <img src="/img/lbel_img_logo_branco.png" />
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
         <div class="pusher">
             
             <!-- Sidebar -->
-            <div class="ui vertical masthead center aligned segment">
+            <div class="ui vertical center aligned segment">
                 <div class="ui container" id="inicio">
                     <div class="ui massive secondary menu">
                         <a class="toc item">
@@ -105,10 +105,11 @@
                             <img src="/img/lbel_img_logo_254.png" style="height: 20px; width: 96px" />
                         </div>
                     </div> <!--secondary menu-->
-                </div> <!--id=inicio-->
-            <!--this seems to be closed before it should, caio!  first section must be  masthead! /div-->
+                </div>
+            </div>
 
-            <!-- invoke function render here  content has to close masthead class-->
+            <!-- Close masthead function (removed this class name to remove a DOG) -->
+            <!-- Btw each content must be self-contained, so do not spread </div>s around -->
 
             (:if content != null:)
                 (:content():)

@@ -97,7 +97,7 @@ class Novo {
 			return;
 		}
 		Web.setReturnCode(200);
-		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render.bind(null)));
+		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render));
 	}
 
 	public function postDados(args:PersonalData)
