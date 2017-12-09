@@ -35,9 +35,9 @@ typedef PersonalData = {
 
 class Novo {
 	static inline var CARD_COOKIE = "CARD_REQUEST";
-	static inline var RECAPTCHA_SITE_KEY = "6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4";
-	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";
 	static inline var RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
+	static inline var RECAPTCHA_SITE_KEY = "6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4";  // FIXME get from environment
+	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";  // FIXME get from environment
 
 	public function new() {}
 
