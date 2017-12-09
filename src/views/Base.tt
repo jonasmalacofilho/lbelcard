@@ -106,9 +106,10 @@
                         </div>
                     </div> <!--secondary menu-->
                 </div> <!--id=inicio-->
-            </div>
+            <!--this seems to be closed before it should, caio!  first section must be  masthead! /div-->
 
-            <!-- invoke function render here -->
+            <!-- invoke function render here  content has to close masthead class-->
+
             (:if content != null:)
                 (:content():)
             (:end:)
@@ -130,7 +131,7 @@
                         </div>
                         <div class="ten wide column center aligned">
                             <h4 class="ui header fontgp2 inverted">L'BEL Card</h4>
-                            <p class="fontgp2 inverted">O CARTÃO DEFINITIVO DO CONSULTOR!</p>
+                            <p class="fontgp2 inverted">O SEU CARTÃO DE NEGÓCIOS!</p>
                         </div>
                         <div class="three wide column right aligned">
                             <h4 class="ui header fontgp2 inverted">L'BEL</h4>

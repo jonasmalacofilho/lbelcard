@@ -2,107 +2,140 @@
 
 
 <!-- Holy wall of text -->
+
+
+
+<div class="ui container">
+     <div class="ui vertical stripe segment">
+          <div class="ui text container">
+               <img class="ui image fluid" src="img/seu-cartao-de-negocios.jpg">		 
+          </div> <!--ui container-->
+     </div> <!--ui vertical stripe segment-->
+</div> <!--ui container-->
+
+</div> <!--masthead  this was open in the base.tt  -->
+
+
 <div class="ui vertical stripe segment">
     <div class="ui text container">
-        <div class="ui vertical segment" style="margin: 0 0 2em;">
-            <h3 class="ui header fontc3 cor3">
-                L'BEL CARD - O cartão cheio de vantagens!
-            </h3>
-            <div class="elemento3">
-                <p class="fontgp2">
-                Lorem ipsum dolor sit amet.
-                </p>
-                <p class="fontgp2">
-                        Lorem ipsum dolor sit amet, 
-                        consectetur adipiscing elit. 
-                        Cras a posuere ex. 
-                        Lorem ipsum dolor sit amet, 
-                        consectetur adipiscing elit. 
-                        Donec auctor turpis ut ex accumsan finibus. 
-                        Donec justo justo, pretium a eros at, 
-                        vehicula convallis est. 
-                        Aenean sollicitudin egestas nulla ac mattis. 
-                        Vivamus porttitor volutpat lorem, 
-                        non gravida tellus feugiat eu. 
-                        Sed nec elit sit amet nulla bibendum 
-                        sodales non vel purus. 
-                        Maecenas velit massa, 
-                        aliquam sit amet purus eget, 
-                        volutpat suscipit nulla. 
-                        Curabitur dictum sodales bibendum. 
-                        Maecenas sagittis suscipit arcu, ut dapibus nisl. 
-                        Class aptent taciti sociosqu ad litora torquent per conubia nostra, 
-                        per inceptos himenaeos.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
+        <p class="fontgp2">
+       
+        Um cartão de crédito pré-pago, oferecido com exclusividade
+        para os consultores L'BEL em mais uma iniciativa para 
+        apoiar ainda mais os seus negócios:
 
-<!-- content template -->
+       </p>
+
+       <ul class="fontgp2">
+          <li> aceito em todos os estabelecimentos que aceitam pagamentos com a bandeira Mastercard</li>
+          <li> recarga em celular </li>
+          <li> pagamento de contas sem precisar sair de casa </li>
+          <li> aceito internacionalmente</li>
+          <li> o único que tem a marca L'BEL</li>
+          <li> mais uma opção para recebimento de suas bonificações</li>
+      </ul>
+      <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
+          <a class="ui massive button fundo3 cor0" href="/novo">Peça já o seu<i class="right arrow icon"></i></a>
+      </div>
+   <!--ui text container-->
+</div> <!--ui vertical stripe segment-->
+
+
+    
 <div class="ui vertical stripe segment" id="vantagens">
     <div class="ui container">
         <div class="ui horizontal divider fontc3 cor3">
-        VANTAGENS
+        DETALHES
         </div>
     </div>
 </div>
 <div class="ui vertical stripe segment">
     <div class="ui container text">
-            Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit. 
-            Cras a posuere ex. 
-            Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit. 
-            Donec auctor turpis ut ex accumsan finibus. 
-            Donec justo justo, pretium a eros at, 
-            vehicula convallis est. 
-            Aenean sollicitudin egestas nulla ac mattis. 
-            Vivamus porttitor volutpat lorem, 
-            non gravida tellus feugiat eu. 
-            Sed nec elit sit amet nulla bibendum 
-            sodales non vel purus. 
-            Maecenas velit massa, 
-            aliquam sit amet purus eget, 
-            volutpat suscipit nulla. 
-            Curabitur dictum sodales bibendum. 
-            Maecenas sagittis suscipit arcu, ut dapibus nisl. 
-            Class aptent taciti sociosqu ad litora torquent per conubia nostra, 
-            per inceptos himenaeos.
+         
+     <img class="ui medium right floated image rounded" src="img/card-front.jpg">
+        <p class="fontgp2">
+        O cartão de crédito pré-pago é a forma de dispor
+        de um cartão de crédito sem comprovação de renda. 
+        Com ele, você dispõe de um  meio de pagamento
+        para as todas as situações onde um cartão de crédito
+        é necessário: seja em lojas, restaurantes, postos de
+        combustível ou serviços online.
+        </p>
+        <p class="fontgp2">
+        Você recarrega o crédito (coloca dinheiro no cartão) de diversas formas:
+        </p>
+        <ul class="fontgp2">
+             <li> caixas de supermercados:
+        Extra, Pão de Açúcar, Walmart e Lojas Americanas </li> 
+             <li> débito a partir conta corrente</li>
+             <li> depósito identificado</li>
+             <li> transferência bancária (DOC/TED)</li>
+             <li> gerando boletos bancários para você ou outras pessoas pagarem </li>
+        </ul>
+        <p class="fontgp2">
+        Você gasta os créditos ao utilizando o cartão de crédito normalmente. Também pode sacar o dinheiro em caixas Banco24Horas e transferir o crédito para outro cartão.
+        </p> 
+        <p class="fontgp2">
+        Você só pode gastar o que o que for carregado no cartão. Consulte o saldo e controle o movimento de depósitos e despesas através do extrato no website ou no aplicativo para o seu smartphone.
+        </p> 
+        <p class="fontgp2">
+        <img class="ui medium right floated image rounded" src="img/card-back.jpg">
+        A Belcorp fez uma parceria com a Acessocard, para oferecer a emissão do L'BELcard aos nossos consultores sem custo inicial:
+        </p> 
+        <ul class="fontgp2">
+            <li> é entregue em aproximandamente 10 dias úteis</li>
+            <li> a manutenção custa 5 reais por mês, apenas se houver crédito</li>
+            <li> em algumas ocasiões, como saques nacionais e internacionais taxas de serviço podem ser cobradas</li>
+        </ul>
+      <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
+          <a class="ui massive button fundo3 cor0" href="/novo">Peça seu cartão L'BEL<i class="right arrow icon"></i></a>
+      </div>
     </div>
 </div>
 
 <!-- another section just to be consistent with my list -->
 <div class="ui vertical stripe segment" id="facilidades">
-        <div class="ui container">
-            <div class="ui horizontal divider fontc3 cor3">
-                FACILIDADES
-            </div>
+    <div class="ui container">
+        <div class="ui horizontal divider fontc3 cor3">
+            FACILIDADES
         </div>
     </div>
-    <div class="ui vertical stripe segment">
-        <div class="ui container text">
-                Lorem ipsum dolor sit amet, 
-                consectetur adipiscing elit. 
-                Cras a posuere ex. 
-                Lorem ipsum dolor sit amet, 
-                consectetur adipiscing elit. 
-                Donec auctor turpis ut ex accumsan finibus. 
-                Donec justo justo, pretium a eros at, 
-                vehicula convallis est. 
-                Aenean sollicitudin egestas nulla ac mattis. 
-                Vivamus porttitor volutpat lorem, 
-                non gravida tellus feugiat eu. 
-                Sed nec elit sit amet nulla bibendum 
-                sodales non vel purus. 
-                Maecenas velit massa, 
-                aliquam sit amet purus eget, 
-                volutpat suscipit nulla. 
-                Curabitur dictum sodales bibendum. 
-                Maecenas sagittis suscipit arcu, ut dapibus nisl. 
-                Class aptent taciti sociosqu ad litora torquent per conubia nostra, 
-                per inceptos himenaeos.
-        </div>
+</div>    
+<div class="ui vertical stripe segment">
+
+    <div class="ui container text">
+         <p class="fontgp2">
+         O CARTÃO PRÉPAGO L'BEL é  uma solução para facilitar o seu dia-a-dia
+         </p> 
+         <p class="fontgp2">
+         Com ele vocẽ terá mais uma opção para recebimento de suas bonificações.
+         </p> 
+         <p class="fontgp2">
+          Hoje quem recebe o pagamento de sua bonificação por ordem de pagamento (OP), 
+          poderá optar por receber através do cartão pré-pago L’BEL e não precisará ir
+          até uma agência bancária para receber sua bonificação. Você ainda poderá 
+          optar pelo saque em qualquer caixa eletrônico da rede Banco24horas.
+         </p> 
+         <p class="fontgp2">
+         Mesmo se você possui uma conta corrente, você poderá receber sua bonificação
+         através do cartão pré-pago L'BEL card e depois transferir para a conta corrente.
+         </p> 
+         <p class="fontgp2">
+         É uma alternativa para administrar melhor o seu negócio.  
+         </p> 
+         
+         <div class="ui vertical center aligned segment" style="margin: 0 0 2em">
+            <a class="ui massive button fundo3 cor0" href="/novo">Solicite o seu!<i class="right arrow icon"></i></a>
+         </div>
+
+         <div class="ui vertical stripe segment">
+             <div class="ui vertical center aligned segment" style="margin: 0 0 2em">
+                 <img class="medium center float image" src="img/card-front.jpg">		 
+              </div> <!--ui container-->
+         </div> <!--ui vertical stripe segment-->
+
     </div>
 </div>
+
+ 
 (:end:)
