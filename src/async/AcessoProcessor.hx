@@ -22,6 +22,7 @@ class AcessoProcessor {
 		try {
 			loop();
 		} catch (err:AcessoError) {
+			trace('acesso: ${card.state} returned $err (${card.requestId})');
 			card.state = Failed(err, card.state);
 			card.update();
 			switch err {
@@ -46,6 +47,7 @@ class AcessoProcessor {
 			switch card.state {
 			case Failed(TransportError(_)|TemporarySystemError(_), onState):
 				card.state = onState;
+				continue;
 
 			case Queued(_) if (token == null):
 				var params = { Email:ACESSO_USERNAME, Senha:ACESSO_PASSWORD };
@@ -55,7 +57,7 @@ class AcessoProcessor {
 				var data:SolicitarAdesaoClienteParams = {
 					Language : REST,
 					NomeCanal : Webservice,
-					RecId : 42,
+					RecId : 42,  // FIXME
 					TokenAcesso : token,
 					Data : {
 						CodEspecieProduto : card.product,
@@ -64,23 +66,53 @@ class AcessoProcessor {
 				}
 				var client = new GestaoAquisicaoCartao().SolicitarAdesaoCliente(data);
 				if (client.newUser)
-					card.state = Queued(SolicitarCartaoIdentificado);
+					card.state = Queued(SolicitarCartaoIdentificado);  // FIXME
 				else
-					card.state = Queued(AlterarEnderecoPortador);
+					card.state = Queued(AlterarEnderecoPortador(client.client));
+				card.update();
+
+			case Queued(AlterarEnderecoPortador(client)):
+				var data:AlterarEnderecoPortadorParams = {
+					Language : REST,
+					NomeCanal : Webservice,
+					RecId : 42,  // FIXME
+					TokenAcesso : token,
+					Data : {
+						CodCliente : card.userData.CodCliente,
+						NovoEndereco : card.userData.Endereco,
+						TokenAdesao : client,
+						TpCliente : card.userData.TpCliente
+					}
+				}
+				new GestaoPortador().AlterarEnderecoPortador(data);
+				card.state = Queued(SolicitarAlteracaoEmailPortador(client));
+				card.update();
+
+			case Queued(SolicitarAlteracaoEmailPortador(client)):
+				var data:SolicitarAlteracaoEmailPortadorParams = {
+					Language : REST,
+					NomeCanal : Webservice,
+					RecId : 42,  // FIXME
+					TokenAcesso : token,
+					Data : {
+						CodCliente : card.userData.CodCliente,
+						NovoEmail : {
+							EnderecoEmail : card.userData.Email,
+							Principal : true,
+							TpEmail : Residencial
+						},
+						TokenAdesao : client,
+						TpCliente : card.userData.TpCliente
+					}
+				}
+				var tounce = new GestaoPortador().SolicitarAlteracaoEmailPortador(data);
+				card.state = Queued(ConfirmarSolicitacaoAlteracaoEmailPortador(client, tounce));
 				card.update();
 
 			case Queued(_):
 				trace('acesso: stopping on ${card.state} (not implemented or unsafe at the moment)');
 				break;  // FIXME remove
 
-			// case Queued(AlterarEnderecoPortador):
-			// 	// FIXME call the appropriate API
-			// 	card.state = Queued(SolicitarAlteracaoEmailPortador);
-			//
-			// case Queued(SolicitarAlteracaoEmailPortador):
-			// 	// FIXME call the appropriate API
-			// 	card.state = Queued(ConfirmarSolicitacaoAlteracaoEmailPortador);
-			//
 			// case Queued(ConfirmarSolicitacaoAlteracaoEmailPortador):
 			// 	// FIXME call the appropriate API
 			// 	card.state = Queued(EfetivarAlteracaoEmailPortador);
@@ -117,6 +149,8 @@ class AcessoProcessor {
 			case Failed(_), CardRequested:
 				break;  // nothing to do
 			}
+
+			Sys.sleep(0.1);
 		}
 	}
 }

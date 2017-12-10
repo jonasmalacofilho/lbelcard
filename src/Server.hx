@@ -79,6 +79,12 @@ class Server {
 				trace('recovery: reenqueue requests');
 				var q = async.Queue.global();
 				for (card in db.CardRequest.manager.search($submitting == true)) {  // FIXME notifications
+#if dev
+					// FIXME remove bellow
+					card.state = Queued(SolicitarAdesaoCliente);
+					card.update();
+					// FIXME remove above
+#end
 					if (!card.state.match(Queued(_) | Failed(TransportError(_) | TemporarySystemError(_), _)))
 						continue;
 					q.addTask(card.requestId);
