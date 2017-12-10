@@ -40,7 +40,7 @@
                         <div class="ui input left icon">
                             <i class="time icon"></i>
                             <!-- TODO: set date as JS -->
-                            <input type="text" name="DtNascimento">
+                            <input type="text" name="DtNascimento" id='DtNascimento'>
                         </div>                   
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                 <div class="ui calendar">
                 <div class="ui input left icon">
                     <i class="time icon"></i>
-                    <input type="text" name="DtExpedicao">
+                    <input type="text" name="DtExpedicao" id="DtExpedicao">
                 </div>
                 </div>
             </div>

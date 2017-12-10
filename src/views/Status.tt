@@ -1,48 +1,71 @@
-(: static function render () :)
+(: using StringTools :)
+(: import db.Types :)
+(: static function render (card : CardRequestState) :)
 <div class="ui vertical segment">
     <div class="ui container">
         <div class="ui ordered steps">
-            <div class="step completed">
+            <div class="step (:compare(card,AwaitingBearerData).trim():)">
                 <div class="content">
                     <div class="title">Dados Pessoais</div>
                     <div class="description">Entre com seus dados</div>
                 </div>
             </div>
 
-            <div class="step active">
+            <div class="step (:compare(card,AwaitingBearerConfirmation).trim():)">
                 <div class="content">
-                    <div class="title">Confirmação dos Dados</div>
-                    <div class="description">Análise pelo emissor do cartão</div>
+                    <div class="title">Confirmação</div>
+                    <div class="description">Confirme que seus dados estão corretos</div>
                 </div>
             </div>
-        
 
-            <div class="step disabled">
+            <div class="step (:compare(card, Queued(null)).trim():) negative">
+                <div class="content">
+                    <div class='title'>Análise</div>
+                    <div class="description">Estamos validando se está tudo Ok.</div>
+                </div>
+            </div>
+
+            <div class="step (:compare(card, CardRequested).trim():)">
                 <div class="content">
                 <div class="title">Dados aprovados!</div>
-                <div class="description">Seus dados foram aprovados!</div>
-                </div>
-            </div>
-            <div class="step disabled">
-                <div class="content">
-                    <div class="title">Sucesso!</div>
-                    <div class="description">Pedido feito com sucesso!</div>
+                <div class="description">Seu cartão será confeccionado!</div>
                 </div>
             </div>
         </div>
     </div>
 </div>    
 
-(:* if error *:)
-<div class="ui segment">
-    <div class="ui container">
-        <div class="ui red message">
-            <div class="header">Ocorreu um erro nesta etapa</div>
-            Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit. 
-            Cras a posuere ex. 
+    (: if card.match(Failed(err,s)) :)
+        (:* if error *:)
+        <div class="ui segment">
+            <div class="ui container">
+                <div class="ui red message">
+                    <div class="header">Ocorreu um erro nesta etapa</div>
+                    Lorem ipsum dolor sit amet, 
+                    consectetur adipiscing elit. 
+                    Cras a posuere ex. 
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    (:end:)
 
+(:end:)
+
+(: static function compare(cur : CardRequestState, baseline : CardRequestState) :)
+    (: switch(cur) :)
+    (: case Failed(err,s) :)
+        (: do cur = s :)
+    (: case v :)
+    (:end:)
+
+    (: do var curIndex = Type.enumIndex(cur) :)
+    (: do var baseIndex = Type.enumIndex(baseline) :)
+
+    (: if (curIndex > baseIndex) :)
+        completed
+    (: else if (curIndex == baseIndex) :)
+        active
+    (: else if (curIndex < baseIndex) :)
+        disabled
+    (:end:)
 (:end:)

@@ -225,7 +225,7 @@ class Novo {
 		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);
-		Sys.println(views.Base.render("Acompanhe o progresso da sua solicitação",views.Status.render));
+		Sys.println(views.Base.render("Acompanhe o progresso da sua solicitação",views.Status.render.bind(card.state)));
 	}
 
 	static function limitReached(user:db.BelUser)

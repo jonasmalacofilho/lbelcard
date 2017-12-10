@@ -12,9 +12,19 @@ class CardReq
             untyped $.fn.form.settings.rules.validaCPF = function(val){
                 return MainJS.validaCPF(val);
             }
+            untyped $.fn.form.settings.rules.date = function(val){
+                var d : Date = null;
+                try{
+                   d = parseDate(val);
+                }
+                catch(e : Dynamic)
+                {}
+
+                return d != null;
+            }
 
             untyped $('select').dropdown();
-            calendar();
+            
             validate();
             
             //TODO: Check if should fire change or blur evt
@@ -34,6 +44,8 @@ class CardReq
             untyped $('#CPF').mask('000.000.000-00');
             untyped $('#CEP').mask('00000-000');
             untyped $('#cel').mask('00000-0000');
+            untyped $('#DtNascimento').mask('00/00/0000');
+            untyped $('#DtExpedicao').mask('00/00/0000');
 
             storage();
         });
@@ -60,7 +72,7 @@ class CardReq
                     if(!k.startsWith("Dt"))
                         elem.val(val);
                     else
-                        untyped elem.parent().parent().calendar('set date', val, true, false);
+                        untyped elem.parent().parent().calendar('set date', val, true, true);
                 }
             }
 
@@ -81,6 +93,36 @@ class CardReq
                 });                
             });
     }
+
+    static function parseDate(text:String):Date
+	{
+		var emsg = 'Invalid date <$text>';
+		var pat = ~/^\s*((\d\d)\/(\d\d)\/(\d\d\d\d))\s*$/;
+		if (!pat.match(text))
+		throw '$emsg: expected <DD/MM/YYYY>';
+		var year = Std.parseInt(pat.matched(4));
+		var month = Std.parseInt(pat.matched(3));
+		var day = Std.parseInt(pat.matched(2));
+		var now = Date.now();
+		var computed = 
+		switch [year, month, day] {
+		case [year, _, _] if (year < 1900 || year > now.getFullYear()):
+			throw '$emsg: expected year to be between 1900 and ${now.getFullYear()}';
+		case [_, month, _] if (month < 1 || month > 12):
+			throw '$emsg: expected month to be between 01 and 12';
+		case [_, _, day] if (day < 1 || day > 31):
+			throw '$emsg: expected day to be between 01 and 31';
+		case [year , 2, 29] if (year%4 != 0 || (year%100 == 0 && year%400 != 0)):
+			throw '$emsg: $year is not a leap year';
+		case [_, 4|6|9|11, 31], [_, 2, 30|31]:
+			throw '$emsg: there is no ${pat.matched(1)} (day incompatible with month)';
+		case _:
+			new Date(year, month - 1, day, 0, 0, 0);
+		};
+		if (DateTools.format(computed, "%d/%m/%Y") != pat.matched(1))
+		throw 'Assert failed: ${pat.matched(1)} => $computed';
+		return computed;
+	}
 
     static function response (d : Correios.Response<Correios.Address>)
     {
@@ -105,27 +147,6 @@ class CardReq
         new JQuery('form').submit();
     }
 
-    static function calendar()
-    {
-        untyped $(".ui.calendar").calendar({
-				ampm : false,
-				type : 'date',
-				startMode : 'year',
-				formatter : {
-				date : function(date, settings)
-				{
-					if(!date) return "";
-					var day = StringTools.lpad(date.getDate()+'','0',2);
-					var mn = StringTools.lpad(date.getMonth() + 1+ '','0',2);
-					var year = date.getFullYear();
-					return '$day/$mn/$year';
-				}
-				}
-			});
-    }
-
-    
-
     static function validate()
     {
         untyped $('.ui.form').form({
@@ -148,6 +169,10 @@ class CardReq
                     rules : [{
                     type : 'empty',
                     prompt : 'Selecione a data de nascimento'
+                    },
+                    {
+                        type : 'date',
+                        prompt : 'Digite uma data Válida'
                     }]
                 },
                 NomePai : {
@@ -267,6 +292,10 @@ class CardReq
                     rules : [{
                         type : 'empty',
                         prompt : 'Digite a data de expedição do documento'
+                    },
+                    {
+                        type : 'date',
+                        prompt : 'Digite uma data válida'
                     }]
                 },
                 TpDocumento : {
