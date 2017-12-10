@@ -194,8 +194,8 @@ class Novo {
 			card.update();
 
 			var q = ProcessingQueue.global();
-			q.addTask(Sys.sleep.bind(2));  // just something to trigger the bad errors
-			q.addTask(new AcessoProcessor(card.requestId).execute);  // FIXME
+			q.addTask("sleep:2");  // just something to trigger the bad errors
+			q.addTask(card.requestId);  // FIXME
 		}
 
 		Web.redirect(moveForward(card));

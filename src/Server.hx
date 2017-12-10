@@ -77,7 +77,7 @@ class Server {
 				for (card in db.CardRequest.manager.all()) {  // FIXME must have a better query
 					if (!card.state.match(Queued(_) | Processing(_) | Failed(TransportError(_)|TemporarySystemError(_), _)))  // FIXME remove Processing
 						continue;
-					q.addTask(new AcessoProcessor(card.requestId).execute);
+					q.addTask(card.requestId);
 				}
 				share.set(true);
 			}
@@ -102,6 +102,9 @@ class Server {
 			if (uri == "")
 				uri = "/";
 			trace('begin: $method $uri ($requestId)');
+
+			var q = ProcessingQueue.global();
+			q.addTask("sleep:3");
 
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);

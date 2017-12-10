@@ -68,12 +68,12 @@ class AcessoProcessor {
 			case TransportError(msg):
 				// network error: wait a bit and then resume working
 				Sys.sleep(60);
-				ProcessingQueue.global().addTask(execute);  // renqueue this task
+				ProcessingQueue.global().addTask(key);  // renqueue this task
 			case TemporarySystemError({ Message:msg, ResultCode: 99 }) if (msg.indexOf("ValidarToken") > 0):
 				// token must have expired: wait a bit, refresh it, and resume working
 				Sys.sleep(3);
 				token = null;
-				ProcessingQueue.global().addTask(execute);  // renqueue this task
+				ProcessingQueue.global().addTask(key);  // renqueue this task
 			case _:
 				// nothing to do for user/data or other system errors
 			}

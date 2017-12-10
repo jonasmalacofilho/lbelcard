@@ -4,7 +4,7 @@ import neko.vm.*;
 class ProcessingQueue {
 	static inline var NAME = "global-processing-queue";
 
-	var queue:Array<Null<Void->Void>> = [];
+	var queue:Array<Null<String>> = [];
 	var lock:Mutex = new Mutex();
 	var master:Module = Module.local();
 	var worker:Thread;
@@ -36,7 +36,10 @@ class ProcessingQueue {
 		return inst;
 	}
 
-	public function addTask(task:Null<Void->Void>)
+	/**
+	Add a new task to the queue
+	**/
+	public function addTask(task:String)
 	{
 		trace('queue: add task');
 		lock.acquire();
@@ -76,7 +79,7 @@ class ProcessingQueue {
 
 	function workerLoop()
 	{
-		trace('queue: init worker loop (${master.codeSize()})');
+		trace('queue: init worker loop (${master.codeSize()}|${Module.local().codeSize()})');
 		var localQueue = queue;  // make the worker blind to queue replacement (for worker updates)
 		while (true) {
 			lock.acquire();
@@ -87,7 +90,13 @@ class ProcessingQueue {
 				break;
 			}
 			lock.release();
-			task();
+			switch task.split(":") {
+			case ["sleep", s]:
+				Sys.sleep(Std.parseFloat(s));
+			case _:
+				var p = new AcessoProcessor(task);
+				p.execute();
+			}
 		}
 		trace('queue: terminate worker');
 	}
