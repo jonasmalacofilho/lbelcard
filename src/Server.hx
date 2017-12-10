@@ -13,11 +13,11 @@ class Server {
 
 		initModule();
 
-		if (ProcessingQueue.handOver()) {
+		if (async.Handler.handOver()) {
 			ManagedModule.callFinalizers();
 			return;
 		}
-		ProcessingQueue.global().refreshCode(neko.vm.Module.local());
+		async.Queue.global().upgrade(neko.vm.Module.local());
 
 		attemptRecovery();
 		ManagedModule.runAndCache(handleRequest);
@@ -73,7 +73,7 @@ class Server {
 		try {
 			if (!hasRun) {
 				trace('recovery: reenqueue requests');
-				var q = ProcessingQueue.global();
+				var q = async.Queue.global();
 				for (card in db.CardRequest.manager.all()) {  // FIXME must have a better query
 					if (!card.state.match(Queued(_) | Processing(_) | Failed(TransportError(_)|TemporarySystemError(_), _)))  // FIXME remove Processing
 						continue;
@@ -103,7 +103,7 @@ class Server {
 				uri = "/";
 			trace('begin: $method $uri ($requestId)');
 
-			var q = ProcessingQueue.global();
+			var q = async.Queue.global();
 			q.addTask("sleep:3");
 
 			Web.setHeader("X-Request-ID", requestId);

@@ -1,3 +1,5 @@
+package async;
+
 import Environment.*;
 import acesso.*;
 import acesso.Data;
@@ -24,13 +26,25 @@ class AcessoProcessor {
 			case Queued(_) if (token == null):
 				var params = { Email:ACESSO_USERNAME, Senha:ACESSO_PASSWORD };
 				token = new GestaoBase().CriarToken(params);
+				execute();
 			case Queued(SolicitarAdesaoCliente):
-				var client = new GestaoAquisicaoCartao().SolicitarAdesaoCliente(null);
+				var data:SolicitarAdesaoClienteParams = {
+					Language : REST,
+					NomeCanal : Webservice,
+					RecId : 42,
+					TokenAcesso : token,
+					Data : {
+						CodEspecieProduto : card.product,
+						Usuario : card.userData
+					}
+				}
+				var client = new GestaoAquisicaoCartao().SolicitarAdesaoCliente(data);
 				if (client.newUser)
 					card.state = Queued(SolicitarCartaoIdentificado);
 				else
 					card.state = Queued(AlterarEnderecoPortador);
 				card.update();
+				execute();
 			case Queued(AlterarEnderecoPortador):
 				// FIXME call the appropriate API
 				card.state = Queued(SolicitarAlteracaoEmailPortador);
@@ -58,7 +72,7 @@ class AcessoProcessor {
 			case Queued(ConfirmarPagamento):
 				// FIXME call the appropriate API
 				card.state = CardRequested;
-			case _: assert(false);
+			case _: assert(false, card.state);
 			}
 
 		} catch (err:AcessoError) {
@@ -68,12 +82,12 @@ class AcessoProcessor {
 			case TransportError(msg):
 				// network error: wait a bit and then resume working
 				Sys.sleep(60);
-				ProcessingQueue.global().addTask(key);  // renqueue this task
+				async.Queue.global().addTask(key);  // renqueue this task
 			case TemporarySystemError({ Message:msg, ResultCode: 99 }) if (msg.indexOf("ValidarToken") > 0):
 				// token must have expired: wait a bit, refresh it, and resume working
 				Sys.sleep(3);
 				token = null;
-				ProcessingQueue.global().addTask(key);  // renqueue this task
+				async.Queue.global().addTask(key);  // renqueue this task
 			case _:
 				// nothing to do for user/data or other system errors
 			}

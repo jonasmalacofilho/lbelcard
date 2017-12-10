@@ -193,7 +193,7 @@ class Novo {
 			card.submitting = true;
 			card.update();
 
-			var q = ProcessingQueue.global();
+			var q = async.Queue.global();
 			q.addTask("sleep:2");  // just something to trigger the bad errors
 			q.addTask(card.requestId);  // FIXME
 		}
