@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-    (:end:)
+    (:else:) (:end:)
 
 (:end:)
 
@@ -78,5 +78,5 @@
         active
     (: else if (curIndex < baseIndex) :)
         disabled
-    (:end:)
+    (:else:) (:end:)
 (:end:)
