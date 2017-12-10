@@ -19,11 +19,21 @@ class CardReq
             
             //TODO: Check if should fire change or blur evt
             new JQuery('#CEP').blur(function(_){
-                //fuck this ( forgot how to $(this) )
-                var cur = new JQuery('#CEP');
+                
+                var cur = js.jquery.Helper.JTHIS;
+                
+                if(cur.val().length != 9)
+                    return;
+
                 var api = new Correios("PxQtu0NJd0v6B2sPBUR0leTE8Eryi1ZN", "KffqAXnZIz6Wmb9pYWYkCFag0qHw1z4jsKHeKw3IpKF39Qur");
                 api.queryCep(cur.val(), response);
+                new JQuery('#loader').addClass('active');
+
             });
+
+            untyped $('#CPF').mask('000.000.000-00');
+            untyped $('#CEP').mask('00000-000');
+            untyped $('#cel').mask('00000-0000');
 
             var sess_storage = js.Browser.getSessionStorage();
 
@@ -49,7 +59,7 @@ class CardReq
             }
 
             //save stuff on form submit
-            new JQuery('input').blur(function(_)
+            new JQuery('form').submit(function(_)
             {
                 if(sess_storage == null)
                 return;
@@ -57,19 +67,19 @@ class CardReq
                 var sess_storage = js.Browser.getSessionStorage();
                 if(sess_storage == null)
                     return;
-
+                
                 new JQuery('input').each(function(i,elem)
                 {
                     var cur = new JQuery(elem);
                     sess_storage.setItem(cur.attr('name'), cur.val());
-                });
-                
+                });                
             });
         });
     }
     
     static function response (d : Correios.Response<Correios.Address>)
     {
+        new JQuery('#loader').removeClass('active');
         switch(d)
         {
             case Some(addr):
@@ -78,7 +88,8 @@ class CardReq
                 new JQuery('#bairro').val(addr.bairro);
                 new JQuery('#logradouro').val(addr.endereco);
             case None:
-                //TODO: Handle invalid CEP
+                //TODO: Fix this later
+                js.Browser.alert('CEP inválido! Por favor, verifique se o valor está correto');
             case Failure(e):
                 trace('error @webmania : $e');
         }
@@ -166,18 +177,6 @@ class CardReq
                     rules : [{
                         type : 'empty',
                         prompt : 'Digite um número de telefone'
-                    },
-                    {
-                        type : 'regExp[/[0-9]+/g]',
-                        prompt : 'Digite apenas números'
-                    },
-                    {
-                        type : 'minLength[8]',
-                        prompt : 'Número de telefone inválido'
-                    },
-                    {
-                        type : 'maxLength[9]',
-                        prompt : 'Número de telefone inválido'
                     }]
                 },
                 TpTelefone : {
@@ -188,12 +187,8 @@ class CardReq
                 },
                 CEP : {
                     rules : [{
-                        type : 'exactLength[8]',
+                        type : 'exactLength[9]',
                         prompt : 'CEP Inválido'
-                    },
-                    {
-                        type : 'integer',
-                        prompt : 'Digite apenas números'
                     }]
                 },
                 UF : {
@@ -224,10 +219,6 @@ class CardReq
                     rules : [{
                         type : 'empty',
                         prompt : "Preencha o número de residência"
-                    },
-                    {
-                        type : 'number',
-                        prompt : "Digite apenas números, letras e outros caracteres devem ser preenchidos no campo Complemento"
                     }]
                 },
                 //Skipping complemento
@@ -251,10 +242,6 @@ class CardReq
                     rules : [{
                         type : 'empty',
                         prompt : 'Digite seu CPF'
-                    },
-                    {
-                        type : 'exactLength[11]',
-                        prompt : 'Digite apenas os números'
                     },
                     {
                         type : 'validaCPF',

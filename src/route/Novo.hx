@@ -4,6 +4,7 @@ import acesso.Data;
 import eweb.Dispatch;
 import eweb.Web;
 import haxe.Json;
+using Std;
 
 typedef PersonalData = {
 	Bairro:String,
@@ -103,56 +104,54 @@ class Novo {
 	public function postDados(args:PersonalData)
 	{
 		assert(~/^[0-9]+$/.match(args.NumDocumento), args.NumDocumento);
-		assert(~/^[0-9]+$/.match(args.CodCliente), args.CodCliente);
-
+		
 		var card = getCardRequest();
 		if (card == null)
 			throw "Nenhum cartão encontrado";  // FIXME error type
-		if (card.bearer.cpf != args.CodCliente)
+		
+		/*if (card.bearer.cpf != args.CodCliente)
 			throw "O CPF informado não pertence ao consultor";
+			*/
 		assert(!limitReached(card.bearer));  // might happen because we don't lock the BelUser while creating a CardRequest
 
-		// FIXME dates: they actually this depend on the client locale; thus it
-		//       would be best to avoid touching dates on the server due to the
-		//       existance of locale, timezone and other corner cases that are
-		//       (very) hard to handle correctly
+		//TODO: Pass these in Jonas' format
+		var temp = args.DtNascimento.split('/');
+		var dtNascimento = new Date(temp[2].parseInt(),temp[1].parseInt()-1,temp[0].parseInt(),0,0,0);
+		
+		temp = args.DtExpedicao.split('/');
+		var dtExpedicao = new Date(temp[2].parseInt(),temp[1].parseInt() - 1, temp[0].parseInt(),0,0,0);
+		
 
-		// leaving this here for it can be usefull
-		// 	//I pass dates as MM/DD/YYYY which is a nono
-		// 	if(f == 'DtNascimento' || f == 'DtExpedicao')
-		// 	{
-		// 		var split :Array<String> = Reflect.field(args, f).split('/');
-    //
-		// 		var p = [];
-		// 		for(s in split)
-		// 			p.push(Std.parseInt(s));
-    //
-		// 		var data = new Date(p[2], p[1]-1, p[0],0,0,0).getTime();
-		// 		Reflect.setField(d,f,data);
+		var digits = ~/\D/g;
+
+		var cpf = digits.replace(args.CodCliente, "");
+		var cel = digits.replace(args.NumeroTel, "");
+		var cep = digits.replace(args.CEP, "");
+
 
 		var userData:DadosDoUsuario = {
 			Documento : {
 				TpDocumento : args.TpDocumento,
 				NumDocumento : args.NumDocumento,
-				DtExpedicao : null,  // FIXME,
+				DtExpedicao : null, //FIXME
 				OrgaoExpedidor : args.OrgaoExpedidor,
 				UFOrgao : args.UFOrgao,
 				PaisOrgao : args.PaisOrgao
 			},
-			DtNascimento : null,  // FIXME,
+			DtNascimento : null, //FIXME
 			NomeMae : args.NomeMae,
 			TpSexo : args.TpSexo,
 			Celular : {
 				TpTelefone : args.TpTelefone,
 				DDI : args.DDI,
 				DDD : args.DDD,
-				Numero : args.NumeroTel
+				Numero : cel
 			},
-			CodCliente : args.CodCliente,
+			CodCliente : cpf,
 			Email : args.Email,
 			Endereco : {
 				TpEndereco : args.TpEndereco,
-				CEP : args.CEP,
+				CEP : cep,
 				Logradouro : args.Logradouro,
 				Numero : args.NumeroRes,  // FIXME rename
 				Complemento : args.Complemento,
