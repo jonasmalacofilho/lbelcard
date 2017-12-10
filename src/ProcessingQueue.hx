@@ -23,7 +23,7 @@ class ProcessingQueue {
 	{
 		lock.acquire();
 		if (this.master.codeSize() != master.codeSize()) {  // FIXME use load time and check name
-			trace('queue: refresh code');
+			trace('queue: refresh code (${this.master.codeSize()} => ${master.codeSize()})');
 			// update the master module
 			this.master = master;
 			if (worker != null) {
@@ -50,7 +50,7 @@ class ProcessingQueue {
 
 	function workerLoop()
 	{
-		trace('queue: init worker loop');
+		trace('queue: init worker loop (${master.codeSize()})');
 		var localQueue = queue;  // make the worker blind to queue replacement (for worker updates)
 		while (true) {
 			lock.acquire();
