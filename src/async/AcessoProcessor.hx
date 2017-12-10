@@ -43,8 +43,6 @@ class AcessoProcessor {
 	function loop()
 	{
 		while (true) {
-			show(card.requestId, card.state);
-
 			switch card.state {
 			case Failed(TransportError(_)|TemporarySystemError(_), onState):
 				card.state = onState;
@@ -72,7 +70,8 @@ class AcessoProcessor {
 				card.update();
 
 			case Queued(_):
-				break;  // FIXME temporary early exit (remove)
+				trace('acesso: stopping on ${card.state} (not implemented or unsafe at the moment)');
+				break;  // FIXME remove
 
 			// case Queued(AlterarEnderecoPortador):
 			// 	// FIXME call the appropriate API
