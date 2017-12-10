@@ -1,6 +1,7 @@
 package js;
 import js.jquery.JQuery;
 import webmaniabr.*;
+using StringTools;
 
 @:keep @:expose
 class CardReq
@@ -22,6 +23,47 @@ class CardReq
                 var cur = new JQuery('#CEP');
                 var api = new Correios("PxQtu0NJd0v6B2sPBUR0leTE8Eryi1ZN", "KffqAXnZIz6Wmb9pYWYkCFag0qHw1z4jsKHeKw3IpKF39Qur");
                 api.queryCep(cur.val(), response);
+            });
+
+            var sess_storage = js.Browser.getSessionStorage();
+
+            if(sess_storage != null && 
+            sess_storage.key(0) != null &&
+            sess_storage.key(0) != "")
+            {
+                for(i in 0...sess_storage.length)
+                {
+                    var k = sess_storage.key(i);
+                    var val = sess_storage.getItem(k);
+                    
+                    if(val == null || val.length == 0)
+                        continue;
+
+                    var elem = new JQuery('input[name="${k}"]');
+                    
+                    if(!k.startsWith("Dt"))
+                        elem.val(val);
+                    else
+                        untyped elem.parent().parent().calendar('set date', val, true, false);
+                }
+            }
+
+            //save stuff on form submit
+            new JQuery('input').blur(function(_)
+            {
+                if(sess_storage == null)
+                return;
+
+                var sess_storage = js.Browser.getSessionStorage();
+                if(sess_storage == null)
+                    return;
+
+                new JQuery('input').each(function(i,elem)
+                {
+                    var cur = new JQuery(elem);
+                    sess_storage.setItem(cur.attr('name'), cur.val());
+                });
+                
             });
         });
     }
