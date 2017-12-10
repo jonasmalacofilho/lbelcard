@@ -36,14 +36,25 @@
 </div>    
 
     (: if card.match(Failed(err,s)) :)
-        (:* if error *:)
+        
+        (: do var err = switch(card) {case Failed(err, s): err; default: null;} :)
         <div class="ui segment">
             <div class="ui container">
                 <div class="ui red message">
                     <div class="header">Ocorreu um erro nesta etapa</div>
-                    Lorem ipsum dolor sit amet, 
-                    consectetur adipiscing elit. 
-                    Cras a posuere ex. 
+                    (: switch err :)
+                        (: case UserOrDataError(res),PermanentSystemError(res) :)
+                            (:res.Message:)
+                            (: if res.FieldErrors != null :)
+                                <ul>
+                                (: for r in res.FieldErrors :)
+                                    <li>(:r.Message:)</li>
+                                (: end :)
+                                </ul>
+                            (:end:)
+                        (: case TemporarySystemError(_), TransportError(_) :)
+                            Tente acessar este sistema mais tarde.
+                    (: end :)
                 </div>
             </div>
         </div>
