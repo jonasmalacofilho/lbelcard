@@ -69,17 +69,21 @@ class Server {
 	static function attemptRecovery()
 	{
 		var share = new eweb._impl.ToraRawShare("recovery-has-run");
-		var hasRun:Bool = share.get(true);
+		var version:Null<Float> = share.get(true);
+		var module = neko.vm.Module.local();
+		var path = '${module.name}.n';
+		var curVersion = sys.FileSystem.stat(path).mtime.getTime();
+		show(version, curVersion);
 		try {
-			if (!hasRun) {
+			if (version == null || curVersion > version) {
 				trace('recovery: reenqueue requests');
 				var q = async.Queue.global();
-				for (card in db.CardRequest.manager.all()) {  // FIXME must have a better query
-					if (!card.state.match(Queued(_) | Processing(_) | Failed(TransportError(_)|TemporarySystemError(_), _)))  // FIXME remove Processing
+				for (card in db.CardRequest.manager.search($submitting == true)) {  // FIXME notifications
+					if (!card.state.match(Queued(_) | Failed(TransportError(_) | TemporarySystemError(_), _)))
 						continue;
 					q.addTask(card.requestId);
 				}
-				share.set(true);
+				share.set(curVersion);
 			}
 			share.commit();
 		} catch (err:Dynamic) {

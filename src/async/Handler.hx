@@ -63,6 +63,7 @@ class Handler {
 				var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 				trace('async ERROR: $err', stack);
 			}
+			sys.db.Manager.cleanup();
 		}
 		trace('async: loop terminated');
 	}
