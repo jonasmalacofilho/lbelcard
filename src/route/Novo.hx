@@ -113,8 +113,8 @@ class Novo {
 		args.DDD = notDigits.replace(args.DDD, "");
 		args.NumeroTel = notDigits.replace(args.NumeroTel, "");
 		args.CEP = notDigits.replace(args.CEP, "");
-		assert(args.DDI.startsWith("0"), args.DDI);
-		assert(args.DDI == "55" && args.DDD.startsWith("0"), args.DDI, args.DDD);
+		assert(!args.DDI.startsWith("0"), args.DDI);
+		assert(args.DDI != "55" || !args.DDD.startsWith("0"), args.DDI, args.DDD);
 
 		var card = getCardRequest();
 		if (card == null)
