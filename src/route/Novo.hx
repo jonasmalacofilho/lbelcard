@@ -4,7 +4,8 @@ import acesso.Data;
 import eweb.Dispatch;
 import eweb.Web;
 import haxe.Json;
-using Std;
+
+using StringTools;
 
 typedef PersonalData = {
 	Bairro:String,
@@ -40,6 +41,8 @@ class Novo {
 	static inline var RECAPTCHA_SITE_KEY = "6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4";  // FIXME get from environment
 	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";  // FIXME get from environment
 
+	var notDigits = ~/\D/g;
+
 	public function new() {}
 
 	public function getDefault()
@@ -55,7 +58,7 @@ class Novo {
 
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
-		assert(~/^[0-9]+$/.match(args.cpf), args.cpf);
+		args.cpf = notDigits.replace(args.cpf, "");
 
 #if dev
 		trace('dev-build: recaptcha validation skipped');
@@ -69,10 +72,11 @@ class Novo {
 		var user = db.BelUser.manager.select($belNumber == args.belNumber);
 		if (user == null || user.cpf != args.cpf) {
 #if dev
-			assert(user == null, args.belNumber);
-			trace('dev-build: ignoring missing assossiation to L\'Bel');
-			user = new db.BelUser(args.belNumber, args.cpf);
-			user.insert();
+			trace('dev-build: ignoring missing or incorrect association to L\'Bel');
+			if (user == null) {
+				user = new db.BelUser(args.belNumber, args.cpf);
+				user.insert();
+			}
 #else
 			show(args);
 			throw "Consultor não encontrado ou CPF não bate";  // FIXME error type
@@ -103,55 +107,53 @@ class Novo {
 
 	public function postDados(args:PersonalData)
 	{
-		assert(~/^[0-9]+$/.match(args.NumDocumento), args.NumDocumento);
-		
+		args.CodCliente = notDigits.replace(args.CodCliente, "");
+		args.NumDocumento = notDigits.replace(args.NumDocumento, "");
+		args.DDI = notDigits.replace(args.DDI, "");
+		args.DDD = notDigits.replace(args.DDD, "");
+		args.NumeroTel = notDigits.replace(args.NumeroTel, "");
+		args.CEP = notDigits.replace(args.CEP, "");
+		assert(args.DDI.startsWith("0"), args.DDI);
+		assert(args.DDI == "55" && args.DDD.startsWith("0"), args.DDI, args.DDD);
+
 		var card = getCardRequest();
 		if (card == null)
 			throw "Nenhum cartão encontrado";  // FIXME error type
-		
-		/*if (card.bearer.cpf != args.CodCliente)
+
+		if (card.bearer.cpf != args.CodCliente) {
+#if dev
+			trace('dev-build: ignoring mismatch between authorized and current bearers');
+#else
 			throw "O CPF informado não pertence ao consultor";
-			*/
-		assert(!limitReached(card.bearer));  // might happen because we don't lock the BelUser while creating a CardRequest
+#end
+		}
 
-		//TODO: Pass these in Jonas' format
-		var temp = args.DtNascimento.split('/');
-		var dtNascimento = new Date(temp[2].parseInt(),temp[1].parseInt()-1,temp[0].parseInt(),0,0,0);
-		
-		temp = args.DtExpedicao.split('/');
-		var dtExpedicao = new Date(temp[2].parseInt(),temp[1].parseInt() - 1, temp[0].parseInt(),0,0,0);
-		
-
-		var digits = ~/\D/g;
-
-		var cpf = digits.replace(args.CodCliente, "");
-		var cel = digits.replace(args.NumeroTel, "");
-		var cep = digits.replace(args.CEP, "");
-
+		// might happen; we don't lock the BelUser when creating the CardRequest
+		assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
 
 		var userData:DadosDoUsuario = {
 			Documento : {
 				TpDocumento : args.TpDocumento,
 				NumDocumento : args.NumDocumento,
-				DtExpedicao : null, //FIXME
+				DtExpedicao : SerializedDate.fromStringBR(args.DtExpedicao),
 				OrgaoExpedidor : args.OrgaoExpedidor,
 				UFOrgao : args.UFOrgao,
 				PaisOrgao : args.PaisOrgao
 			},
-			DtNascimento : null, //FIXME
+			DtNascimento : SerializedDate.fromStringBR(args.DtNascimento),
 			NomeMae : args.NomeMae,
 			TpSexo : args.TpSexo,
 			Celular : {
 				TpTelefone : args.TpTelefone,
 				DDI : args.DDI,
 				DDD : args.DDD,
-				Numero : cel
+				Numero : args.NumeroTel
 			},
-			CodCliente : cpf,
+			CodCliente : args.CodCliente,
 			Email : args.Email,
 			Endereco : {
 				TpEndereco : args.TpEndereco,
-				CEP : cep,
+				CEP : args.CEP,
 				Logradouro : args.Logradouro,
 				Numero : args.NumeroRes,  // FIXME rename
 				Complemento : args.Complemento,
@@ -180,37 +182,47 @@ class Novo {
 	public function postConfirma()
 	{
 		var card = getCardRequest();
-		if (card == null) {
-			Web.setReturnCode(404);
-			Sys.println("Nenhum cartão encontrado");
-			return;
+		if (card == null)
+			throw "Nenhum cartão encontrado";  // FIXME error type
+
+		if (card.state.match(AwaitingBearerConfirmation)) {
+			// might happen; we don't lock the BelUser when creating the CardRequest
+			assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
+
+			card.state = Queued(SolicitarAdesaoCliente);
+			card.submitting = true;
+			card.update();
+
+			var q = ProcessingQueue.global();
+			q.addTask(Sys.sleep.bind(2));  // just something to trigger the bad errors
+			q.addTask(new AcessoProcessor(card.requestId).execute);  // FIXME
 		}
-		card.state = Queued(SolicitarAdesaoCliente);
-		card.update();
-		var q = ProcessingQueue.global();
-		q.addTask(new AcessoProcessor(card.requestId).execute);  // FIXME
+
 		Web.redirect(moveForward(card));
 	}
 
-	public function getStatus()
+	public function getStatus(key:String)
 	{
-		var card = getCardRequest();
-		if (card == null) {
-			Web.setReturnCode(404);
-			Sys.println("Nenhum cartão encontrado");
-			return;
-		}
+		var card = db.CardRequest.manager.select($requestId == key);
+		if (card == null)
+			throw "Nenhum cartão encontrado";  // FIXME error type
+		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);
-		Sys.println(Type.enumConstructor(card.state));
+		Sys.println(views.Base.render("Acompanhe o progresso da sua solicitação",views.Status.render));
 	}
 
 	static function limitReached(user:db.BelUser)
 	{
 		var cards = db.CardRequest.manager.search($bearer == user);
 		for (i in cards) {
-			if (i.state.match(Queued(_) | Processing(_) | CardRequested))
+			if (i.state.match(Queued(_) | Processing(_) | CardRequested)) {
+#if dev
+				trace('dev-build: overriding maxed out limit of cards per user');
+#else
 				return true;
+#end
+			}
 		}
 		return false;
 	}
@@ -222,7 +234,7 @@ class Novo {
 		return switch card.state {
 		case AwaitingBearerData: "/novo/dados";
 		case AwaitingBearerConfirmation: "/novo/confirma";
-		case _: "/novo/status";
+		case _: '/novo/status/${card.requestId}';
 		}
 	}
 

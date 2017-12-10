@@ -103,19 +103,6 @@ class Server {
 				uri = "/";
 			trace('begin: $method $uri ($requestId)');
 
-			// use the queue for something
-			var q = ProcessingQueue.global();
-			q.addTask(function () trace("Hello from the processing queue"));
-			q.addTask(Sys.sleep.bind(3));
-			q.addTask(function () trace("Waited for three seconds... all good, bye"));
-			q.addTask(function () {
-				trace("Can acess queue from within queue processing?");
-				ProcessingQueue.global().addTask(function () trace("Yes"));
-			});
-
-			show(Web.getParams().get("g-recaptcha-response"));
-			show([for (k in Web.getParams().keys()) '$k: ${Web.getParams().get(k)}'].join("\n"));
-
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);
 			d.dispatch(new route.Index());

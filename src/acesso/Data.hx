@@ -26,7 +26,34 @@ abstract ClientGuid(String) from String to String {}
 
 abstract CardGuid(String) from String to String {}
 
-abstract SerializedDate(String) from String to String {}
+abstract SerializedDate(String) to String {
+	function new(s)
+		this = s;
+
+	public function getTime():Float
+	{
+		assert(~/^\/Date\((\d+)\)\/$/.match(this), this);
+		return Std.parseFloat(this.substring("/Date(".length, this.indexOf(")")));
+	}
+
+	@:to public function getDate():Date
+		return Date.fromTime(getTime());
+
+	public static function fromStringBR(s:String):SerializedDate
+	{
+		var r = ~/^(\d+)\/(\d+)\/(\d+)$/;
+		if (!r.match(s))
+			throw 'Invalid BR datestring: $s (expected DD/MM/YYYY)';
+		var day = Std.parseInt(r.matched(1));
+		var month = Std.parseInt(r.matched(2)) - 1;
+		var year = Std.parseInt(r.matched(3));
+		assert(day >= 1 && day <= 31, day);
+		assert(month >= 0 && month <= 11, month + 1);
+		assert(year >= 1900 && year <= Date.now().getFullYear(), year);
+		var t = new Date(year, month, day, 0, 0, 0).getTime();
+		return new SerializedDate('/Date($t)/');
+	}
+}
 
 abstract CodEspecieProduto(String) from String to String {}
 
