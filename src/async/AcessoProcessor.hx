@@ -22,7 +22,7 @@ class AcessoProcessor {
 		try {
 			loop();
 		} catch (err:AcessoError) {
-			trace('acesso: ${card.state} returned $err (${card.requestId})');
+			trace('acesso: returned $err (${card.requestId})');
 			card.state = Failed(err, card.state);
 			card.update();
 			switch err {
@@ -51,76 +51,72 @@ class AcessoProcessor {
 
 			case Queued(_) if (token == null):
 				var params = { Email:ACESSO_USERNAME, Senha:ACESSO_PASSWORD };
-				token = new GestaoBase().CriarToken(params);
+				token = GestaoBase.CriarToken(params);
 
 			case Queued(SolicitarAdesaoCliente):
-				var data:SolicitarAdesaoClienteParams = {
-					Language : REST,
-					NomeCanal : Webservice,
-					RecId : 42,  // FIXME
-					TokenAcesso : token,
-					Data : {
-						CodEspecieProduto : card.product,
-						Usuario : card.userData
-					}
+				var data:SolicitarAdesaoClienteData = {
+					CodEspecieProduto : card.product,
+					Usuario : card.userData
 				}
-				var client = new GestaoAquisicaoCartao().SolicitarAdesaoCliente(data);
+				var client = new GestaoAquisicaoCartao(token).SolicitarAdesaoCliente(data);
 				if (client.newUser)
-					card.state = Queued(SolicitarCartaoIdentificado);  // FIXME
+					card.state = Queued(SolicitarCartaoIdentificado(client.client));
 				else
 					card.state = Queued(AlterarEnderecoPortador(client.client));
 				card.update();
 
 			case Queued(AlterarEnderecoPortador(client)):
-				var data:AlterarEnderecoPortadorParams = {
-					Language : REST,
-					NomeCanal : Webservice,
-					RecId : 42,  // FIXME
-					TokenAcesso : token,
-					Data : {
-						CodCliente : card.userData.CodCliente,
-						NovoEndereco : card.userData.Endereco,
-						TokenAdesao : client,
-						TpCliente : card.userData.TpCliente
-					}
+				var data:AlterarEnderecoPortadorData = {
+					CodCliente : card.userData.CodCliente,
+					NovoEndereco : card.userData.Endereco,
+					TokenAdesao : client,
+					TpCliente : card.userData.TpCliente
 				}
-				new GestaoPortador().AlterarEnderecoPortador(data);
+				new GestaoPortador(token).AlterarEnderecoPortador(data);
 				card.state = Queued(SolicitarAlteracaoEmailPortador(client));
 				card.update();
 
 			case Queued(SolicitarAlteracaoEmailPortador(client)):
-				var data:SolicitarAlteracaoEmailPortadorParams = {
-					Language : REST,
-					NomeCanal : Webservice,
-					RecId : 42,  // FIXME
-					TokenAcesso : token,
-					Data : {
-						CodCliente : card.userData.CodCliente,
-						NovoEmail : {
-							EnderecoEmail : card.userData.Email,
-							Principal : true,
-							TpEmail : Residencial
-						},
-						TokenAdesao : client,
-						TpCliente : card.userData.TpCliente
-					}
+				var data:SolicitarAlteracaoEmailPortadorData = {
+					CodCliente : card.userData.CodCliente,
+					NovoEmail : {
+						EnderecoEmail : card.userData.Email,
+						Principal : true,
+						TpEmail : Residencial
+					},
+					TokenAdesao : client,
+					TpCliente : card.userData.TpCliente
 				}
-				var tounce = new GestaoPortador().SolicitarAlteracaoEmailPortador(data);
+				var tounce = new GestaoPortador(token).SolicitarAlteracaoEmailPortador(data);
 				card.state = Queued(ConfirmarSolicitacaoAlteracaoEmailPortador(client, tounce));
+				card.update();
+
+			case Queued(ConfirmarSolicitacaoAlteracaoEmailPortador(client, tounce)):
+				var data:ConfirmarSolicitarAlteracaoEmailPortadorData = {
+					CodCliente : card.userData.CodCliente,
+					TokenSolicitacaoAlteracao : tounce,
+					TokenAdesao : client,
+					TpCliente : card.userData.TpCliente
+				}
+				var confirmTounce = new GestaoPortador(token).ConfirmarSolicitarAlteracaoEmailPortador(data);
+				card.state = Queued(EfetivarAlteracaoEmailPortador(client, confirmTounce));
+				card.update();
+
+			case Queued(EfetivarAlteracaoEmailPortador(client, tounce)):
+				var data:EfetivarAlteracaoEmailPortadorData = {
+					CodCliente : card.userData.CodCliente,
+					TokenEfetivacaoAlteracao : tounce,
+					TokenAdesao : client,
+					TpCliente : card.userData.TpCliente
+				}
+				new GestaoPortador(token).EfetivarAlteracaoEmailPortador(data);
+				card.state = Queued(SolicitarAlteracaoTelefonePortador(client));
 				card.update();
 
 			case Queued(_):
 				trace('acesso: stopping on ${card.state} (not implemented or unsafe at the moment)');
 				break;  // FIXME remove
 
-			// case Queued(ConfirmarSolicitacaoAlteracaoEmailPortador):
-			// 	// FIXME call the appropriate API
-			// 	card.state = Queued(EfetivarAlteracaoEmailPortador);
-			//
-			// case Queued(EfetivarAlteracaoEmailPortador):
-			// 	// FIXME call the appropriate API
-			// 	card.state = Queued(SolicitarAlteracaoTelefonePortador);
-			//
 			// case Queued(SolicitarAlteracaoTelefonePortador):
 			// 	// FIXME call the appropriate API
 			// 	card.state = Queued(ConfirmarAlteracaoTelefonePortador);

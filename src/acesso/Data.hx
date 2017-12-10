@@ -27,7 +27,7 @@ Global client Id at Acesso
 **/
 abstract TokenAdesao(String) from String to String {}
 
-abstract CardGuid(String) from String to String {}
+abstract TokenCartao(String) from String to String {}
 
 /**
 Generic token for requesting, confirming or executing user data changes
@@ -210,41 +210,49 @@ typedef DadosDoUsuario = {
 	TpCliente : TpCliente
 }
 
+typedef Params<T> = {
+	> Meta,
+	Data : T
+}
+
 /*
 Data types sent to the upstream APIs
 */
 
-typedef SolicitarAdesaoClienteParams = {
-	> Meta,
-	Data : {
-		CodEspecieProduto : CodEspecieProduto,
-		Usuario : DadosDoUsuario
-	}
+typedef SolicitarAdesaoClienteData = {
+	CodEspecieProduto : CodEspecieProduto,
+	Usuario : DadosDoUsuario
 }
 
-typedef AlterarEnderecoPortadorParams = {
-	> Meta,
-	Data : {
-		CodCliente : CodCliente,
-		NovoEndereco : Endereco,
-		TokenAdesao : TokenAdesao,
-		TpCliente : TpCliente
-	}
+typedef AlterarEnderecoPortadorData = {
+	CodCliente : CodCliente,
+	NovoEndereco : Endereco,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
 }
 
-typedef SolicitarAlteracaoEmailPortadorParams = {
-	> Meta,
-	Data : {
-		CodCliente : CodCliente,
-		NovoEmail : {
-			EnderecoEmail : String,
-			Principal : Bool,
-			TpEmail : TpEmail
-		},
-		TokenAdesao : TokenAdesao,
-		TpCliente : TpCliente
-	}
+typedef SolicitarAlteracaoEmailPortadorData = {
+	CodCliente : CodCliente,
+	NovoEmail : {
+		EnderecoEmail : String,
+		Principal : Bool,
+		TpEmail : TpEmail
+	},
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
 }
 
-typedef SolicitarCartaoIdentificadoParams = Dynamic;
+typedef ConfirmarSolicitarAlteracaoEmailPortadorData = {
+	CodCliente : CodCliente,
+	TokenSolicitacaoAlteracao : TokenAlteracao,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
+}
+
+typedef EfetivarAlteracaoEmailPortadorData = {
+	CodCliente : CodCliente,
+	TokenEfetivacaoAlteracao : TokenAlteracao,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
+}
 

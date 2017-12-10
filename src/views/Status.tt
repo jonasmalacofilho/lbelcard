@@ -52,7 +52,7 @@
                                 (: end :)
                                 </ul>
                             (:end:)
-                        (: case TemporarySystemError(_), TransportError(_) :)
+                        (: case TemporarySystemError(_), TransportError(_), AccessTokenError(_), JumpToError(_) :)
                             Tente acessar este sistema mais tarde.
                     (: end :)
                 </div>
