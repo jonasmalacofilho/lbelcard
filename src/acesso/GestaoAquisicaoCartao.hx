@@ -4,14 +4,14 @@ class GestaoAquisicaoCartao extends GestaoBase {
 	static inline var ENDPOINT =
 			"https://servicos.acessocard.com.br/api2.0/Services/rest/GestaoAquisicaoCartao.svc";
 
-	public function SolicitarAdesaoCliente(params:SolicitarAdesaoClienteParams):{ newUser:Bool, client:ClientGuid }
+	public function SolicitarAdesaoCliente(params:SolicitarAdesaoClienteParams):{ newUser:Bool, client:TokenAdesao }
 	{
 		var res:Response = request(ENDPOINT, "solicitar-adesao-cliente", params);
 		switch res.ResultCode {
 		case 0:
-			return { newUser:true, client:(res.Data:ClientGuid) };
+			return { newUser:true, client:(res.Data:TokenAdesao) };
 		case 1:
-			return { newUser:false, client:(res.Data:ClientGuid) };
+			return { newUser:false, client:(res.Data:TokenAdesao) };
 		case 99:
 			throw TemporarySystemError(res);
 		case err:

@@ -22,9 +22,17 @@ Typed values based on basic types
 
 abstract TokenAcesso(String) from String to String {}
 
-abstract ClientGuid(String) from String to String {}
+/**
+Global client Id at Acesso
+**/
+abstract TokenAdesao(String) from String to String {}
 
 abstract CardGuid(String) from String to String {}
+
+/**
+Generic token for requesting, confirming or executing user data changes
+**/
+abstract TokenAlteracao(String) from String to String {}
 
 abstract SerializedDate(String) to String {
 	function new(s)
@@ -131,6 +139,18 @@ abstract CodCliente(String) from String to String {}
 	}
 }
 
+@:enum abstract TpEmail(Int) {
+	public var Residencial = 0;
+	public var Comercial = 1;
+	public var Secundario = 2;
+
+	@:from static function fromInt(v:Int):TpEmail
+	{
+		assert(v >= 0 && v <= 2, v);
+		return cast v;
+	}
+}
+
 /*
 Intermidiate data types supplied by the API client
 */
@@ -199,6 +219,30 @@ typedef SolicitarAdesaoClienteParams = {
 	Data : {
 		CodEspecieProduto : CodEspecieProduto,
 		Usuario : DadosDoUsuario
+	}
+}
+
+typedef AlterarEnderecoPortadorParams = {
+	> Meta,
+	Data : {
+		CodCliente : CodCliente,
+		NovoEndereco : Endereco,
+		TokenAdesao : TokenAdesao,
+		TpCliente : TpCliente
+	}
+}
+
+typedef SolicitarAlteracaoEmailPortadorParams = {
+	> Meta,
+	Data : {
+		CodCliente : CodCliente,
+		NovoEmail : {
+			EnderecoEmail : String,
+			Principal : Bool,
+			TpEmail : TpEmail
+		},
+		TokenAdesao : TokenAdesao,
+		TpCliente : TpCliente
 	}
 }
 

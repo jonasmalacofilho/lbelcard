@@ -1,5 +1,7 @@
 package db;
 
+import acesso.Data;
+
 enum CardRequestState {
 	AwaitingBearerData;
 	AwaitingBearerConfirmation;
@@ -11,9 +13,9 @@ enum CardRequestState {
 
 enum AcessoStep {
 	SolicitarAdesaoCliente;
-	AlterarEnderecoPortador;
-	SolicitarAlteracaoEmailPortador;
-	ConfirmarSolicitacaoAlteracaoEmailPortador;
+	AlterarEnderecoPortador(client:TokenAdesao);
+	SolicitarAlteracaoEmailPortador(client:TokenAdesao);
+	ConfirmarSolicitacaoAlteracaoEmailPortador(client:TokenAdesao, tounce:TokenAlteracao);
 	EfetivarAlteracaoEmailPortador;
 	SolicitarAlteracaoTelefonePortador;
 	ConfirmarAlteracaoTelefonePortador;
@@ -24,8 +26,8 @@ enum AcessoStep {
 
 enum AcessoError {
 	TransportError(err:String);
-	UserOrDataError(res:acesso.Data.Response);
-	TemporarySystemError(res:acesso.Data.Response);
-	PermanentSystemError(res:acesso.Data.Response);
+	UserOrDataError(res:Response);
+	TemporarySystemError(res:Response);
+	PermanentSystemError(res:Response);
 }
 
