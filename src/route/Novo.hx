@@ -232,7 +232,7 @@ class Novo {
 	{
 		var cards = db.CardRequest.manager.search($bearer == user);
 		for (i in cards) {
-			if (i.state.match(Queued(_) | Processing(_) | CardRequested)) {
+			if (i.state.match(Queued(_) | CardRequested)) {
 #if dev
 				trace('dev-build: overriding maxed out limit of cards per user');
 #else

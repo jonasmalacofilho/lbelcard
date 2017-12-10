@@ -23,11 +23,13 @@ class Handler {
 
 		Otherwise returns false, and normal execution of the module can be resumed.
 	 **/
+	@:access(Server)
 	public static function handOver():Bool
 	{
 		var inst:Queue = Module.local().getExports()[NAME];
 		if (inst != null) {
-			trace('async: init handler (${Module.local().codeSize()})');
+			Server.shortId = Server.requestId = 'async-${crypto.Random.global.readHex(2)}';
+			trace('async: init handler (${Server.codeVersion})');
 			var h = new Handler(inst);
 			h.loop();
 			return true;
@@ -37,7 +39,7 @@ class Handler {
 
 	function loop()
 	{
-		trace('async: init loop (${Module.local().codeSize()})');
+		trace('async: init loop (${Server.codeVersion})');
 		while (true) {
 			lock.acquire();
 			var task = queue.shift();
@@ -63,6 +65,7 @@ class Handler {
 				var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 				trace('async ERROR: $err', stack);
 			}
+			sys.db.Manager.cleanup();
 		}
 		trace('async: loop terminated');
 	}

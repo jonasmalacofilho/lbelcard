@@ -4,9 +4,9 @@ enum CardRequestState {
 	AwaitingBearerData;
 	AwaitingBearerConfirmation;
 	Queued(step:AcessoStep);
-	Processing(step:AcessoStep);
 	Failed(err:AcessoError, onState:CardRequestState);
 	CardRequested;
+	// UserNotified(ofState:CardRequestState);  // idea on how to handle emails
 }
 
 enum AcessoStep {

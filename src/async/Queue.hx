@@ -9,6 +9,7 @@ class Queue {
 	var queue:Array<Null<String>> = [];
 	var lock:Mutex = new Mutex();
 	var master:Module = Module.local();
+	var codeVersion = Server.codeVersion;
 
 	function new() {}
 
@@ -30,7 +31,7 @@ class Queue {
 		// thus, it's safe to lock the share now, so that we can initialize a queue
 		inst = share.get(true);
 		if (inst == null) {
-			trace('async: init queue (${Module.local().codeSize()})');
+			trace('async: init queue');
 			inst = new Queue();
 			share.set(inst);
 			share.commit();
@@ -44,7 +45,7 @@ class Queue {
 	function initWorker()
 	{
 		Thread.create(function () {
-			var module = Module.readPath(master.name + ".n", [], master.loader());
+			var module = Module.readPath(master.name, [], master.loader());
 			module.setExport(NAME, this);
 			module.execute();
 		});
@@ -55,19 +56,20 @@ class Queue {
 	**/
 	public function addTask(task:String)
 	{
-		trace('async: add $task (${Module.local().codeSize()})');
+		trace('async: add $task (${this.codeVersion})');
 		lock.acquire();
 		queue.push(task);
 		lock.release();
 	}
 
-	public function upgrade(master:Module)
+	public function upgrade(master:Module, toCodeVersion:Float)
 	{
 		lock.acquire();
-		if (this.master.codeSize() != master.codeSize()) {  // FIXME use load time and check name
-			trace('async: upgrade (${this.master.codeSize()} => ${master.codeSize()} | ${Module.local().codeSize()})');
-			// update the master module
+		if (toCodeVersion > this.codeVersion) {  // FIXME use load time
+			trace('async: upgrade (${this.codeVersion} => ${toCodeVersion})');
+			// update the master module and code version
 			this.master = master;
+			this.codeVersion = toCodeVersion;
 			// update the worker code
 			//  - ask the current worker to terminate itself before executing any more tasks
 			//  - switch to a new instance of the queue (that the old worker wont see)
