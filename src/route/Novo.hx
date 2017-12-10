@@ -45,28 +45,31 @@ class Novo {
 
 	public function new() {}
 
-	public function getDefault()
+	public function getDefault(?error : String)
 	{
 		Web.setReturnCode(200);
 #if dev
 		trace('dev-build: recaptcha installation skipped');
-		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind(null)));
+		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind(null), error));
 #else
-		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind({ siteKey:RECAPTCHA_SITE_KEY })));
+		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind({ siteKey:RECAPTCHA_SITE_KEY }), error));
 #end
 	}
 
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
 		args.cpf = notDigits.replace(args.cpf, "");
-
+		
 #if dev
 		trace('dev-build: recaptcha validation skipped');
 #else
 		var recaptcha = Web.getParams().get("g-recaptcha-response");
 		weakAssert(recaptcha != null);
 		if(recaptcha == null || !recapChallenge(recaptcha))
-			throw "A verificação do reCAPTCHA falhou";  // FIXME error type
+		{
+			Web.redirect('${moveForward(null)}/?error=${'A verificação do reCAPTCHA falhou'.urlEncode()}');
+			return;
+		}
 #end
 
 		var user = db.BelUser.manager.select($belNumber == args.belNumber);
@@ -79,12 +82,16 @@ class Novo {
 			}
 #else
 			show(args);
-			throw "Consultor não encontrado ou CPF não bate";  // FIXME error type
+			Web.redirect('${moveForward(null)}?error=${'Consultor não encontrado ou CPF não bate'.urlEncode()}');
+			return;
 #end
 		}
 
 		if (limitReached(user))
-			throw "Atingido o limite de solicitação de cartões para esse consultor";  // FIXME error type
+		{	
+			Web.redirect('${moveForward(null)}?error=${'Atingido o limite de solicitação de cartões para esse consultor'.urlEncode()}');
+			return;
+		}
 
 		var card = new db.CardRequest(user);
 		card.product = Environment.ACESSO_PRODUCT;
@@ -118,13 +125,16 @@ class Novo {
 
 		var card = getCardRequest();
 		if (card == null)
-			throw "Nenhum cartão encontrado";  // FIXME error type
-
+		{
+			Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');	
+			return;
+		}
 		if (card.bearer.cpf != args.CodCliente) {
 #if dev
 			trace('dev-build: ignoring mismatch between authorized and current bearers');
 #else
-			throw "O CPF informado não pertence ao consultor";
+			Web.redirect('${moveForward(card)}?error=${'O CPF informado não pertence ao consultor'.urlEncode()}');	
+			return;
 #end
 		}
 
@@ -172,18 +182,21 @@ class Novo {
 		Web.redirect(moveForward(card));
 	}
 
-	public function getConfirma()
+	public function getConfirma(?error : String)
 	{
 		Web.setReturnCode(200);
 		var card = getCardRequest();
-		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(card.userData)));
+		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(card.userData), error));
 	}
 
 	public function postConfirma()
 	{
 		var card = getCardRequest();
 		if (card == null)
-			throw "Nenhum cartão encontrado";  // FIXME error type
+		{
+			Web.redirect('${moveForward(card)}?error=${'Nenhum cartão encontrado'.urlEncode()}');
+			return;
+		}
 
 		if (card.state.match(AwaitingBearerConfirmation)) {
 			// might happen; we don't lock the BelUser when creating the CardRequest
@@ -205,7 +218,10 @@ class Novo {
 	{
 		var card = db.CardRequest.manager.select($requestId == key);
 		if (card == null)
-			throw "Nenhum cartão encontrado";  // FIXME error type
+		{
+				Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');	
+				return;
+		}
 		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);

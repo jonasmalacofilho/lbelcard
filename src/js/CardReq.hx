@@ -35,7 +35,13 @@ class CardReq
             untyped $('#CEP').mask('00000-000');
             untyped $('#cel').mask('00000-0000');
 
-            var sess_storage = js.Browser.getSessionStorage();
+            storage();
+        });
+    }
+    
+    static function storage()
+    {
+        var sess_storage = js.Browser.getSessionStorage();
 
             if(sess_storage != null && 
             sess_storage.key(0) != null &&
@@ -74,9 +80,8 @@ class CardReq
                     sess_storage.setItem(cur.attr('name'), cur.val());
                 });                
             });
-        });
     }
-    
+
     static function response (d : Correios.Response<Correios.Address>)
     {
         new JQuery('#loader').removeClass('active');
