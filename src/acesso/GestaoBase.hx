@@ -45,7 +45,7 @@ class GestaoBase {
 
 		req.addHeader("Content-Type", "application/json");
 		req.addHeader("User-Agent", "haxe/neko");
-		// TODO set timeout
+		req.cnxTimeout = 10;  // TODO reevaluate
 
 		var requestData = haxe.Json.stringify(params);
 		req.setPostData(requestData);

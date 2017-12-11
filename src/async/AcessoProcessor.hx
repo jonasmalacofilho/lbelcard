@@ -170,7 +170,6 @@ class AcessoProcessor {
 				card.update();
 
 			case Queued(ConfirmarPagamento(req, cost)):
-				// FIXME call the appropriate API
 				var data:ConfirmarPagamentoData = {
 					AgenciaRecebedora : "",
 					AgenciaRecebedoraDV : "",
@@ -193,7 +192,7 @@ class AcessoProcessor {
 				break;  // nothing to do
 			}
 
-			// rate limit
+			// rate limit (TODO reevaluate)
 			Sys.sleep(0.1);
 		}
 	}
