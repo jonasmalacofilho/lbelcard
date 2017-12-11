@@ -9,11 +9,11 @@ typedef FieldError = {
 	ResultCode:Int
 }
 
-typedef Response = {
+typedef Response<T> = {
 	ResultCode:Int,
 	Message:String,
 	FieldErrors:Null<Array<FieldError>>,
-	Data:Null<String>
+	Data:Null<T>
 }
 
 /*
@@ -61,6 +61,9 @@ abstract SerializedDate(String) to String {
 		var t = new Date(year, month, day, 0, 0, 0).getTime();
 		return new SerializedDate('/Date($t)/');
 	}
+
+	@:from public static function fromDate(d:Date):SerializedDate
+		return new SerializedDate('/Date(${d.getTime()})/');
 }
 
 abstract CodEspecieProduto(String) from String to String {}
@@ -145,6 +148,44 @@ abstract CodCliente(String) from String to String {}
 	public var Secundario = 2;
 
 	@:from static function fromInt(v:Int):TpEmail
+	{
+		assert(v >= 0 && v <= 2, v);
+		return cast v;
+	}
+}
+
+@:enum abstract TpEntrega(Int) {
+	public var Carta_Simples = 3;
+
+	@:from static function fromInt(v:Int):TpEntrega
+	{
+		assert(v >= 3 && v <= 3, v);
+		return cast v;
+	}
+}
+
+@:enum abstract TpMeioPagamento(Int) {
+	public var BoletoBancario = 0;
+	public var TransferenciaBancaria = 1;
+	public var TED = 2;
+	public var DOC = 3;
+	public var Cartao = 4;
+	public var NaoInformado = 5;
+	public var Outros = 6;
+
+	@:from static function fromInt(v:Int):TpMeioPagamento
+	{
+		assert(v >= 0 && v <= 6, v);
+		return cast v;
+	}
+}
+
+@:enum abstract TpOperacao(Int) {
+	public var Embossing_Cartao = 0;
+	public var Carga_Cartao = 1;
+	public var Embossing_Carga_Cartao = 2;
+
+	@:from static function fromInt(v:Int):TpOperacao
 	{
 		assert(v >= 0 && v <= 2, v);
 		return cast v;
@@ -254,5 +295,50 @@ typedef EfetivarAlteracaoEmailPortadorData = {
 	TokenEfetivacaoAlteracao : TokenAlteracao,
 	TokenAdesao : TokenAdesao,
 	TpCliente : TpCliente
+}
+
+typedef SolicitarAlteracaoTelefonePortadorData = {
+	CodCliente : CodCliente,
+	DDI : String,
+	DDD : String,
+	Numero : String,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
+}
+
+typedef ConfirmarAlteracaoTelefonePortadorData = {
+	CodCliente : CodCliente,
+	Token : TokenAlteracao,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
+}
+
+typedef ComplementarDadosPrincipaisData = {
+	> DadosPrincipais,
+	Portador : {
+		CodCliente : CodCliente,
+		TokenAdesao : TokenAdesao,
+		TpCliente : TpCliente
+	}
+}
+
+typedef SolicitarCartaoIdentificadoData = {
+	CodCliente : CodCliente,
+	CodEspecieProduto : CodEspecieProduto,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente,
+	TpEntrega : TpEntrega,
+	ValorCarga : Float
+}
+
+typedef ConfirmarPagamentoData = {
+	AgenciaRecebedora : String,
+	AgenciaRecebedoraDV : String,
+	BancoRecebedor : String,
+	DataPagamento : SerializedDate,
+	TokenOperacao : TokenCartao,
+	TpMeioPagamento : TpMeioPagamento,
+	TpOperacao : TpOperacao,
+	ValorPagamento : Float
 }
 
