@@ -81,8 +81,8 @@ class Server {
 				for (card in db.CardRequest.manager.search($submitting == true)) {  // FIXME notifications
 #if dev
 					// FIXME remove bellow
-					card.state = Queued(SolicitarAdesaoCliente);
-					card.update();
+					// card.state = Queued(SolicitarAdesaoCliente);
+					// card.update();
 					// FIXME remove above
 #end
 					if (!card.state.match(Queued(_) | Failed(TransportError(_) | TemporarySystemError(_), _)))
@@ -112,9 +112,6 @@ class Server {
 			if (uri == "")
 				uri = "/";
 			trace('begin: $method $uri ($requestId)');
-
-			var q = async.Queue.global();
-			q.addTask("sleep:3");
 
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);

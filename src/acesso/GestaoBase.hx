@@ -10,10 +10,10 @@ class GestaoBase {
 	{
 		var email = StringTools.urlEncode(params.Email);
 		var senha = StringTools.urlEncode(params.Senha);
-		var res:Response = doNetworkRequest(ENDPOINT, 'criar-token/$email/$senha', params);
+		var res:Response<TokenAcesso> = doNetworkRequest(ENDPOINT, 'criar-token/$email/$senha', params);
 		switch res.ResultCode {
 		case 0:
-			return (res.Data:TokenAcesso);
+			return res.Data;
 		case 5, 99:  // unspecified, internal
 			throw TemporarySystemError(res);
 		case _:

@@ -21,16 +21,16 @@ enum AcessoStep {
 	ConfirmarAlteracaoTelefonePortador(client:TokenAdesao, tounce:TokenAlteracao);
 	ComplementarDadosPrincipais(client:TokenAdesao);
 	SolicitarCartaoIdentificado(client:TokenAdesao);
-	ConfirmarPagamento(client:TokenAdesao, card:TokenCartao);
+	ConfirmarPagamento(card:TokenCartao, cost:Float);
 }
 
 enum AcessoError {
 	TransportError(err:String);
-	UserOrDataError(res:Response);
-	TemporarySystemError(res:Response);
-	PermanentSystemError(res:Response);
+	UserOrDataError(res:Response<Dynamic>);
+	TemporarySystemError(res:Response<Dynamic>);
+	PermanentSystemError(res:Response<Dynamic>);
 
-	AccessTokenError(err:Response);
-	JumpToError(err:Response, step:AcessoStep);
+	AccessTokenError(err:Response<Dynamic>);
+	JumpToError(err:Response<Dynamic>, step:AcessoStep);
 }
 

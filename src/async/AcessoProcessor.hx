@@ -113,30 +113,77 @@ class AcessoProcessor {
 				card.state = Queued(SolicitarAlteracaoTelefonePortador(client));
 				card.update();
 
+			case Queued(SolicitarAlteracaoTelefonePortador(client)):
+				var data:SolicitarAlteracaoTelefonePortadorData = {
+					CodCliente : card.userData.CodCliente,
+					DDD : card.userData.Celular.DDD,
+					DDI : card.userData.Celular.DDI,
+					Numero : card.userData.Celular.Numero,
+					TokenAdesao : client,
+					TpCliente : card.userData.TpCliente
+				}
+				var tounce = new GestaoPortador(token).SolicitarAlteracaoTelefonePortador(data);
+				card.state = Queued(ConfirmarAlteracaoTelefonePortador(client, tounce));
+
+			case Queued(ConfirmarAlteracaoTelefonePortador(client, tounce)):
+				var data:ConfirmarAlteracaoTelefonePortadorData = {
+					CodCliente : card.userData.CodCliente,
+					Token : tounce,
+					TokenAdesao : client,
+					TpCliente : card.userData.TpCliente
+				}
+				new GestaoPortador(token).ConfirmarAlteracaoTelefonePortador(data);
+				card.state = Queued(ComplementarDadosPrincipais(client));
+				card.update();
+
+			case Queued(ComplementarDadosPrincipais(client)):
+				var data:ComplementarDadosPrincipaisData = {
+					Documento : card.userData.Documento,
+					DtNascimento : card.userData.DtNascimento,
+					NomeMae : card.userData.NomeMae,
+					TpSexo : card.userData.TpSexo,
+					Portador : {
+						CodCliente : card.userData.CodCliente,
+						TokenAdesao : client,
+						TpCliente : card.userData.TpCliente
+					}
+				}
+				new GestaoPortador(token).ComplementarDadosPrincipais(data);
+				card.state = Queued(SolicitarCartaoIdentificado(client));
+				card.update();
+
 			case Queued(_):
 				trace('acesso: stopping on ${card.state} (not implemented or unsafe at the moment)');
 				break;  // FIXME remove
 
-			// case Queued(SolicitarAlteracaoTelefonePortador):
-			// 	// FIXME call the appropriate API
-			// 	card.state = Queued(ConfirmarAlteracaoTelefonePortador);
-			//
-			// case Queued(ConfirmarAlteracaoTelefonePortador):
-			// 	// FIXME call the appropriate API
-			// 	card.state = Queued(ComplementarDadosPrincipais);
-			//
-			// case Queued(ComplementarDadosPrincipais):
-			// 	// FIXME call the appropriate API
-			// 	card.state = Queued(SolicitarCartaoIdentificado);
-			//
-			// case Queued(SolicitarCartaoIdentificado):
-			// 	// FIXME call the appropriate API
-			// 	card.state = Queued(ConfirmarPagamento);
-			//
-			// case Queued(ConfirmarPagamento):
-			// 	// FIXME call the appropriate API
-			// 	card.state = CardRequested;
-			// 	card.submitting = false;
+			case Queued(SolicitarCartaoIdentificado(client)):
+				var data:SolicitarCartaoIdentificadoData = {
+					CodCliente : card.userData.CodCliente,
+					CodEspecieProduto : card.product,
+					TokenAdesao : client,
+					TpCliente : card.userData.TpCliente,
+					TpEntrega : Carta_Simples,
+					ValorCarga : 0.
+				}
+				var req = new GestaoAquisicaoCartao(token).SolicitarCartaoIdentificado(data);
+				card.state = Queued(ConfirmarPagamento(req.card, req.cost));
+				card.update();
+
+			case Queued(ConfirmarPagamento(req, cost)):
+				// FIXME call the appropriate API
+				var data:ConfirmarPagamentoData = {
+					AgenciaRecebedora : "",
+					AgenciaRecebedoraDV : "",
+					BancoRecebedor : "",
+					DataPagamento : Date.now(),
+					TokenOperacao : req,
+					TpMeioPagamento : Outros,
+					TpOperacao : Embossing_Carga_Cartao,
+					ValorPagamento : cost
+				}
+				new GestaoAquisicaoCartao(token).ConfirmarPagamento(data);
+				card.state = CardRequested;
+				card.submitting = false;
 
 			case AwaitingBearerData, AwaitingBearerConfirmation:
 				assert(false, card.state);
@@ -146,6 +193,7 @@ class AcessoProcessor {
 				break;  // nothing to do
 			}
 
+			// rate limit
 			Sys.sleep(0.1);
 		}
 	}
