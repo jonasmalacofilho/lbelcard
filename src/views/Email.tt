@@ -6,8 +6,7 @@
             <tbody>
                 <tr style="height:50px;background-color:rgb(75, 46, 104);width:600px;">
                     <td>
-                        <!--<img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png">-->
-			            <img src="./lbel_img_logo_branco.png" style="width:64px;margin-left:20px;"/>
+                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png">
                     </td>
                 </tr>
                 <tr>
@@ -48,8 +47,8 @@
         <table width="600px" align="center" cellspacing="0">
             <tbody style="margin-top:50px;background-color:rgb(75, 46, 104);color:#FFFFFF;padding:0px;border:none;margin:0px;">
                 <tr style="height:100px;">
-                    <td style="width:92px"><!-- TODO: SET THE RIGHT IMG! -->
-                        <img src="./lbel_img_logo_branco.png" style="width:64px;margin-left:20px;"/>
+                    <td style="width:92px">
+                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png">
                     </td>
                     <td style="font-size:10px"> 
                         L'Bel Incorporated : Foo bar foo bar 
