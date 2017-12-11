@@ -5,6 +5,8 @@ import eweb.Dispatch;
 import eweb.Web;
 import haxe.Json;
 
+using StringTools;
+
 typedef PersonalData = {
 	Bairro:String,
 	CEP:String,
@@ -39,47 +41,57 @@ class Novo {
 	static inline var RECAPTCHA_SITE_KEY = "6LeA3zoUAAAAAM4xAlcdzP27QA-mduMUcFvn1RH4";  // FIXME get from environment
 	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";  // FIXME get from environment
 
+	var notDigits = ~/\D/g;
+
 	public function new() {}
 
-	public function getDefault()
+	public function getDefault(?error : String)
 	{
 		Web.setReturnCode(200);
 #if dev
 		trace('dev-build: recaptcha installation skipped');
-		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind(null)));
+		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind(null), error));
 #else
-		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind({ siteKey:RECAPTCHA_SITE_KEY })));
+		Sys.println(views.Base.render("Peça seu cartão", views.Login.render.bind({ siteKey:RECAPTCHA_SITE_KEY }), error));
 #end
 	}
 
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
-		assert(~/^[0-9]+$/.match(args.cpf), args.cpf);
-
+		args.cpf = notDigits.replace(args.cpf, "");
+		
 #if dev
 		trace('dev-build: recaptcha validation skipped');
 #else
 		var recaptcha = Web.getParams().get("g-recaptcha-response");
 		weakAssert(recaptcha != null);
 		if(recaptcha == null || !recapChallenge(recaptcha))
-			throw "A verificação do reCAPTCHA falhou";  // FIXME error type
+		{
+			Web.redirect('${moveForward(null)}/?error=${'A verificação do reCAPTCHA falhou'.urlEncode()}');
+			return;
+		}
 #end
 
 		var user = db.BelUser.manager.select($belNumber == args.belNumber);
 		if (user == null || user.cpf != args.cpf) {
 #if dev
-			assert(user == null, args.belNumber);
-			trace('dev-build: ignoring missing assossiation to L\'Bel');
-			user = new db.BelUser(args.belNumber, args.cpf);
-			user.insert();
+			trace('dev-build: ignoring missing or incorrect association to L\'Bel');
+			if (user == null) {
+				user = new db.BelUser(args.belNumber, args.cpf);
+				user.insert();
+			}
 #else
 			show(args);
-			throw "Consultor não encontrado ou CPF não bate";  // FIXME error type
+			Web.redirect('${moveForward(null)}?error=${'Consultor não encontrado ou CPF não bate'.urlEncode()}');
+			return;
 #end
 		}
 
 		if (limitReached(user))
-			throw "Atingido o limite de solicitação de cartões para esse consultor";  // FIXME error type
+		{	
+			Web.redirect('${moveForward(null)}?error=${'Atingido o limite de solicitação de cartões para esse consultor'.urlEncode()}');
+			return;
+		}
 
 		var card = new db.CardRequest(user);
 		card.product = Environment.ACESSO_PRODUCT;
@@ -102,44 +114,43 @@ class Novo {
 
 	public function postDados(args:PersonalData)
 	{
-		assert(~/^[0-9]+$/.match(args.NumDocumento), args.NumDocumento);
-		assert(~/^[0-9]+$/.match(args.CodCliente), args.CodCliente);
+		args.CodCliente = notDigits.replace(args.CodCliente, "");
+		args.NumDocumento = notDigits.replace(args.NumDocumento, "");
+		args.DDI = notDigits.replace(args.DDI, "");
+		args.DDD = notDigits.replace(args.DDD, "");
+		args.NumeroTel = notDigits.replace(args.NumeroTel, "");
+		args.CEP = notDigits.replace(args.CEP, "");
+		assert(!args.DDI.startsWith("0"), args.DDI);
+		assert(args.DDI != "55" || !args.DDD.startsWith("0"), args.DDI, args.DDD);
 
 		var card = getCardRequest();
 		if (card == null)
-			throw "Nenhum cartão encontrado";  // FIXME error type
-		if (card.bearer.cpf != args.CodCliente)
-			throw "O CPF informado não pertence ao consultor";
-		assert(!limitReached(card.bearer));  // might happen because we don't lock the BelUser while creating a CardRequest
+		{
+			Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');	
+			return;
+		}
+		if (card.bearer.cpf != args.CodCliente) {
+#if dev
+			trace('dev-build: ignoring mismatch between authorized and current bearers');
+#else
+			Web.redirect('${moveForward(card)}?error=${'O CPF informado não pertence ao consultor'.urlEncode()}');	
+			return;
+#end
+		}
 
-		// FIXME dates: they actually this depend on the client locale; thus it
-		//       would be best to avoid touching dates on the server due to the
-		//       existance of locale, timezone and other corner cases that are
-		//       (very) hard to handle correctly
-
-		// leaving this here for it can be usefull
-		// 	//I pass dates as MM/DD/YYYY which is a nono
-		// 	if(f == 'DtNascimento' || f == 'DtExpedicao')
-		// 	{
-		// 		var split :Array<String> = Reflect.field(args, f).split('/');
-    //
-		// 		var p = [];
-		// 		for(s in split)
-		// 			p.push(Std.parseInt(s));
-    //
-		// 		var data = new Date(p[2], p[1]-1, p[0],0,0,0).getTime();
-		// 		Reflect.setField(d,f,data);
+		// might happen; we don't lock the BelUser when creating the CardRequest
+		assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
 
 		var userData:DadosDoUsuario = {
 			Documento : {
 				TpDocumento : args.TpDocumento,
 				NumDocumento : args.NumDocumento,
-				DtExpedicao : null,  // FIXME,
+				DtExpedicao : SerializedDate.fromStringBR(args.DtExpedicao),
 				OrgaoExpedidor : args.OrgaoExpedidor,
 				UFOrgao : args.UFOrgao,
 				PaisOrgao : args.PaisOrgao
 			},
-			DtNascimento : null,  // FIXME,
+			DtNascimento : SerializedDate.fromStringBR(args.DtNascimento),
 			NomeMae : args.NomeMae,
 			TpSexo : args.TpSexo,
 			Celular : {
@@ -171,47 +182,63 @@ class Novo {
 		Web.redirect(moveForward(card));
 	}
 
-	public function getConfirma()
+	public function getConfirma(?error : String)
 	{
 		Web.setReturnCode(200);
 		var card = getCardRequest();
-		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(card.userData)));
+		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(card.userData), error));
 	}
 
 	public function postConfirma()
 	{
 		var card = getCardRequest();
-		if (card == null) {
-			Web.setReturnCode(404);
-			Sys.println("Nenhum cartão encontrado");
+		if (card == null)
+		{
+			Web.redirect('${moveForward(card)}?error=${'Nenhum cartão encontrado'.urlEncode()}');
 			return;
 		}
-		card.state = Queued(SolicitarAdesaoCliente);
-		card.update();
-		var q = ProcessingQueue.global();
-		q.addTask(new AcessoProcessor(card.requestId).execute);  // FIXME
+
+		if (card.state.match(AwaitingBearerConfirmation)) {
+			// might happen; we don't lock the BelUser when creating the CardRequest
+			assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
+
+			card.state = Queued(SolicitarAdesaoCliente);
+			card.submitting = true;
+			card.update();
+
+			var q = async.Queue.global();
+			q.addTask("sleep:2");  // just something to trigger the bad errors
+			q.addTask(card.requestId);  // FIXME
+		}
+
 		Web.redirect(moveForward(card));
 	}
 
-	public function getStatus()
+	public function getStatus(key:String)
 	{
-		var card = getCardRequest();
-		if (card == null) {
-			Web.setReturnCode(404);
-			Sys.println("Nenhum cartão encontrado");
-			return;
+		var card = db.CardRequest.manager.select($requestId == key);
+		if (card == null)
+		{
+				Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');	
+				return;
 		}
+		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);
-		Sys.println(Type.enumConstructor(card.state));
+		Sys.println(views.Base.render("Acompanhe o progresso da sua solicitação",views.Status.render.bind(card.state)));
 	}
 
 	static function limitReached(user:db.BelUser)
 	{
 		var cards = db.CardRequest.manager.search($bearer == user);
 		for (i in cards) {
-			if (i.state.match(Queued(_) | Processing(_) | CardRequested))
+			if (i.state.match(Queued(_) | CardRequested)) {
+#if dev
+				trace('dev-build: overriding maxed out limit of cards per user');
+#else
 				return true;
+#end
+			}
 		}
 		return false;
 	}
@@ -223,7 +250,7 @@ class Novo {
 		return switch card.state {
 		case AwaitingBearerData: "/novo/dados";
 		case AwaitingBearerConfirmation: "/novo/confirma";
-		case _: "/novo/status";
+		case _: '/novo/status/${card.requestId}';
 		}
 	}
 

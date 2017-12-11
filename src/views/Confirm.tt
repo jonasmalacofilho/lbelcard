@@ -2,7 +2,7 @@
 (:static function render(d : acesso.Data.DadosDoUsuario) :)
 <div class="ui text container">
     <div class="ui segments borderless">
-        
+
         <div class="ui segment">
             <h2 class="ui header cor3">Por favor, confirme se suas informações estão corretas</h2>
         </div>
@@ -24,17 +24,17 @@
                     <p><b>Sexo:</b> (: switch d.TpSexo :) (:case Nao_informado:) Não Informado (: case Masculino :) Masculino (: case Feminino :) Feminino (:end:)
                 </div>
                 <div class="ui segment">
-                    (:* <p><b>Data de Nascimento:</b> (:Date.fromTime(d.DtNascimento).format("%d-%m-%Y"):)</p> *:)
+                    <p><b>Data de Nascimento:</b> (:d.DtNascimento.getDate().format("%d/%m/%Y"):)</p>
                 </div>
             </div>
         </div>
 
         <div class="ui segments">
-            
+
             <div class="ui segment">
                 <h3 class="ui sub header cor3">Informações de Contato</h3>
             </div>
-            
+
             <div class="ui segment">
                 <p><b>Telefone:</b> +(:d.Celular.DDI:) ((:d.Celular.DDD:)) (:d.Celular.Numero:)</p>
             </div>
@@ -51,7 +51,7 @@
                 <p>(:d.Endereco.Bairro:), (:d.Endereco.Cidade:),(:d.Endereco.UF:)<span style="float:right">
                 </div>
                 <div class="ui segment">
-                    <b>CEP:</b> (:d.Endereco.CEP:)</span></p>                
+                    <b>CEP:</b> (:d.Endereco.CEP:)</span></p>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
             <div class="ui segment">
                 <h3 class="ui sub header cor3">Informações Complementares</h3>
             </div>
-            
+
             <div class="ui horizontal segments">
                 <div class="ui segment">
                     <p><b>E-mail:</b>(:d.Email:)</p>
@@ -85,9 +85,9 @@
             <div class="ui horizontal segments">
                 <div class="ui segment">
                     <!-- TODO: Fix -->
-                    (:* <p><b>Data de Emissão:</b> (: Date.fromTime(d.Documento.DtExpedicao).format('%d/%m/%Y'):)</p> *:)
+                    <p><b>Data de Emissão:</b> (: d.Documento.DtExpedicao.getDate().format('%d/%m/%Y'):)</p>
                 </div>
-            
+
                 <div class="ui segment">
                     <p><b>Órgao Emissor:</b> (:d.Documento.OrgaoExpedidor:)</p>
                 </div>

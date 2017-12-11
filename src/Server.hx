@@ -4,6 +4,7 @@ import eweb.Web;
 class Server {
 	public static var requestId(default,null):String;
 	public static var shortId(default,null):String;
+	public static var codeVersion(default,null):Float;
 
 	static var stderr = Sys.stderr();
 
@@ -13,11 +14,11 @@ class Server {
 
 		initModule();
 
-		if (ProcessingQueue.handOver()) {
+		if (async.Handler.handOver()) {
 			ManagedModule.callFinalizers();
 			return;
 		}
-		ProcessingQueue.global().refreshCode(neko.vm.Module.local());
+		async.Queue.global().upgrade(neko.vm.Module.local(), codeVersion);
 
 		attemptRecovery();
 		ManagedModule.runAndCache(handleRequest);
@@ -28,8 +29,11 @@ class Server {
 		var ini_t = Sys.time();
 
 		haxe.Log.trace = function (msg, ?pos) ctrace(shortId, msg, pos);
-		ManagedModule.log = function (msg, ?pos) ctrace("mmgr", msg, pos);
+		ManagedModule.log = function (msg, ?pos) ctrace("eweb", msg, pos);
 		ManagedModule.addModuleFinalizer(crypto.Random.global.close, "random");
+
+		var modulePath = '${neko.vm.Module.local().name}.n';
+		codeVersion = sys.FileSystem.stat(modulePath).mtime.getTime();
 
 		assert(Environment.ACESSO_USERNAME != null);
 		assert(Environment.ACESSO_PASSWORD != null);
@@ -69,17 +73,23 @@ class Server {
 	static function attemptRecovery()
 	{
 		var share = new eweb._impl.ToraRawShare("recovery-has-run");
-		var hasRun:Bool = share.get(true);
+		var lastRecovery:Null<Float> = share.get(true);
 		try {
-			if (!hasRun) {
+			if (lastRecovery == null || codeVersion > lastRecovery) {
 				trace('recovery: reenqueue requests');
-				var q = ProcessingQueue.global();
-				for (card in db.CardRequest.manager.all()) {  // FIXME must have a better query
-					if (!card.state.match(Queued(_) | Processing(_) | Failed(TransportError(_)|TemporarySystemError(_), _)))  // FIXME remove Processing
+				var q = async.Queue.global();
+				for (card in db.CardRequest.manager.search($submitting == true)) {  // FIXME notifications
+#if dev
+					// FIXME remove bellow
+					card.state = Queued(SolicitarAdesaoCliente);
+					card.update();
+					// FIXME remove above
+#end
+					if (!card.state.match(Queued(_) | Failed(TransportError(_) | TemporarySystemError(_), _)))
 						continue;
-					q.addTask(new AcessoProcessor(card.requestId).execute);
+					q.addTask(card.requestId);
 				}
-				share.set(true);
+				share.set(codeVersion);
 			}
 			share.commit();
 		} catch (err:Dynamic) {
@@ -103,18 +113,8 @@ class Server {
 				uri = "/";
 			trace('begin: $method $uri ($requestId)');
 
-			// use the queue for something
-			var q = ProcessingQueue.global();
-			q.addTask(function () trace("Hello from the processing queue"));
-			q.addTask(Sys.sleep.bind(3));
-			q.addTask(function () trace("Waited for three seconds... all good, bye"));
-			q.addTask(function () {
-				trace("Can acess queue from within queue processing?");
-				ProcessingQueue.global().addTask(function () trace("Yes"));
-			});
-
-			show(Web.getParams().get("g-recaptcha-response"));
-			show([for (k in Web.getParams().keys()) '$k: ${Web.getParams().get(k)}'].join("\n"));
+			var q = async.Queue.global();
+			q.addTask("sleep:3");
 
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);

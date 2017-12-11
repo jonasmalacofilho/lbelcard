@@ -13,6 +13,9 @@ class MainJS
         var sum : Int = 0;
         var rest : Int = 0;
 
+        var ereg = ~/\D/g;
+        e = ereg.replace(e, "");
+        
         if(e == '00000000000')
             return false;
 

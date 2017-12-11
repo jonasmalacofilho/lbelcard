@@ -4,27 +4,23 @@ class GestaoAquisicaoCartao extends GestaoBase {
 	static inline var ENDPOINT =
 			"https://servicos.acessocard.com.br/api2.0/Services/rest/GestaoAquisicaoCartao.svc";
 
-	public function SolicitarAdesaoCliente(params:SolicitarAdesaoClienteParams):{ newUser:Bool, client:ClientGuid }
+	public function new(token)
+		super(token);
+
+	public function SolicitarAdesaoCliente(data:SolicitarAdesaoClienteData):{ newUser:Bool, client:TokenAdesao }
 	{
-		var res:Response = request(ENDPOINT, "solicitar-adesao-cliente", params);
+		var res:Response = request(ENDPOINT, "solicitar-adesao-cliente", data);
 		switch res.ResultCode {
 		case 0:
-			return { newUser:true, client:(res.Data:ClientGuid) };
+			return { newUser:true, client:(res.Data:TokenAdesao) };
 		case 1:
-			return { newUser:false, client:(res.Data:ClientGuid) };
-		case 99:
+			return { newUser:false, client:(res.Data:TokenAdesao) };
+		case 5, 6:  // error in: reduced data, complete data
+			throw UserOrDataError(res);
+		case 99:  // [undocumented] invalid token
 			throw TemporarySystemError(res);
 		case err:
 			throw PermanentSystemError(res);
-		}
-	}
-
-	public function SolicitarCartaoIdentificado(params:SolicitarCartaoIdentificadoParams):CardGuid
-	{
-		var res:Response = request(ENDPOINT, "SolicitarCartaoIdentificado", params);
-		switch res.ResultCode {
-		case 0: return (res.Data:CardGuid);
-		case err: throw PermanentSystemError(res);
 		}
 	}
 }

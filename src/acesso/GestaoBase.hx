@@ -4,24 +4,39 @@ class GestaoBase {
 	static inline var ENDPOINT =
 			"https://servicos.acessocard.com.br/api2.0/Services/rest/GestaoAquisicaoCartao.svc";
 
-	public function new() {}
+	var token:TokenAcesso;
 
-	public function CriarToken(params:{ Email:String, Senha:String }):TokenAcesso
+	public static function CriarToken(params:{ Email:String, Senha:String }):TokenAcesso
 	{
 		var email = StringTools.urlEncode(params.Email);
 		var senha = StringTools.urlEncode(params.Senha);
-		var res:Response = request(ENDPOINT, 'criar-token/$email/$senha', params);
+		var res:Response = doNetworkRequest(ENDPOINT, 'criar-token/$email/$senha', params);
 		switch res.ResultCode {
 		case 0:
 			return (res.Data:TokenAcesso);
-		case 5 /* unspecified */ | 99 /* internal */:
+		case 5, 99:  // unspecified, internal
 			throw TemporarySystemError(res);
 		case _:
 			throw PermanentSystemError(res);
 		}
 	}
 
-	function request(endpoint:String, api:String, params:Dynamic):Dynamic
+	function new(token:TokenAcesso)
+		this.token = token;
+
+	function request(endpoint:String, api:String, data:Dynamic):Dynamic
+	{
+		var params:Params<Dynamic> = {
+			Language : REST,
+			NomeCanal : Webservice,
+			RecId : 42,  // FIXME
+			TokenAcesso : token,
+			Data : data
+		}
+		return doNetworkRequest(endpoint, api, params);
+	}
+
+	static function doNetworkRequest(endpoint:String, api:String, params:Dynamic):Dynamic
 	{
 		var ret:Dynamic = null;
 		var url = '$endpoint/$api';

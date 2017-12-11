@@ -22,11 +22,46 @@ Typed values based on basic types
 
 abstract TokenAcesso(String) from String to String {}
 
-abstract ClientGuid(String) from String to String {}
+/**
+Global client Id at Acesso
+**/
+abstract TokenAdesao(String) from String to String {}
 
-abstract CardGuid(String) from String to String {}
+abstract TokenCartao(String) from String to String {}
 
-abstract SerializedDate(String) from String to String {}
+/**
+Generic token for requesting, confirming or executing user data changes
+**/
+abstract TokenAlteracao(String) from String to String {}
+
+abstract SerializedDate(String) to String {
+	function new(s)
+		this = s;
+
+	public function getTime():Float
+	{
+		assert(~/^\/Date\((\d+)\)\/$/.match(this), this);
+		return Std.parseFloat(this.substring("/Date(".length, this.indexOf(")")));
+	}
+
+	@:to public function getDate():Date
+		return Date.fromTime(getTime());
+
+	public static function fromStringBR(s:String):SerializedDate
+	{
+		var r = ~/^(\d+)\/(\d+)\/(\d+)$/;
+		if (!r.match(s))
+			throw 'Invalid BR datestring: $s (expected DD/MM/YYYY)';
+		var day = Std.parseInt(r.matched(1));
+		var month = Std.parseInt(r.matched(2)) - 1;
+		var year = Std.parseInt(r.matched(3));
+		assert(day >= 1 && day <= 31, day);
+		assert(month >= 0 && month <= 11, month + 1);
+		assert(year >= 1900 && year <= Date.now().getFullYear(), year);
+		var t = new Date(year, month, day, 0, 0, 0).getTime();
+		return new SerializedDate('/Date($t)/');
+	}
+}
 
 abstract CodEspecieProduto(String) from String to String {}
 
@@ -104,6 +139,18 @@ abstract CodCliente(String) from String to String {}
 	}
 }
 
+@:enum abstract TpEmail(Int) {
+	public var Residencial = 0;
+	public var Comercial = 1;
+	public var Secundario = 2;
+
+	@:from static function fromInt(v:Int):TpEmail
+	{
+		assert(v >= 0 && v <= 2, v);
+		return cast v;
+	}
+}
+
 /*
 Intermidiate data types supplied by the API client
 */
@@ -163,17 +210,49 @@ typedef DadosDoUsuario = {
 	TpCliente : TpCliente
 }
 
+typedef Params<T> = {
+	> Meta,
+	Data : T
+}
+
 /*
 Data types sent to the upstream APIs
 */
 
-typedef SolicitarAdesaoClienteParams = {
-	> Meta,
-	Data : {
-		CodEspecieProduto : CodEspecieProduto,
-		Usuario : DadosDoUsuario
-	}
+typedef SolicitarAdesaoClienteData = {
+	CodEspecieProduto : CodEspecieProduto,
+	Usuario : DadosDoUsuario
 }
 
-typedef SolicitarCartaoIdentificadoParams = Dynamic;
+typedef AlterarEnderecoPortadorData = {
+	CodCliente : CodCliente,
+	NovoEndereco : Endereco,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
+}
+
+typedef SolicitarAlteracaoEmailPortadorData = {
+	CodCliente : CodCliente,
+	NovoEmail : {
+		EnderecoEmail : String,
+		Principal : Bool,
+		TpEmail : TpEmail
+	},
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
+}
+
+typedef ConfirmarSolicitarAlteracaoEmailPortadorData = {
+	CodCliente : CodCliente,
+	TokenSolicitacaoAlteracao : TokenAlteracao,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
+}
+
+typedef EfetivarAlteracaoEmailPortadorData = {
+	CodCliente : CodCliente,
+	TokenEfetivacaoAlteracao : TokenAlteracao,
+	TokenAdesao : TokenAdesao,
+	TpCliente : TpCliente
+}
 

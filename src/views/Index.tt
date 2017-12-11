@@ -28,6 +28,10 @@
           <li> o único que tem a marca L'BEL</li>
           <li> mais uma opção para recebimento de suas bonificações</li>
       </ul>
+
+      <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
+          <a class="ui massive button fundo3 cor0" href="/novo">Peça já!<i class="right arrow icon"></i></a>
+      </div>
 </div> <!--ui vertical stripe segment-->
 
 
