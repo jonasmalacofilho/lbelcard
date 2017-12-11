@@ -1,0 +1,42 @@
+(: static function render (name : String, email : String, url : String) :)
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <body style="font-family: sans-serif; color: #666;">
+        <table style="width:600px" align="center">
+            <tbody>
+                <tr>
+                    <td style="height:65px,background-color:rgb(75, 46, 104);">
+                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png"/>
+                    </td>
+                </tr>
+                <tr>
+                    <table style="width:540px">
+                        <tbody>
+                            <tr>
+                                <td style="padding-top:32px;font-size:24px;color:rgb(75, 46, 104);">
+                                    Olá (:nome:)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px">Obrigado por escolher este cartão!</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:14px">O L'BelCard é mais um importante passo para você se tornar 
+                                ainda melhor em seus negócios!</td>
+                            </td>
+                            
+                            <tr>
+                                <td style="font-size:14px">
+                                    Acesse <a href="(:url:)">este link</a> para ver o status de seu cartão.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>
+
+                <tr><td style="padding-top:50px;">&nbsp;</td></tr>
+                <!--TODO: Finish this -->
+            </tbody>
+        </table>
+    </body>
+</html>
+(:end:)
