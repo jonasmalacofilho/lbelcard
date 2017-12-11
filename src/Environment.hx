@@ -22,5 +22,11 @@ class Environment {
 	Desired card product code
 	**/
 	public static var ACESSO_PRODUCT:String;
+
+
+	/**
+	Sendgrid API key
+	**/
+	public static var SENDGRID_KEY : String;
 }
 

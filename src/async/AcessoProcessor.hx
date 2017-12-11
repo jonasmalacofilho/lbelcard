@@ -64,7 +64,6 @@ class AcessoProcessor {
 				else
 					card.state = Queued(AlterarEnderecoPortador(client.client));
 				card.update();
-
 			case Queued(AlterarEnderecoPortador(client)):
 				var data:AlterarEnderecoPortadorData = {
 					CodCliente : card.userData.CodCliente,
@@ -187,6 +186,12 @@ class AcessoProcessor {
 			case AwaitingBearerData, AwaitingBearerConfirmation:
 				assert(false, card.state);
 				break;
+
+			case SendEmail:
+				new sendgrid.Email(card.userData.NomeCompleto, card.userData.Email, 'https://lbelcard.com.br/novo/status/${card.requestId}').execute();
+				card.state = Queued(SolicitarAdesaoCliente);
+				card.update();
+
 
 			case Failed(_), CardRequested:
 				break;  // nothing to do

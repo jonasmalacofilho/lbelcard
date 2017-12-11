@@ -5,6 +5,7 @@ import acesso.Data;
 enum CardRequestState {
 	AwaitingBearerData;
 	AwaitingBearerConfirmation;
+	SendEmail;
 	Queued(step:AcessoStep);
 	Failed(err:AcessoError, onState:CardRequestState);
 	CardRequested;

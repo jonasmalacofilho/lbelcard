@@ -202,7 +202,7 @@ class Novo {
 			// might happen; we don't lock the BelUser when creating the CardRequest
 			assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
 
-			card.state = Queued(SolicitarAdesaoCliente);
+			card.state = SendEmail;//Queued(SolicitarAdesaoCliente);
 			card.submitting = true;
 			card.update();
 

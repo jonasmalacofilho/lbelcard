@@ -1,9 +1,5 @@
 (:static function render() :)
 
-<!-- semantic calendar stylesheet -->
-<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/b54ebdbe/dist/calendar.min.css" rel="stylesheet" type="text/css">
-<!-- semantic calendar js -->
-<script src="https://cdn.rawgit.com/lehonma/Semantic-UI-Calendar/01933d0c/dist/calendar.js"></script>
 <!-- JQuery Mask -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
 <script>

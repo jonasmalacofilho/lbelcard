@@ -17,5 +17,15 @@ class Index {
 	{
 		d.dispatch(new Novo());
 	}
+
+	#if dev
+	public function doEmail()
+	{
+		var s = new sendgrid.Email('Caio', "caio.honma@gmail.com", "https://lbelcard.com.br/novo/status/looongstring");
+		s.execute();
+		Sys.println('ok');
+
+	}
+	#end
 }
 
