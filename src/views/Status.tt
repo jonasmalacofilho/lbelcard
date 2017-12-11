@@ -1,6 +1,12 @@
 (: using StringTools :)
 (: import db.Types :)
 (: static function render (card : CardRequestState) :)
+<script>
+    $(document).ready(function()
+    {
+        setTimeout(function(){window.location.reload();}, 30000);
+    });
+</script>
 <div class="ui vertical segment">
     <div class="ui container">
         <div class="ui ordered steps">
