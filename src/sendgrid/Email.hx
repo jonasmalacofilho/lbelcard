@@ -22,12 +22,20 @@ class Email {
         var req = new haxe.Http(url);
         req.setHeader('Content-Type', "application/json");
         req.setHeader("User-Agent", "BELCARD");
-        req.setHeader("Authorization", 'Bearer ${"TODO: SENDGRID_KEY"}');
+        req.setHeader("Authorization", 'Bearer ${Environment.SENDGRID_KEY}');
         req.setPostData(haxe.Json.stringify(payload));
 
         var status = null;
         req.onStatus = function(code) {status = code;};
-        
-        
+        req.onError = function(msg)
+        {
+            trace(msg);
+            if(status <= 400 && status < 500)
+                throw 'Invalid field : ${msg}';
+            else
+                throw 'Unexpected error : ${msg}';
+        }
+
+        req.request(true);        
     }
 }
