@@ -41,7 +41,7 @@ class GestaoBase {
 		var ret:Dynamic = null;
 		var url = '$endpoint/$api';
 		var req = new haxe.Http(url);
-		var log = new db.AcessoApiLog(url, "POST");
+		var log = new db.RemoteCallLog(url, "POST");
 
 		req.addHeader("Content-Type", "application/json");
 		req.addHeader("User-Agent", "haxe/neko");
@@ -51,19 +51,24 @@ class GestaoBase {
 		req.setPostData(requestData);
 
 		var statusCode = null;
+		var t0 = Sys.time();
 		req.onStatus = function (code) statusCode = code;
 		req.onError = function (msg) {
-			trace('acesso: call FAILED with $msg ($statusCode)');
+			var t1 = Sys.time();
+			trace('acesso: call FAILED with $msg ($statusCode) after ${Math.round((t1 - t0)*1e3)} ms');
 			var err = TransportError(msg);
 			log.responseCode = statusCode;
 			log.responseData = Std.string(err);
+			log.timing = t1;
 			log.update();
 			throw err;
 		}
 		req.onData = function (responseData) {
-			trace('acesso: got $statusCode');
+			var t1 = Sys.time();
+			trace('acesso: got $statusCode after ${Math.round((t1 - t0)*1e3)} ms');
 			log.responseCode = statusCode;
 			log.responseData = responseData;
+			log.timing = t1;
 			log.update();
 			ret = haxe.Json.parse(responseData);
 		}

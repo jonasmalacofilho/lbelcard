@@ -57,7 +57,7 @@ class Server {
 		}
 
 		var allTables:Array<sys.db.Manager<Dynamic>> = [
-			db.AcessoApiLog.manager,
+			db.RemoteCallLog.manager,
 			db.BelUser.manager,
 			db.CardRequest.manager
 		];

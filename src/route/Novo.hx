@@ -56,9 +56,9 @@ class Novo {
 #end
 	}
 
-	public function postDefault(args:{ belNumber:Int, cpf:String})
+	public function postDefault(args:{ belNumber:String, cpf:String})
 	{
-		// FIXME future proof belNumber making it a String
+		args.belNumber = notDigits.replace(args.belNumber, "").trim();
 		args.cpf = notDigits.replace(args.cpf, "").trim();
 
 #if dev
