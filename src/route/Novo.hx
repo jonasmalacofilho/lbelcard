@@ -42,6 +42,7 @@ class Novo {
 	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";  // FIXME get from environment
 
 	var notDigits = ~/\D/g;
+	var specials = ~/\W/g;
 
 	public function new() {}
 
@@ -58,7 +59,8 @@ class Novo {
 
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
-		args.cpf = notDigits.replace(args.cpf, "");
+		// FIXME change belNumber to String
+		args.cpf = notDigits.replace(args.cpf, "").trim();
 
 #if dev
 		trace('dev-build: recaptcha validation skipped');
@@ -115,11 +117,17 @@ class Novo {
 	public function postDados(args:PersonalData)
 	{
 		args.CodCliente = notDigits.replace(args.CodCliente, "");
-		args.NumDocumento = notDigits.replace(args.NumDocumento, "");
 		args.DDI = notDigits.replace(args.DDI, "");
 		args.DDD = notDigits.replace(args.DDD, "");
 		args.NumeroTel = notDigits.replace(args.NumeroTel, "");
 		args.CEP = notDigits.replace(args.CEP, "");
+		args.NumDocumento = specials.replace(args.NumDocumento, "");
+		for (f in Reflect.fields(args)) {
+			var val = Reflect.field(args, f);
+			if (Std.is(val, String))
+				Reflect.setField(args, f, val.trim());
+		}
+
 		assert(!args.DDI.startsWith("0"), args.DDI);
 		assert(args.DDI != "55" || !args.DDD.startsWith("0"), args.DDI, args.DDD);
 
