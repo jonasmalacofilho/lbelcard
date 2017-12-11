@@ -68,11 +68,6 @@ class CardReq
                         continue;
 
                     var elem = new JQuery('input[name="${k}"]');
-                    
-                    if(!k.startsWith("Dt"))
-                        elem.val(val);
-                    else
-                        untyped elem.parent().parent().calendar('set date', val, true, true);
                 }
             }
 

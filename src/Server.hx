@@ -42,9 +42,7 @@ class Server {
 		assert(Environment.MAIN_DB != null && Environment.MAIN_DB.indexOf("sqlite3://") == 0, Environment.MAIN_DB);
 
 		var dbPath = Environment.MAIN_DB.substr("sqlite3://".length);
-		trace("-----------------------------------------------------------");
 		trace('sqlite: open $dbPath');
-		trace("-----------------------------------------------------------");
 		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(dbPath);
 		ManagedModule.addModuleFinalizer(cnx.close, "db/main");
 		sys.db.Manager.initialize();
