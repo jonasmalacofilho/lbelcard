@@ -124,8 +124,8 @@ class Novo {
 		args.NumDocumento = specials.replace(args.NumDocumento, "");
 		for (f in Reflect.fields(args)) {
 			var val = Reflect.field(args, f);
-			if (Std.is(val, String))
-				Reflect.setField(args, f, val.trim());
+			if (val != null && Std.is(val, String))
+				Reflect.setField(args, f, StringTools.trim(val));
 		}
 
 		assert(!args.DDI.startsWith("0"), args.DDI);
