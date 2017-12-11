@@ -11,10 +11,10 @@
 </script>
 <div class="ui text container">
 <form method="POST" action="/novo/dados" class="ui form error">
-    
+
     <div class="ui segment">
         <h3 class="ui dividing header">Dados Pessoais</h3>
-            
+
             <!-- Full name -->
             <div class="field">
                 <label>Nome Completo</label>
@@ -39,11 +39,11 @@
                         <div class="ui input left icon">
                             <i class="time icon"></i>
                             <input type="text" name="DtNascimento" id='DtNascimento'>
-                        </div>                   
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Mom's name -->
             <div class="field">
                 <label>Nome completo de sua Mãe</label>
@@ -58,7 +58,7 @@
 
         <!-- Phone info -->
         <div class="fields">
-           
+
 
             <div class="three two field wide">
                 <label>DDI</label>
@@ -73,9 +73,9 @@
                 <label>Número de Celular</label>
                 <input type="text" name="NumeroTel" placeholder="XXXXX-XXXX" maxlength="11" id="cel"/>
             </div>
-            
+
             <input type='hidden' name='TpTelefone' value='0'/>
-            
+
         </div>
 
         <h4 class="ui">Endereço de Residencial</h4>
@@ -208,9 +208,9 @@
                 <input type="text" name="PaisOrgao" value="Brasil" maxlength="30"/>
             </div>
         </div>
-        
+
         <button class="ui button fundo3 inverted fluid">Enviar</button>
-        
+
     </div>
 </form>
 

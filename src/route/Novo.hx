@@ -59,7 +59,7 @@ class Novo {
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
 		args.cpf = notDigits.replace(args.cpf, "");
-		
+
 #if dev
 		trace('dev-build: recaptcha validation skipped');
 #else
@@ -88,7 +88,7 @@ class Novo {
 		}
 
 		if (limitReached(user))
-		{	
+		{
 			Web.redirect('${moveForward(null)}?error=${'Atingido o limite de solicitação de cartões para esse consultor'.urlEncode()}');
 			return;
 		}
@@ -126,14 +126,14 @@ class Novo {
 		var card = getCardRequest();
 		if (card == null)
 		{
-			Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');	
+			Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');
 			return;
 		}
 		if (card.bearer.cpf != args.CodCliente) {
 #if dev
 			trace('dev-build: ignoring mismatch between authorized and current bearers');
 #else
-			Web.redirect('${moveForward(card)}?error=${'O CPF informado não pertence ao consultor'.urlEncode()}');	
+			Web.redirect('${moveForward(card)}?error=${'O CPF informado não pertence ao consultor'.urlEncode()}');
 			return;
 #end
 		}
@@ -218,7 +218,7 @@ class Novo {
 		var card = db.CardRequest.manager.select($requestId == key);
 		if (card == null)
 		{
-				Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');	
+				Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');
 				return;
 		}
 		show(Type.enumConstructor(card.state));
