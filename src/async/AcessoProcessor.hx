@@ -49,6 +49,11 @@ class AcessoProcessor {
 				card.state = onState;
 				continue;
 
+			case SendEmail:
+				new sendgrid.Email(card.userData.NomeCompleto, card.userData.Email, 'https://lbelcard.com.br/novo/status/${card.requestId}').execute();
+				card.state = Queued(SolicitarAdesaoCliente);
+				card.update();
+
 			case Queued(_) if (token == null):
 				var params = { Email:ACESSO_USERNAME, Senha:ACESSO_PASSWORD };
 				token = GestaoBase.CriarToken(params);
@@ -186,12 +191,6 @@ class AcessoProcessor {
 			case AwaitingBearerData, AwaitingBearerConfirmation:
 				assert(false, card.state);
 				break;
-
-			case SendEmail:
-				new sendgrid.Email(card.userData.NomeCompleto, card.userData.Email, 'https://lbelcard.com.br/novo/status/${card.requestId}').execute();
-				card.state = Queued(SolicitarAdesaoCliente);
-				card.update();
-
 
 			case Failed(_), CardRequested:
 				break;  // nothing to do
