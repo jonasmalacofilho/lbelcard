@@ -9,7 +9,6 @@ enum CardRequestState {
 	Queued(step:AcessoStep);
 	Failed(err:AcessoError, onState:CardRequestState);
 	CardRequested;
-	// UserNotified(ofState:CardRequestState);  // idea on how to handle emails
 }
 
 enum AcessoStep {

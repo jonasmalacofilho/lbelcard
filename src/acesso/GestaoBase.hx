@@ -45,17 +45,17 @@ class GestaoBase {
 
 		req.addHeader("Content-Type", "application/json");
 		req.addHeader("User-Agent", "haxe/neko");
-		req.cnxTimeout = 10;  // TODO reevaluate
+		req.cnxTimeout = 12;  // recommended by AcessoCard
 
 		var requestData = haxe.Json.stringify(params);
 		req.setPostData(requestData);
 
-		var statusCode = 0;
+		var statusCode = null;
 		req.onStatus = function (code) statusCode = code;
 		req.onError = function (msg) {
-			trace('acesso: call FAILED with $msg');
-			weakAssert(statusCode == null, "statusCode available, must update the code to log it");
+			trace('acesso: call FAILED with $msg ($statusCode)');
 			var err = TransportError(msg);
+			log.responseCode = statusCode;
 			log.responseData = Std.string(err);
 			log.update();
 			throw err;
