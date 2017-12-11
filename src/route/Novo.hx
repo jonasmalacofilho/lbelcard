@@ -21,7 +21,7 @@ typedef PersonalData = {
 	NomeCompleto:String,
 	NomeMae:String,
 	NumDocumento:String,
-	NumeroRes:String,
+	NumeroEnd:String,
 	NumeroTel:String,
 	PaisOrgao:String,
 	TpCliente:Int,
@@ -165,7 +165,7 @@ class Novo {
 				TpEndereco : args.TpEndereco,
 				CEP : args.CEP,
 				Logradouro : args.Logradouro,
-				Numero : args.NumeroRes,  // FIXME rename
+				Numero : args.NumeroEnd,
 				Complemento : args.Complemento,
 				Bairro : args.Bairro,
 				Cidade : args.Cidade,
@@ -207,8 +207,7 @@ class Novo {
 			card.update();
 
 			var q = async.Queue.global();
-			q.addTask("sleep:2");  // just something to trigger the bad errors
-			q.addTask(card.requestId);  // FIXME
+			q.addTask(card.requestId);
 		}
 
 		Web.redirect(moveForward(card));

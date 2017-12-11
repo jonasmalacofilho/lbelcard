@@ -27,7 +27,7 @@ class CardReq
             
             validate();
             
-            //TODO: Check if should fire change or blur evt
+            // TODO check if should fire change or blur evt
             new JQuery('#CEP').blur(function(_){
                 
                 var cur = js.jquery.Helper.JTHIS;
@@ -43,7 +43,7 @@ class CardReq
 
             untyped $('#CPF').mask('000.000.000-00');
             untyped $('#CEP').mask('00000-000');
-            untyped $('#cel').mask('00000-0000');
+            untyped $('#cel').mask('00000-0000');  // FIXME only if DDI == 55, if that
             untyped $('#DtNascimento').mask('00/00/0000');
             untyped $('#DtExpedicao').mask('00/00/0000');
 
@@ -135,8 +135,8 @@ class CardReq
                 new JQuery('#bairro').val(addr.bairro);
                 new JQuery('#logradouro').val(addr.endereco);
             case None:
-                //TODO: Fix this later
-                js.Browser.alert('CEP inválido! Por favor, verifique se o valor está correto');
+                // FIXME ??
+                js.Browser.alert('CEP inválido; por favor, verifique se o valor está correto');
             case Failure(e):
                 trace('error @webmania : $e');
         }
@@ -156,7 +156,7 @@ class CardReq
                 NomeCompleto : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite seu nome completo (sem abreviações)'
+                        prompt : 'Digite seu nome completo, sem abreviações'
                     }]
                 },
                 TpSexo : {
@@ -172,25 +172,25 @@ class CardReq
                     },
                     {
                         type : 'date',
-                        prompt : 'Digite uma data Válida'
+                        prompt : 'Digite uma data válida'
                     }]
                 },
                 NomePai : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite o nome completo de seu pai (sem abreviações)'
+                        prompt : 'Digite o nome completo de seu pai, sem abreviações'
                     }]
                 },
                 NomeMae : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite o nome completo de sua mãe (sem abreviações)'
+                        prompt : 'Digite o nome completo de sua mãe, sem abreviações'
                     }]
                 },
                 DDI : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite um DDI válido'
+                        prompt : 'Digite o DDI to telefone informado'
                     }]
                 },
                 DDD : {
@@ -199,14 +199,14 @@ class CardReq
                         prompt : 'Digite o DDD do telefone informado'
                     },
                     {
-                        type : 'exactLength[2]',
-                        prompt : 'DDD inválido, ele deve possuir apenas 2 dígitos'
+                        type : 'exactLength[2]',  // FIXME only if DDI == 55
+                        prompt : 'DDD inválido, ele só deve possuir 2 dígitos'
                     }]
                 },
                 NumeroTel : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite um número de telefone'
+                        prompt : 'Digite o número de telefone'
                     }]
                 },
                 TpTelefone : {
@@ -218,54 +218,54 @@ class CardReq
                 CEP : {
                     rules : [{
                         type : 'exactLength[9]',
-                        prompt : 'CEP Inválido'
+                        prompt : 'CEP inválido'
                     }]
                 },
                 UF : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Preencha o campo de CEP'
+                        prompt : 'Preencha o estado'
                     }]
                 },
                 Cidade : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Preencha o campo de CEP'
+                        prompt : 'Preencha a cidade'
                     }]
                 },
                 Bairro : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite o bairro, ou preencha o campo de CEP'
+                        prompt : 'Preencha o bairro'
                     }]
                 },
                 Logradouro : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite a rua ou preencha o campo de CEP'
+                        prompt : 'Preencha o logradouro (rua, avenida, etc.)'
                     }]
                 },
-                NumeroRes : {
+                NumeroEnd : {
                     rules : [{
                         type : 'empty',
-                        prompt : "Preencha o número de residência"
+                        prompt : 'Preencha o número no logradouro (ou informe "s/n")'
                     }]
                 },
-                //Skipping complemento
+                // skipping Complemento, it can be anything, really
                 TpEndereco : {
                     rules : [{
                         type : 'empty',
-                        prompt : "Preencha o Tipo de Complemento"
+                        prompt : 'Informe o tipo do endereço'
                     }]
                 },
                 Email : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite seu e-mail de contato'
+                        prompt : 'Digite seu email de contato'
                     }
                     ,{
                         type : 'email',
-                        prompt : 'Digite um e-mail válido'
+                        prompt : 'Digite um email válido'
                     }]
                 },
                 CodCliente : {
@@ -275,13 +275,13 @@ class CardReq
                     },
                     {
                         type : 'validaCPF',
-                        prompt : 'CPF Inválido'
+                        prompt : 'CPF inválido'
                     }]
                 },
                 NumDocumento : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Digite um número de documento'
+                        prompt : 'Digite o número de documento'
                     },
                     {
                         type : 'regExp[/[a-zA-Z0-9]+/g]',
@@ -301,26 +301,25 @@ class CardReq
                 TpDocumento : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Preencha o tipo de Documento informado'
+                        prompt : 'Preencha o tipo do documento informado'
                     }]
                 },
-                //this isn't req...but eh
-                OrgaoExpeditor : {
+                OrgaoExpedidor : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Preencha a sigla do órgão expeditor do documento'
+                        prompt : 'Preencha a sigla do órgão expedidor'
                     }]
                 },
                 UFOrgao : {
                     rules : [{
                         type : 'empty',
-                        prompt : "Preencha o estado do órgão emissor do Documento"
+                        prompt : 'Preencha o estado onde o documento foi emitido'
                     }]
                 },
                 PaisOrgao : {
                     rules : [{
                         type : 'empty',
-                        prompt : 'Preencha o país do órgão emissor do documento'
+                        prompt : 'Preencha o país onde o documento foi emitido'
                     }]
                 }
 

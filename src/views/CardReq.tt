@@ -33,13 +33,11 @@
                 </div>
 
                 <!-- Birth date -->
-                <!-- TODO: Implement Semantic Calendar -->
                 <div class="field">
                     <label>Data de Nascimento</label>
                     <div class="ui calendar">
                         <div class="ui input left icon">
                             <i class="time icon"></i>
-                            <!-- TODO: set date as JS -->
                             <input type="text" name="DtNascimento" id='DtNascimento'>
                         </div>                   
                     </div>
@@ -68,15 +66,14 @@
             </div>
             <div class="three field wide">
                 <label>DDD</label>
-                <input type="number" name="DDD" placeholder="DDD" maxlength="2"/>
+                <input type="number" name="DDD" placeholder="XX" maxlength="2"/>(:*FIXME maxlength=2 only if DDI == 55*:)
             </div>
 
             <div class="ten field wide">
                 <label>Número de Celular</label>
-                <input type="text" name="NumeroTel" placeholder="999999999" maxlength="11" id="cel"/>
+                <input type="text" name="NumeroTel" placeholder="XXXXX-XXXX" maxlength="11" id="cel"/>
             </div>
             
-            <!-- TODO: Override this? (It can bite me in the ass later) --> 
             <input type='hidden' name='TpTelefone' value='0'/>
             
         </div>
@@ -90,7 +87,7 @@
         <div class="two fields">
             <div class="field">
                 <label>CEP</label>
-                <input type="text" name="CEP" id="CEP" maxlength="8" placeholder="Digite apenas os números" title="Preencha este campo primeiro para autocompletar as informações">
+                <input type="text" name="CEP" id="CEP" maxlength="8" placeholder="XXXXX-XXX" title="Preencha este campo primeiro para autocompletar as informações">
             </div>
 
             <div class="field">
@@ -119,7 +116,7 @@
 
             <div class="two wide field">
                 <label>Número</label>
-                <input type="text" name="NumeroRes" maxlength="10" />
+                <input type="text" name="NumeroEnd" maxlength="10" />
             </div>
 
             <div class="two wide field">
@@ -196,14 +193,11 @@
                 </select>
             </div>
 
-            <!-- Doc. emitter (e.g. SSP) -->
-            <!-- not required, but eh... the other fields are, so -->
             <div class="three wide field">
                 <label>Órgão expeditor </label>
-                <input type="text" name="OrgaoExpedidor" placeholder="SSP" maxlength="20"/>
+                <input type="text" name="OrgaoExpedidor" placeholder="" maxlength="20"/>
             </div>
 
-            <!-- TODO: Make Select -->
             <div class="four wide field">
                 <label>UF do Órgão Expeditor</label>
                     (: views.Components.UF() :)
