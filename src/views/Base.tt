@@ -96,7 +96,7 @@
         </div>
 
         <!-- Content -->    
-        <div class="pusher">
+        <div class="pusher" style="display: flex; min-height: 100vh; flex-direction: column;">
             
             <!-- Sidebar -->
             <div class="ui vertical center aligned segment">
@@ -113,6 +113,7 @@
                 </div>
             </div>
 
+						<div style="flex: 1;">
             (:if message != null && message.length > 0:)
                 (: views.Components.message(message) :)
             (:end:)
@@ -120,6 +121,7 @@
             (:if content != null:)
                 (:content():)
             (:end:)
+						</div>
             
 
 
