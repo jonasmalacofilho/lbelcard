@@ -18,6 +18,7 @@ class AcessoProcessor {
 
 	public function execute()
 	{
+		trace('processor: working on $key');
 		card = db.CardRequest.manager.select($requestId == key);
 		assert(card != null, key);
 		try {
