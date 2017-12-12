@@ -197,6 +197,7 @@ Intermidiate data types supplied by the API client
 */
 
 typedef Meta = {
+	?IpCliente : String,
 	Language : Language,
 	NomeCanal : NomeCanal,
 	RecId : Int,

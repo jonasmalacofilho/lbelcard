@@ -103,12 +103,13 @@ class Server {
 
 			requestId = crypto.Random.global.readHex(16);
 			shortId = requestId.substr(0, 4);
+			var ip = Web.getClientIP();
 			var method = Web.getMethod().toUpperCase();
 			var params = Web.getParams();
 			var uri = Web.getURI();
 			if (uri == "")
 				uri = "/";
-			trace('begin: $method $uri ($requestId)');
+			trace('begin: $method $uri from $ip ($requestId)');
 
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);
