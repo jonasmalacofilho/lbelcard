@@ -11,7 +11,13 @@
     js.Login.init();
     function onSubmit()
     {
-        $('form').submit();
+        $('.ui.form').form('validate form');
+        console.log($('.ui.form').form('is valid'));
+
+        if($('.ui.form').form('is valid'))
+            $('form').submit();
+        else
+            $('input').blur();
     }
 </script>
 <div class='ui text container'>

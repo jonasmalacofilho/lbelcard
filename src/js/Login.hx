@@ -7,7 +7,7 @@ class Login
     public static function init()
     {
         new JQuery('document').ready(function(_){
-            untyped $.fn.form.settings.rules.validCPF = function(val){
+            untyped $.fn.form.settings.rules.validaCPF = function(val){
                 return MainJS.validaCPF(val);
             }
             validate();
@@ -17,7 +17,7 @@ class Login
 
     static function validate()
     {
-        untyped $('ui.form').form({
+        untyped $('.ui.form').form({
             'inline' : true,
             on: 'blur',
             fields : {
@@ -29,12 +29,8 @@ class Login
                 },
                 cpf : {
                    rules : [{
-                        type : 'emtpy',
+                        type : 'empty',
                         prompt : 'Digite seu CPF'
-                    },
-                    {
-                        type : 'exactLength[11]',
-                        prompt : 'Digite apenas os números'
                     },
                     {
                         type : 'validaCPF',
