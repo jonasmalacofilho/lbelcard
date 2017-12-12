@@ -38,7 +38,7 @@
         </div>
 
         <div class="field">
-            <label>CPF (apenas números)</label>
+            <label>CPF</label>
             <input id="CPF" type="text" name="cpf" tabindex=2>
         </div>
 

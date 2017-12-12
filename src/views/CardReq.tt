@@ -160,10 +160,10 @@
             </div>
 
             <div class="five wide field">
-                <label>Nacionalidade</label>
+                <label>nacionalidade</label>
                 <select name="TpCliente">
-                    <option value="0">Brasileira</option>
-                    <option value="2">Estrangeira</option>
+                    <option value="0">brasileira</option>
+                    <option value="2">estrangeira</option>
                 </select>
 
             </div>
