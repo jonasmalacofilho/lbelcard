@@ -19,12 +19,9 @@ class Index {
 	}
 
 	#if dev
-	public function doEmail()
+	public function doError(?msg : String)
 	{
-		var s = new sendgrid.Email('Caio', "caio.honma@gmail.com", "https://lbelcard.com.br/novo/status/looongstring");
-		s.execute();
-		Sys.println('ok');
-
+		Sys.println(views.Base.render("ERRO", views.Error.render.bind(msg)));
 	}
 	#end
 }

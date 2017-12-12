@@ -27,11 +27,10 @@ class CardReq
 
 			validate();
 
-			// TODO check if should fire change or blur evt
-			new JQuery('#CEP').blur(function(_){
-
+			new JQuery('#CEP').keyup(function(_){
+                
 				var cur = js.jquery.Helper.JTHIS;
-
+                
 				if(cur.val().length != 9)
 					return;
 
@@ -132,7 +131,7 @@ class CardReq
 			new JQuery('#logradouro').val(addr.endereco);
 		case None:
 			// FIXME ??
-			js.Browser.alert('CEP inválido; por favor, verifique se o valor está correto');
+			js.Browser.alert('CEP inválido; por favor, verifique se o número está correto');
 		case Failure(e):
 			trace('error @webmania : $e');
 		}
