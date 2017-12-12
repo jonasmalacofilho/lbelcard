@@ -40,7 +40,7 @@ abstract SerializedDate(String) to String {
 
 	public function getTime():Float
 	{
-		assert(~/^\/Date\((\d+)\)\/$/.match(this), this);
+		assert(~/^\/Date\((-?\d+)\)\/$/.match(this), this);
 		return Std.parseFloat(this.substring("/Date(".length, this.indexOf(")")));
 	}
 
