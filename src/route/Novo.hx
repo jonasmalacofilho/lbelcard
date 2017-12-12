@@ -66,7 +66,7 @@ class Novo {
 		var recaptcha = Web.getParams().get("g-recaptcha-response");
 		weakAssert(recaptcha != null);
 		if(recaptcha == null || !recapChallenge(recaptcha)) {
-			trace('abort: invalid recaptacha');
+			trace('abort: invalid recaptcha');
 			getDefault('Não conseguimos verificar que você não é um robô, aguarde um pouco e tente novamente');
 			return;
 		}
@@ -284,12 +284,13 @@ class Novo {
 		http.addParameter("remoteip", Web.getClientIP());
 
 		http.onError = function(msg : String){
-			throw 'recaptcha remote verification error: $msg';
+			throw 'recaptcha: $msg during remote verification';
 		};
 		http.onData = function(d : String)
 		{
 			var res = haxe.Json.parse(d);
 			ret = res.success;
+			assert(ret != null || Reflect.hasField(res, "error-codes"), d);
 		};
 		http.request(true);
 
