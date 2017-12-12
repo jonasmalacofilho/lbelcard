@@ -1,30 +1,37 @@
 (:using DateTools:)
 (:static function render(d : acesso.Data.DadosDoUsuario) :)
 <div class="ui text container">
-    <div class="ui segments borderless">
 
+    <h3 class="ui dividing header">Confirmação</h3>
+    <p> Por favor, confira as informações cadastrais abaixo. </br>
+    Se estiverem erradas clique em "Voltar" 
+    para corrigí-las.</br>
+    Se estiverem corretas clique em "Enviar" e aguarde o
+    um email de confirmação.
+    </p>
+    <div class="ui segments borderless">
         <div class="ui segment">
-            <h2 class="ui header cor3">Por favor, confirme se suas informações estão corretas</h2>
+            <h2 class="ui header cor3">Dados cadastrais</h2>
         </div>
 
         <div class="ui segments">
             <div class="ui segment">
-                <h3 class="ui sub header cor3">Informações Pessoais</h3>
+                <h3 class="ui sub header cor3">Identificação</h3>
             </div>
 
             <div class="ui segment">
-                <p><b>Nome:</b> (:d.NomeCompleto:) </p>
+                <p><b>nome:</b> (:d.NomeCompleto:) </p>
             </div>
             <div class="ui segment">
-                <p><b>Nome da Mãe:</b> (:d.NomeMae:)</p>
+                <p><b>nome da mãe:</b> (:d.NomeMae:)</p>
             </div>
 
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>Sexo:</b> (: switch d.TpSexo :) (:case Nao_informado:) Não Informado (: case Masculino :) Masculino (: case Feminino :) Feminino (:end:)
+                    <p><b>sexo:</b> (: switch d.TpSexo :) (:case Nao_informado:) não informado (: case Masculino :) masculino (: case Feminino :) feminino (:end:)
                 </div>
                 <div class="ui segment">
-                    <p><b>Data de Nascimento:</b> (:d.DtNascimento.getDate().format("%d/%m/%Y"):)</p>
+                    <p><b>data de nascimento:</b> (:d.DtNascimento.getDate().format("%d/%m/%Y"):)</p>
                 </div>
             </div>
         </div>
@@ -32,11 +39,11 @@
         <div class="ui segments">
 
             <div class="ui segment">
-                <h3 class="ui sub header cor3">Informações de Contato</h3>
+                <h3 class="ui sub header cor3">Telefone e endereço</h3>
             </div>
 
             <div class="ui segment">
-                <p><b>Telefone:</b> +(:d.Celular.DDI:) ((:d.Celular.DDD:)) (:d.Celular.Numero:)</p>
+                <p><b>telefone:</b> +(:d.Celular.DDI:) ((:d.Celular.DDD:)) (:d.Celular.Numero:)</p>
             </div>
 
             <div class="ui segment">
@@ -59,45 +66,45 @@
         <div class="ui segments">
 
             <div class="ui segment">
-                <h3 class="ui sub header cor3">Informações Complementares</h3>
+                <h3 class="ui sub header cor3">E-mail e documentos</h3>
             </div>
 
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>E-mail:</b>(:d.Email:)</p>
+                    <p><b>e-mail:</b>(:d.Email:)</p>
                 </div>
                 <div class="ui segment">
                     <p><b>CPF:</b> (:d.CodCliente:)</p>
                 </div>
             </div>
             <div class="ui segment">
-                <p><b>Tipo de Cliente:</b> (: switch d.TpCliente:)(:case Nacional_pessoa_fisica:)Pessoa Física(:case Nacional_pessoa_juridica:)Pessoa Jurídica(:case Estrangeiro:)Estrangeiro(:end:)</p>
+                <p><b>nacionalidade:</b> (: switch d.TpCliente:)(:case Nacional_pessoa_fisica:)brasileira(:case Nacional_pessoa_juridica:)Pessoa Jurídica(:case Estrangeiro:)estrangeira(:end:)</p>
             </div>
 
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>Documento:</b> (:d.Documento.NumDocumento:)</p>
+                    <p><b>número:</b> (:d.Documento.NumDocumento:)</p>
                 </div>
                 <div class="ui segment">
-                    <p><b>Tipo de Documento:</b> (:switch d.Documento.TpDocumento:)(:case RG:)RG(:case RNE:)RNE(:case Passaporte:)Passaporte(:end:)</p>
+                    <p><b>tipo de documento:</b> (:switch d.Documento.TpDocumento:)(:case RG:)RG(:case RNE:)RNE(:case Passaporte:)Passaporte(:end:)</p>
                 </div>
             </div>
             <div class="ui horizontal segments">
                 <div class="ui segment">
                     <!-- TODO: Fix -->
-                    <p><b>Data de Emissão:</b> (: d.Documento.DtExpedicao.getDate().format('%d/%m/%Y'):)</p>
+                    <p><b>data de emissão:</b> (: d.Documento.DtExpedicao.getDate().format('%d/%m/%Y'):)</p>
                 </div>
 
                 <div class="ui segment">
-                    <p><b>Órgao Emissor:</b> (:d.Documento.OrgaoExpedidor:)</p>
+                    <p><b>órgao emissor:</b> (:d.Documento.OrgaoExpedidor:)</p>
                 </div>
             </div>
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>UF do Órgão:</b> (:d.Documento.UFOrgao:)</p>
+                    <p><b>UF do órgão:</b> (:d.Documento.UFOrgao:)</p>
                 </div>
                 <div class="ui segment">
-                    <p><b>País do Órgão:</b> (:d.Documento.PaisOrgao:)</p>
+                    <p><b>país do órgão:</b> (:d.Documento.PaisOrgao:)</p>
                 </div>
             </div>
         </div>
