@@ -5,7 +5,7 @@
 (: do var err = switch(card) {case Failed(err, s): err; default: null;} :)
 
 
-(:if !card.match(Failed(_) | CardRequested):)
+(:if !card.match(CardRequested | Failed(AcessoUserOrDataError(_)|AcessoPermanentError(_), _)):)
 <script>
     $(document).ready(function()
     {
