@@ -32,11 +32,13 @@
 (: end :)
 
 (: static function message(msg : String):)
-    <div class="ui container text negative message">
-        <i class="close icon"></i>
-        <div class="header">
-            Erro:
+    <div class="ui vertical segment">
+        <div class="ui container text negative message">
+            <i class="close icon"></i>
+            <div class="header">
+                Erro:
+            </div>
+            <p>(:msg:)</p>
         </div>
-        <p>(:msg:)</p>
     </div>
 (:end:)
