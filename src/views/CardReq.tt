@@ -8,13 +8,13 @@
 <div class="ui text container">
 
 <h3 class="ui dividing header">Cadastro</h3>
-<h4 class="ui header">O primeiro passo para solicitar o seu cartão é o cadastramento
+<p>O primeiro passo para solicitar o seu cartão é o cadastramento
                             de informações para que possamos identificar e 
                                entrar em contato com você.
                                </br>
                                Por favor preencha todos os campso das fichas abaixo e clique em 
                                "Prosseguir" quando terminar, você poderá confirmar as informações 
-                               ainda antes do envio. </h4>
+                               ainda antes do envio. </p>
 
 <form method="POST" action="/novo/dados" class="ui form error">
 
