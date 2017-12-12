@@ -11,7 +11,8 @@ class Login
                 return MainJS.validaCPF(val);
             }
             validate();
-        });
+       		untyped $('#CPF').mask('000.000.000-00');
+ });
     }
 
     static function validate()
@@ -20,13 +21,13 @@ class Login
             'inline' : true,
             on: 'blur',
             fields : {
-                n_consultor : {
+                belNumber : {
                     rules : [{
                         type : 'empty',
                         prompt : 'Digite seu número de Consultor L\'BEL'
                     }]
                 },
-                CPF : {
+                cpf : {
                    rules : [{
                         type : 'emtpy',
                         prompt : 'Digite seu CPF'

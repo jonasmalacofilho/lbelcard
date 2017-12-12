@@ -1,4 +1,6 @@
 (:static function render(recaptcha:{ siteKey:String }):)
+<!-- js  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
 <!-- reCAPTCHA -->
 (:if recaptcha != null:)
 <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -6,6 +8,7 @@
 
 <!-- TODO: Fix this: -->
 <script>
+    js.Login.init();
     function onSubmit()
     {
         $('form').submit();
@@ -14,16 +17,23 @@
 <div class='ui text container'>
     <form class='ui form' method="post">
     <div class='ui segment'>
-        <h3 class="ui dividing header">Login</h3>
+        <h3 class="ui dividing header">Verificação</h3>
+        <p> 
+        O cartão L'BELcard é exclusivo para os consultores L'BEL.
+        Antes de iniciarmos o processo, precisamos validar seu
+        número de consultor. 
+        </br>
+        Por favor, preencha os campos abaixo e clique em "Continuar"
 
+        </p>   
         <div class="field">
-            <label>Número de Consultor L'BEL</label>
+            <label>número de consultor L'BEL</label>
             <input type='number' name='belNumber' tabindex=1>
         </div>
 
         <div class="field">
-            <label>CPF (Digite apenas os números)</label>
-            <input type="text" name="cpf" tabindex=2>
+            <label>CPF (apenas números)</label>
+            <input id="CPF" type="text" name="cpf" tabindex=2>
         </div>
 
         <button class="g-recaptcha ui purple buttonui button fluid large submit"
