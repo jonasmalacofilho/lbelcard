@@ -15,9 +15,9 @@ class GestaoBase {
 		case 0:
 			return res.Data;
 		case 5, 99:  // unspecified, internal
-			throw TemporarySystemError(res);
+			throw AcessoTemporaryError(res);
 		case _:
-			throw PermanentSystemError(res);
+			throw AcessoPermanentError(res);
 		}
 	}
 
@@ -41,30 +41,36 @@ class GestaoBase {
 		var ret:Dynamic = null;
 		var url = '$endpoint/$api';
 		var req = new haxe.Http(url);
-		var log = new db.AcessoApiLog(url, "POST");
+		var log = new db.RemoteCallLog(url, "POST");
 
 		req.addHeader("Content-Type", "application/json");
-		req.addHeader("User-Agent", "haxe/neko");
-		req.cnxTimeout = 10;  // TODO reevaluate
+		req.addHeader("User-Agent", Server.userAgent);
+		req.cnxTimeout = 12;  // recommended by AcessoCard
 
 		var requestData = haxe.Json.stringify(params);
 		req.setPostData(requestData);
 
-		var statusCode = 0;
+		var statusCode = null;
+		var t0 = Sys.time();
 		req.onStatus = function (code) statusCode = code;
 		req.onError = function (msg) {
-			trace('acesso: call FAILED with $msg');
-			weakAssert(statusCode == null, "statusCode available, must update the code to log it");
+			var t1 = Sys.time();
+			trace('acesso: call FAILED with $msg ($statusCode) after ${Math.round((t1 - t0)*1e3)} ms');
 			var err = TransportError(msg);
+			log.responseCode = statusCode;
 			log.responseData = Std.string(err);
+			log.timing = t1;
 			log.update();
 			throw err;
 		}
 		req.onData = function (responseData) {
-			trace('acesso: got $statusCode');
+			var t1 = Sys.time();
+			trace('acesso: got $statusCode after ${Math.round((t1 - t0)*1e3)} ms');
 			log.responseCode = statusCode;
 			log.responseData = responseData;
+			log.timing = t1;
 			log.update();
+			// FIXME should statusCode >= 400 return data or TransportError?
 			ret = haxe.Json.parse(responseData);
 		}
 

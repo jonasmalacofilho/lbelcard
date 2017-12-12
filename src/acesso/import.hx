@@ -1,3 +1,3 @@
 import acesso.Data;
-import db.Types.AcessoError;
+import db.types.CardRequestError;
 

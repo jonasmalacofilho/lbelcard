@@ -1,6 +1,6 @@
 package db;
 
-class AcessoApiLog extends sys.db.Object {
+class RemoteCallLog extends sys.db.Object {
 	public var id:SId;
 	public var url:String;
 	public var method:String;
@@ -11,6 +11,7 @@ class AcessoApiLog extends sys.db.Object {
 	public var responseHeaders:SNull<SData<Array<String>>>;
 	public var responseCode:SNull<Int>;
 	public var responseData:SNull<String>;
+	public var timing:SNull<Float>;
 
 	public function new(url, method)
 	{

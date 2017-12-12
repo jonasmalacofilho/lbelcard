@@ -19,24 +19,24 @@
                             </tr>
                             <tr>
                                 <td style="padding-top:20px;font-size:20px;color:rgb(75, 46, 104)">
-                                    Seu L'BELCard foi pedido!
+                                    Recebemos o pedido de seu L'BELcard!
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding-top:15px;font-size:15px">
-                                    Obrigado por pedir este cartão!
+                                    Parabéns!  O L'BELcard é mais uma opção para você receber suas 
+                                    bonificações e facilitar a administração dos seus negócios!
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding-top:15px;font-size:14px">
-                                    O L'BelCard é mais um importante passo para você se tornar 
-                                    ainda melhor em seus negócios!
+                                    Obrigado!
                                 </td>
                             </tr>
                             
                             <tr>
                                 <td style="padding-top:15px;padding-bottom:20px;font-size:20px">
-                                    Acesse <a href="(:url:)">este link</a> para ver o status de seu pedido!
+                                    Clique <a href="(:url:)">aqui</a> para acompanhar sua solicitação!
                                 </td>
                             </tr>
                         </tbody>
@@ -51,9 +51,9 @@
                         <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png">
                     </td>
                     <td style="font-size:10px"> 
-                        L'Bel Incorporated : Foo bar foo bar 
+                        <a href="http://lbel.com.br/contato/">BELCORP</a>
                         <br>
-                        foo bar 
+                        SAC <a href="tel:08007788992">0800 77 88 99 2<\a>  <a href="mailto:sac.belcorp@belcorp.biz">sac.belcorp@belcorp.biz</a>
                     </td>
                 </tr>
             </tbody>

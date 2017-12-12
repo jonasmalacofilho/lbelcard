@@ -1,5 +1,5 @@
 (: using StringTools :)
-(: import db.Types :)
+(: import db.types.* :)
 (: static function render (card : CardRequestState) :)
 <script>
     $(document).ready(function()
@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <div class="step (:compare(card, Queued(null)).trim():) negative">
+            <div class="step (:compare(card, AcessoCard(null)).trim():) negative">
                 <div class="content">
                     <div class='title'>Análise</div>
                     <div class="description">Estamos validando se está tudo Ok.</div>
@@ -49,7 +49,7 @@
                 <div class="ui red message">
                     <div class="header">Ocorreu um erro nesta etapa</div>
                     (: switch err :)
-                        (: case UserOrDataError(res),PermanentSystemError(res) :)
+                        (: case AcessoUserOrDataError(res),AcessoPermanentError(res) :)
                             (:res.Message:)
                             (: if res.FieldErrors != null :)
                                 <ul>
@@ -58,7 +58,7 @@
                                 (: end :)
                                 </ul>
                             (:end:)
-                        (: case TemporarySystemError(_), TransportError(_), AccessTokenError(_), JumpToError(_) :)
+                        (: case AcessoTemporaryError(_), TransportError(_), AcessoTokenError(_), JumpToError(_), SendGridError(_) :)
                             Tente acessar este sistema mais tarde.
                     (: end :)
                 </div>

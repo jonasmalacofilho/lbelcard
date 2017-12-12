@@ -1,18 +1,8 @@
-package db;
+package db.types;
 
 import acesso.Data;
 
-enum CardRequestState {
-	AwaitingBearerData;
-	AwaitingBearerConfirmation;
-	SendEmail;
-	Queued(step:AcessoStep);
-	Failed(err:AcessoError, onState:CardRequestState);
-	CardRequested;
-	// UserNotified(ofState:CardRequestState);  // idea on how to handle emails
-}
-
-enum AcessoStep {
+enum AcessoCardStep {
 	SolicitarAdesaoCliente;
 	AlterarEnderecoPortador(client:TokenAdesao);
 	SolicitarAlteracaoEmailPortador(client:TokenAdesao);
@@ -23,15 +13,5 @@ enum AcessoStep {
 	ComplementarDadosPrincipais(client:TokenAdesao);
 	SolicitarCartaoIdentificado(client:TokenAdesao);
 	ConfirmarPagamento(card:TokenCartao, cost:Float);
-}
-
-enum AcessoError {
-	TransportError(err:String);
-	UserOrDataError(res:Response<Dynamic>);
-	TemporarySystemError(res:Response<Dynamic>);
-	PermanentSystemError(res:Response<Dynamic>);
-
-	AccessTokenError(err:Response<Dynamic>);
-	JumpToError(err:Response<Dynamic>, step:AcessoStep);
 }
 

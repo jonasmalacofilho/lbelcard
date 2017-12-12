@@ -8,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <!-- Site Properties -->
-        <title>L'Bel Card - O cartão definitivo do consultor!</title>
+        <title>L'BELcard - (:title:)</title>
 
         <!--jquery-->
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -96,7 +96,7 @@
         </div>
 
         <!-- Content -->    
-        <div class="pusher">
+        <div class="pusher" style="display: flex; min-height: 100vh; flex-direction: column;">
             
             <!-- Sidebar -->
             <div class="ui vertical center aligned segment">
@@ -113,6 +113,7 @@
                 </div>
             </div>
 
+						<div style="flex: 1;">
             (:if message != null && message.length > 0:)
                 (: views.Components.message(message) :)
             (:end:)
@@ -120,6 +121,7 @@
             (:if content != null:)
                 (:content():)
             (:end:)
+						</div>
             
 
 

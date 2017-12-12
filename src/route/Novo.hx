@@ -3,7 +3,6 @@ package route;
 import acesso.Data;
 import eweb.Dispatch;
 import eweb.Web;
-import haxe.Json;
 
 using StringTools;
 
@@ -42,6 +41,7 @@ class Novo {
 	static inline var RECAPTCHA_SECRET = "6LeA3zoUAAAAAHVQxT3Xh1nILlXPjGRl83F_Q5b6";  // FIXME get from environment
 
 	var notDigits = ~/\D/g;
+	var specials = ~/\W/g;
 
 	public function new() {}
 
@@ -56,18 +56,19 @@ class Novo {
 #end
 	}
 
-	public function postDefault(args:{ belNumber:Int, cpf:String})
+	public function postDefault(args:{ belNumber:String, cpf:String})
 	{
-		args.cpf = notDigits.replace(args.cpf, "");
+		args.belNumber = notDigits.replace(args.belNumber, "").trim();
+		args.cpf = notDigits.replace(args.cpf, "").trim();
 
 #if dev
 		trace('dev-build: recaptcha validation skipped');
 #else
 		var recaptcha = Web.getParams().get("g-recaptcha-response");
 		weakAssert(recaptcha != null);
-		if(recaptcha == null || !recapChallenge(recaptcha))
-		{
-			Web.redirect('${moveForward(null)}/?error=${'A verificação do reCAPTCHA falhou'.urlEncode()}');
+		if(recaptcha == null || !recapChallenge(recaptcha)) {
+			trace('abort: invalid recaptacha');
+			getDefault('Não conseguimos verificar que você não é um robô, aguarde um pouco e tente novamente');
 			return;
 		}
 #end
@@ -81,21 +82,25 @@ class Novo {
 				user.insert();
 			}
 #else
-			show(args);
-			Web.redirect('${moveForward(null)}?error=${'Consultor não encontrado ou CPF não bate'.urlEncode()}');
+			if (user == null)
+				trace('abort: user not found (${args.belNumber})');
+			else
+				trace('abort: cpf does not match user (user ${user.belNumber}, cpf ${args.cpf})');
+			getDefault('Consultor não encontrado ou CPF não bate');
 			return;
 #end
 		}
 
-		if (limitReached(user))
-		{
-			Web.redirect('${moveForward(null)}?error=${'Atingido o limite de solicitação de cartões para esse consultor'.urlEncode()}');
+		if (limitReached(user)) {
+			trace('abort: card request limit reached (user ${user.belNumber})');
+			getDefault('Atingido o limite de solicitação de cartões para esse consultor');  // FIXME maybe show error view
 			return;
 		}
 
 		var card = new db.CardRequest(user);
 		card.product = Environment.ACESSO_PRODUCT;
 		card.insert();
+		show(card.requestId);
 
 		Web.setCookie(CARD_COOKIE, card.requestId, DateTools.delta(Date.now(), DateTools.days(1)));
 		Web.redirect(moveForward(card));
@@ -115,25 +120,31 @@ class Novo {
 	public function postDados(args:PersonalData)
 	{
 		args.CodCliente = notDigits.replace(args.CodCliente, "");
-		args.NumDocumento = notDigits.replace(args.NumDocumento, "");
 		args.DDI = notDigits.replace(args.DDI, "");
 		args.DDD = notDigits.replace(args.DDD, "");
 		args.NumeroTel = notDigits.replace(args.NumeroTel, "");
 		args.CEP = notDigits.replace(args.CEP, "");
+		args.NumDocumento = specials.replace(args.NumDocumento, "");
+		for (f in Reflect.fields(args)) {
+			var val = Reflect.field(args, f);
+			if (val != null && Std.is(val, String))
+				Reflect.setField(args, f, StringTools.trim(val));
+		}
+
 		assert(!args.DDI.startsWith("0"), args.DDI);
 		assert(args.DDI != "55" || !args.DDD.startsWith("0"), args.DDI, args.DDD);
 
 		var card = getCardRequest();
 		if (card == null)
-		{
-			Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');
-			return;
-		}
+			throw SecurityError('card request not found');
+		show(card.requestId);
+
 		if (card.bearer.cpf != args.CodCliente) {
 #if dev
 			trace('dev-build: ignoring mismatch between authorized and current bearers');
 #else
-			Web.redirect('${moveForward(card)}?error=${'O CPF informado não pertence ao consultor'.urlEncode()}');
+			trace('abort: card bearer does not match user (user ${card.bearer.belNumber}, cpf ${args.CodCliente})');
+			Web.redirect('${moveForward(card)}?error=${'O CPF informado não pertence ao consultor'.urlEncode()}');  // FIXME show error view
 			return;
 #end
 		}
@@ -184,8 +195,12 @@ class Novo {
 
 	public function getConfirma(?error : String)
 	{
-		Web.setReturnCode(200);
 		var card = getCardRequest();
+		if (card == null || !card.state.match(AwaitingBearerConfirmation)) {
+			Web.redirect(moveForward(card));
+			return;
+		}
+		Web.setReturnCode(200);
 		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(card.userData), error));
 	}
 
@@ -193,17 +208,15 @@ class Novo {
 	{
 		var card = getCardRequest();
 		if (card == null)
-		{
-			Web.redirect('${moveForward(card)}?error=${'Nenhum cartão encontrado'.urlEncode()}');
-			return;
-		}
+			throw SecurityError('card request not found');
+		show(card.requestId);
 
 		if (card.state.match(AwaitingBearerConfirmation)) {
 			// might happen; we don't lock the BelUser when creating the CardRequest
 			assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
 
-			card.state = SendEmail;//Queued(SolicitarAdesaoCliente);
-			card.submitting = true;
+			card.state = SendEmail;
+			card.queued = true;
 			card.update();
 
 			var q = async.Queue.global();
@@ -215,12 +228,9 @@ class Novo {
 
 	public function getStatus(key:String)
 	{
-		var card = db.CardRequest.manager.select($requestId == key);
+		var card = getCardRequest();
 		if (card == null)
-		{
-				Web.redirect('${moveForward(null)}?error=${'Nenhum cartão encontrado'.urlEncode()}');
-				return;
-		}
+			throw SecurityError('card request not found');
 		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);
@@ -231,12 +241,16 @@ class Novo {
 	{
 		var cards = db.CardRequest.manager.search($bearer == user);
 		for (i in cards) {
-			if (i.state.match(Queued(_) | CardRequested)) {
+			if (!i.state.match(AwaitingBearerData | AwaitingBearerConfirmation | Failed(_))) {
+				weakAssert(i.queued, Type.enumConstructor(i.state), "informative, not sure yet how queued x state should work for all states");
 #if dev
 				trace('dev-build: overriding maxed out limit of cards per user');
+				return false;
 #else
 				return true;
 #end
+			} else {
+				weakAssert(!i.queued, Type.enumConstructor(i.state), "incorrect queued x state");
 			}
 		}
 		return false;
@@ -261,22 +275,22 @@ class Novo {
 		return db.CardRequest.manager.select($requestId == key);
 	}
 
-	function recapChallenge(challenge : String)
+	static function recapChallenge(challenge : String)
 	{
 		var ret = false;
 
 		var http = new haxe.Http(RECAPTCHA_URL);
-		http.addParameter('secret', RECAPTCHA_SECRET);
-		http.addParameter('response', challenge);
-		http.addParameter('remoteip', Web.getClientIP());
+		http.addParameter("secret", RECAPTCHA_SECRET);
+		http.addParameter("response", challenge);
+		http.addParameter("remoteip", Web.getClientIP());
+		http.addHeader("User-Agent", Server.userAgent);
 
 		http.onError = function(msg : String){
-			trace(msg);
-			throw 'Unexpected Http error $msg';
+			throw 'recaptcha remote verification error: $msg';
 		};
 		http.onData = function(d : String)
 		{
-			var res = Json.parse(d);
+			var res = haxe.Json.parse(d);
 			ret = res.success;
 		};
 		http.request(true);
