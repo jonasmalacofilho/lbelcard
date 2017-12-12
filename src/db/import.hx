@@ -1,3 +1,3 @@
-import db.Types;
+import db.types.*;
 import sys.db.Types;
 

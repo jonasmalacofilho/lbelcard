@@ -78,15 +78,9 @@ class Server {
 			if (lastRecovery == null || codeVersion > lastRecovery) {
 				trace('recovery: reenqueue requests');
 				var q = async.Queue.global();
-				for (card in db.CardRequest.manager.search($submitting == true)) {  // FIXME notifications
-#if dev
-					// FIXME remove bellow
-					// card.state = Queued(SolicitarAdesaoCliente);
-					// card.update();
-					// FIXME remove above
-#end
-					if (!card.state.match(Queued(_) | Failed(TransportError(_) | TemporarySystemError(_), _)))
-						continue;
+				for (card in db.CardRequest.manager.search($queued == true)) {
+					// this is heuristic, the queue handler is supposed to figure out
+					// wheather it should actually process the request
 					q.addTask(card.requestId);
 				}
 				share.set(codeVersion);

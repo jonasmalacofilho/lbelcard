@@ -15,9 +15,9 @@ class GestaoBase {
 		case 0:
 			return res.Data;
 		case 5, 99:  // unspecified, internal
-			throw TemporarySystemError(res);
+			throw AcessoTemporaryError(res);
 		case _:
-			throw PermanentSystemError(res);
+			throw AcessoPermanentError(res);
 		}
 	}
 
@@ -70,6 +70,7 @@ class GestaoBase {
 			log.responseData = responseData;
 			log.timing = t1;
 			log.update();
+			// FIXME should statusCode >= 400 return data or TransportError?
 			ret = haxe.Json.parse(responseData);
 		}
 

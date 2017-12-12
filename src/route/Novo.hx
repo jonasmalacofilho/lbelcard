@@ -216,7 +216,7 @@ class Novo {
 			assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
 
 			card.state = SendEmail;
-			card.submitting = true;
+			card.queued = true;
 			card.update();
 
 			var q = async.Queue.global();
@@ -241,8 +241,8 @@ class Novo {
 	{
 		var cards = db.CardRequest.manager.search($bearer == user);
 		for (i in cards) {
-			if (i.state.match(SendEmail | Queued(_) | CardRequested)) {
-				weakAssert(i.submitting);
+			if (!i.state.match(AwaitingBearerData | AwaitingBearerConfirmation | Failed(_))) {
+				weakAssert(i.queued, Type.enumConstructor(i.state), "informative, not sure yet how queued x state should work for all states");
 #if dev
 				trace('dev-build: overriding maxed out limit of cards per user');
 				return false;
@@ -250,7 +250,7 @@ class Novo {
 				return true;
 #end
 			} else {
-				weakAssert(!i.submitting);
+				weakAssert(!i.queued, Type.enumConstructor(i.state), "incorrect queued x state");
 			}
 		}
 		return false;

@@ -3,7 +3,8 @@ package async;
 import Environment.*;
 import acesso.*;
 import acesso.Data;
-import db.Types.AcessoError;
+import db.types.CardRequestError;
+import db.types.CardRequestState;
 
 class AcessoProcessor {
 	var key:String;
@@ -21,22 +22,21 @@ class AcessoProcessor {
 		assert(card != null, key);
 		try {
 			loop();
-		} catch (err:AcessoError) {
-			trace('acesso: returned $err (${card.requestId})');
+		} catch (err:CardRequestError) {
 			card.state = Failed(err, card.state);
 			card.update();
+
 			switch err {
 			case TransportError(msg):
-				// network error: wait a bit and then resume working
+				trace('processor: network error, waiting a bit and reenqueuing');
 				Sys.sleep(60);
 				async.Queue.global().addTask(key);  // renqueue this task
-			case TemporarySystemError({ Message:msg, ResultCode: 99 }) if (msg.indexOf("ValidarToken") > 0):
-				// token must have expired: wait a bit, refresh it, and resume working
-				Sys.sleep(3);
+			case AcessoTokenError(_) | AcessoTemporaryError({ Message:(_.indexOf("ValidarToken") >= 0)=>true, ResultCode: 99 }):
+				trace('processor: bad AcessoCard acess token, discarding and reenqueing');
 				token = null;
 				async.Queue.global().addTask(key);  // renqueue this task
 			case _:
-				// nothing to do for user/data or other system errors
+				trace('processor: cannot recover from $err');
 			}
 		}
 	}
@@ -44,32 +44,34 @@ class AcessoProcessor {
 	function loop()
 	{
 		while (true) {
+			rateLimit(card.state);
+
 			switch card.state {
-			case Failed(TransportError(_)|TemporarySystemError(_), onState):
+			case Failed(TransportError(_)|AcessoTemporaryError(_), onState):
 				card.state = onState;
 				continue;
 
 			case SendEmail:
 				new sendgrid.Email(card.userData.NomeCompleto, card.userData.Email, 'https://lbelcard.com.br/novo/status/${card.requestId}').execute();
-				card.state = Queued(SolicitarAdesaoCliente);
+				card.state = AcessoCard(SolicitarAdesaoCliente);
 				card.update();
 
-			case Queued(_) if (token == null):
+			case AcessoCard(_) if (token == null):
 				var params = { Email:ACESSO_USERNAME, Senha:ACESSO_PASSWORD };
 				token = GestaoBase.CriarToken(params);
 
-			case Queued(SolicitarAdesaoCliente):
+			case AcessoCard(SolicitarAdesaoCliente):
 				var data:SolicitarAdesaoClienteData = {
 					CodEspecieProduto : card.product,
 					Usuario : card.userData
 				}
 				var client = new GestaoAquisicaoCartao(token).SolicitarAdesaoCliente(data);
 				if (client.newUser)
-					card.state = Queued(SolicitarCartaoIdentificado(client.client));
+					card.state = AcessoCard(SolicitarCartaoIdentificado(client.client));
 				else
-					card.state = Queued(AlterarEnderecoPortador(client.client));
+					card.state = AcessoCard(AlterarEnderecoPortador(client.client));
 				card.update();
-			case Queued(AlterarEnderecoPortador(client)):
+			case AcessoCard(AlterarEnderecoPortador(client)):
 				var data:AlterarEnderecoPortadorData = {
 					CodCliente : card.userData.CodCliente,
 					NovoEndereco : card.userData.Endereco,
@@ -77,10 +79,10 @@ class AcessoProcessor {
 					TpCliente : card.userData.TpCliente
 				}
 				new GestaoPortador(token).AlterarEnderecoPortador(data);
-				card.state = Queued(SolicitarAlteracaoEmailPortador(client));
+				card.state = AcessoCard(SolicitarAlteracaoEmailPortador(client));
 				card.update();
 
-			case Queued(SolicitarAlteracaoEmailPortador(client)):
+			case AcessoCard(SolicitarAlteracaoEmailPortador(client)):
 				var data:SolicitarAlteracaoEmailPortadorData = {
 					CodCliente : card.userData.CodCliente,
 					NovoEmail : {
@@ -92,10 +94,10 @@ class AcessoProcessor {
 					TpCliente : card.userData.TpCliente
 				}
 				var tounce = new GestaoPortador(token).SolicitarAlteracaoEmailPortador(data);
-				card.state = Queued(ConfirmarSolicitacaoAlteracaoEmailPortador(client, tounce));
+				card.state = AcessoCard(ConfirmarSolicitacaoAlteracaoEmailPortador(client, tounce));
 				card.update();
 
-			case Queued(ConfirmarSolicitacaoAlteracaoEmailPortador(client, tounce)):
+			case AcessoCard(ConfirmarSolicitacaoAlteracaoEmailPortador(client, tounce)):
 				var data:ConfirmarSolicitarAlteracaoEmailPortadorData = {
 					CodCliente : card.userData.CodCliente,
 					TokenSolicitacaoAlteracao : tounce,
@@ -103,10 +105,10 @@ class AcessoProcessor {
 					TpCliente : card.userData.TpCliente
 				}
 				var confirmTounce = new GestaoPortador(token).ConfirmarSolicitarAlteracaoEmailPortador(data);
-				card.state = Queued(EfetivarAlteracaoEmailPortador(client, confirmTounce));
+				card.state = AcessoCard(EfetivarAlteracaoEmailPortador(client, confirmTounce));
 				card.update();
 
-			case Queued(EfetivarAlteracaoEmailPortador(client, tounce)):
+			case AcessoCard(EfetivarAlteracaoEmailPortador(client, tounce)):
 				var data:EfetivarAlteracaoEmailPortadorData = {
 					CodCliente : card.userData.CodCliente,
 					TokenEfetivacaoAlteracao : tounce,
@@ -114,10 +116,10 @@ class AcessoProcessor {
 					TpCliente : card.userData.TpCliente
 				}
 				new GestaoPortador(token).EfetivarAlteracaoEmailPortador(data);
-				card.state = Queued(SolicitarAlteracaoTelefonePortador(client));
+				card.state = AcessoCard(SolicitarAlteracaoTelefonePortador(client));
 				card.update();
 
-			case Queued(SolicitarAlteracaoTelefonePortador(client)):
+			case AcessoCard(SolicitarAlteracaoTelefonePortador(client)):
 				var data:SolicitarAlteracaoTelefonePortadorData = {
 					CodCliente : card.userData.CodCliente,
 					DDD : card.userData.Celular.DDD,
@@ -127,9 +129,9 @@ class AcessoProcessor {
 					TpCliente : card.userData.TpCliente
 				}
 				var tounce = new GestaoPortador(token).SolicitarAlteracaoTelefonePortador(data);
-				card.state = Queued(ConfirmarAlteracaoTelefonePortador(client, tounce));
+				card.state = AcessoCard(ConfirmarAlteracaoTelefonePortador(client, tounce));
 
-			case Queued(ConfirmarAlteracaoTelefonePortador(client, tounce)):
+			case AcessoCard(ConfirmarAlteracaoTelefonePortador(client, tounce)):
 				var data:ConfirmarAlteracaoTelefonePortadorData = {
 					CodCliente : card.userData.CodCliente,
 					Token : tounce,
@@ -137,10 +139,10 @@ class AcessoProcessor {
 					TpCliente : card.userData.TpCliente
 				}
 				new GestaoPortador(token).ConfirmarAlteracaoTelefonePortador(data);
-				card.state = Queued(ComplementarDadosPrincipais(client));
+				card.state = AcessoCard(ComplementarDadosPrincipais(client));
 				card.update();
 
-			case Queued(ComplementarDadosPrincipais(client)):
+			case AcessoCard(ComplementarDadosPrincipais(client)):
 				var data:ComplementarDadosPrincipaisData = {
 					Documento : card.userData.Documento,
 					DtNascimento : card.userData.DtNascimento,
@@ -153,14 +155,14 @@ class AcessoProcessor {
 					}
 				}
 				new GestaoPortador(token).ComplementarDadosPrincipais(data);
-				card.state = Queued(SolicitarCartaoIdentificado(client));
+				card.state = AcessoCard(SolicitarCartaoIdentificado(client));
 				card.update();
 
-			case Queued(_):
+			case AcessoCard(_):
 				trace('acesso: stopping on ${card.state} (not implemented or unsafe at the moment)');
 				break;  // FIXME remove
 
-			case Queued(SolicitarCartaoIdentificado(client)):
+			case AcessoCard(SolicitarCartaoIdentificado(client)):
 				var data:SolicitarCartaoIdentificadoData = {
 					CodCliente : card.userData.CodCliente,
 					CodEspecieProduto : card.product,
@@ -170,10 +172,10 @@ class AcessoProcessor {
 					ValorCarga : 0.
 				}
 				var req = new GestaoAquisicaoCartao(token).SolicitarCartaoIdentificado(data);
-				card.state = Queued(ConfirmarPagamento(req.card, req.cost));
+				card.state = AcessoCard(ConfirmarPagamento(req.card, req.cost));
 				card.update();
 
-			case Queued(ConfirmarPagamento(req, cost)):
+			case AcessoCard(ConfirmarPagamento(req, cost)):
 				var data:ConfirmarPagamentoData = {
 					AgenciaRecebedora : "",
 					AgenciaRecebedoraDV : "",
@@ -186,7 +188,7 @@ class AcessoProcessor {
 				}
 				new GestaoAquisicaoCartao(token).ConfirmarPagamento(data);
 				card.state = CardRequested;
-				card.submitting = false;
+				card.queued = false;
 
 			case AwaitingBearerData, AwaitingBearerConfirmation:
 				assert(false, card.state);
@@ -195,9 +197,18 @@ class AcessoProcessor {
 			case Failed(_), CardRequested:
 				break;  // nothing to do
 			}
+		}
+	}
 
-			// rate limit (TODO reevaluate)
-			Sys.sleep(0.1);
+	static function rateLimit(state:CardRequestState)
+	{
+		switch state {
+		case SendEmail:
+			Sys.sleep(0.01);  // less than SendGrid's 1000 req/s max
+		case AcessoCard(_):
+			Sys.sleep(0.2);  // at most AcessoCard's 5 req/s max
+		case _:
+			// nothing to do
 		}
 	}
 }

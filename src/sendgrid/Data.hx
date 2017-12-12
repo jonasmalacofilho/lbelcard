@@ -24,8 +24,3 @@ typedef Content = {
     value : String
 }
 
-enum SendGridError {
-	TransportError(msg:String);
-	Invalid(status:Int, response:String);
-}
-

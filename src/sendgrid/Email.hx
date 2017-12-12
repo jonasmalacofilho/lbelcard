@@ -1,5 +1,6 @@
 package sendgrid;
 
+import db.types.CardRequestError;
 import sendgrid.Data;
 
 class Email {
@@ -52,7 +53,7 @@ class Email {
 			log.timing = t1;
 			log.update();
 			if (statusCode >= 400)
-				throw Invalid(statusCode, responseData);
+				throw SendGridError(statusCode, responseData);
 		}
 
 		log.requestPayload = requestData;
