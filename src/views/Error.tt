@@ -7,7 +7,7 @@
 <div class='ui vertical segment very padded'>
     <div class="ui container">
             <div class='ui violet message'>
-                <div class='header'>Ocorreu um erro ao processar sua requisição</div>
+                <div class='header'>Não conseguimos processar sua última requisição.</div>
                 (: if msg != null && msg.length > 0:)
                 <br/>
                 <p>

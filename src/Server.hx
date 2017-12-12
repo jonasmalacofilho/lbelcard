@@ -64,7 +64,7 @@ class Server {
 		];
 		for (m in allTables) {
 			if (sys.db.TableCreate.exists(m))
-				continue;  // TODO assert the schema somehow
+				continue;  // it would be nice to also assert the schema
 			sys.db.TableCreate.create(m);
 		}
 
@@ -114,19 +114,40 @@ class Server {
 			sys.db.Manager.cleanup();
 			trace('done: ${since(req_t)} ms to $method $uri');
 
+		} catch (err:RequestError) {
+			switch err {
+			case SecurityError(err, userMsg):
+				abort(req_t, err, 400, userMsg);
+			}
+		} catch (err:eweb.Dispatch.DispatchError) {
+			switch err {
+			case DENotFound(part):
+				abort(req_t, err, 404, "Não encontramos a página que você buscava.");
+			case DEInvalidValue | DEMissing | DEMissingParam(_) | DETooManyValues:
+				abort(req_t, err, 400);
+			}
 		} catch (err:Dynamic) {
-			try
-				Web.setReturnCode(500)
-			catch (_:Dynamic)
-				trace('could not set response status to 500 anymore');
-			var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
-			trace('ERROR after ${since(req_t)} ms: $err', stack);
-			if (ManagedModule.cacheEnabled)
-				ManagedModule.uncache();
-			ManagedModule.callFinalizers();
+			abort(req_t, err, 500);
 		}
 
 		shortId = requestId = null;
+	}
+
+	static function abort(req_t:Float, err:Dynamic, status:Int, ?userMessage:String)
+	{
+		try
+			Web.setReturnCode(status)
+		catch (_:Dynamic)
+			trace('could not set response status to $status anymore');
+		try
+			Sys.println(views.Base.render("Ops", views.Error.render.bind(userMessage)))
+		catch (_:Dynamic)
+			trace('could not return error view anymore');
+		var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
+		trace('ERROR after ${since(req_t)} ms: $err', stack);
+		if (ManagedModule.cacheEnabled)
+			ManagedModule.uncache();
+		ManagedModule.callFinalizers();
 	}
 
 	static inline function since(ref:Float)
