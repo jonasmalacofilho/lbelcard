@@ -15,10 +15,10 @@ class GestaoAquisicaoCartao extends GestaoBase {
 			return { newUser:true, client:res.Data };
 		case 1:
 			return { newUser:false, client:res.Data };
-		case 5, 6:  // error in: reduced data, complete data
+		case 5, 6:
 			throw AcessoUserOrDataError(res);
-		case 99:  // [undocumented] invalid token
-			throw AcessoTemporaryError(res);
+		case 99:
+			throw AcessoTokenError(res);
 		case err:
 			throw AcessoPermanentError(res);
 		}
@@ -32,7 +32,7 @@ class GestaoAquisicaoCartao extends GestaoBase {
 		case 0:
 			return { card:res.Data.TokenCartao, cost:res.Data.ValorTotal };
 		case err:
-			throw AcessoTemporaryError(res);  // FIXME check it again
+			throw AcessoPermanentError(res);
 		}
 	}
 
@@ -43,7 +43,7 @@ class GestaoAquisicaoCartao extends GestaoBase {
 		case 0:
 			// all ok, nothing more to do
 		case err:
-			throw AcessoPermanentError(res);  // FIXME not all are temp errors
+			throw AcessoPermanentError(res);
 		}
 	}
 }

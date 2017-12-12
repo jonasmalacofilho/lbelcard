@@ -28,13 +28,23 @@ class AcessoProcessor {
 			card.update();
 
 			switch err {
+			case AcessoTokenError(_):
+				trace('processor: bad AcessoCard access token, discarding and reenqueing');
+				token = null;
+				async.Queue.global().addTask(key);  // renqueue this task
+			case AcessoTemporaryError(res) | AcessoPermanentError(res) if (res.ResultCode == 99):
+				trace('processor: (presumably) bad AcessoCard access token, discarding and reenqueing');
+				weakAssert(res.Message.indexOf("ValidarToken") >= 0, res);
+				token = null;
+				async.Queue.global().addTask(key);  // renqueue this task
 			case TransportError(msg):
 				trace('processor: network error, waiting a bit and reenqueuing');
-				Sys.sleep(60);
+				Sys.sleep(10);
 				async.Queue.global().addTask(key);  // renqueue this task
-			case AcessoTokenError(_) | AcessoTemporaryError({ Message:(_.indexOf("ValidarToken") >= 0)=>true, ResultCode: 99 }):
-				trace('processor: bad AcessoCard acess token, discarding and reenqueing');
-				token = null;
+			case AcessoTemporaryError(err):
+				trace('processor: (presumably) temporary AcessoCard error, reenqueuing');
+				weakAssert(token == null, "error dispatched by something other than CriarToken");
+				Sys.sleep(60);
 				async.Queue.global().addTask(key);  // renqueue this task
 			case _:
 				trace('processor: cannot recover from $err');

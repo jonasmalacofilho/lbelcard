@@ -15,10 +15,8 @@ class GestaoPortador extends GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			// all ok, nothing more to do
-		case 4, 14, 15, 16:  // error in: cep, neighborhood, city, state
+		case 4, 14, 15, 16:  // error in cep, neighborhood, city or state
 			throw AcessoUserOrDataError(res);
-		case 17, 18, 19, 20:  // error while: persisting, processing, updating, database
-			throw AcessoTemporaryError(res);
 		case err:
 			throw AcessoPermanentError(res);
 		}
@@ -32,8 +30,6 @@ class GestaoPortador extends GestaoBase {
 			return res.Data;
 		case 2, 3, 4, 5:  // data mismatch, invalid email, already registred (to another user?), blacklisted
 			throw AcessoUserOrDataError(res);
-		case 6:  // error during persisting
-			throw AcessoTemporaryError(res);
 		case err:
 			throw AcessoPermanentError(res);
 		}
@@ -46,12 +42,10 @@ class GestaoPortador extends GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			return res.Data.TokenEfetivacao;
-		case 1, 3:  // request token: expired, invalid
+		case 1, 3:  // request token expired or invalid
 			throw JumpToError(res, AcessoCard(AcessoCardStep.SolicitarAlteracaoEmailPortador(data.TokenAdesao)));
 		case 4:  // invalid access token
 			throw AcessoTokenError(res);
-		case 8:  // error during persisting
-			throw AcessoTemporaryError(res);
 		case err:
 			throw AcessoPermanentError(res);
 		}
@@ -61,14 +55,12 @@ class GestaoPortador extends GestaoBase {
 	{
 		var res:Response<Void> = request(ENDPOINT, "efetivar-alteracao-email-portador", data);
 		switch res.ResultCode {
-		case 0:
-			// all ok, nothing more to do
-		case 3:  // data mismatch
+		case 0, 7:
+			// all ok or already updated, nothing more to do
+		case 3:
 			throw AcessoUserOrDataError(res);
-		case 4, 5:  // request token: expired, invalid
+		case 4, 5:  // request token expired or invalid
 			throw JumpToError(res, AcessoCard(AcessoCardStep.SolicitarAlteracaoEmailPortador(data.TokenAdesao)));
-		case 8, 10:  // error during: persisting, processing
-			throw AcessoTemporaryError(res);
 		case err:
 			throw AcessoPermanentError(res);
 		}
@@ -81,10 +73,8 @@ class GestaoPortador extends GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			return res.Data.TokenSolicitacao;
-		case 2, 3, 5, 6, 7:  // data mismatch, missing data, invalid phonenumber, already registred (to another user?), blacklisted
+		case 2, 5, 6, 7:  // data mismatch, invalid phonenumber, already registred (to another user?), blacklisted
 			throw AcessoUserOrDataError(res);
-		case 10:  // error during persisting
-			throw AcessoTemporaryError(res);
 		case err:
 			throw AcessoPermanentError(res);
 		}
@@ -96,12 +86,10 @@ class GestaoPortador extends GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			// all ok, nothing more to do
-		case 1:  // data mismatch
+		case 1:
 			throw AcessoUserOrDataError(res);
 		case 2, 3:  // invalid request token
 			throw JumpToError(res, AcessoCard(AcessoCardStep.SolicitarAlteracaoEmailPortador(data.TokenAdesao)));
-		case 4, 5:  // error during persisting, processing
-			throw AcessoTemporaryError(res);
 		case err:
 			throw AcessoPermanentError(res);
 		}
@@ -115,8 +103,6 @@ class GestaoPortador extends GestaoBase {
 			// all ok, nothing more to do
 		case 5, 6, 7, 8:  // data error: birthday|min, birthday|max, credit bureau search, mother's name
 			throw AcessoUserOrDataError(res);
-		case 4:  // error during persisting
-			throw AcessoTemporaryError(res);
 		case err:
 			throw AcessoPermanentError(res);
 		}
