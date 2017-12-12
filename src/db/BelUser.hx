@@ -1,8 +1,8 @@
 package db;
 
+@:id(belNumber)
 class BelUser extends sys.db.Object {
-	public var id:SId;
-	public var belNumber:String;
+	public var belNumber:Int;
 	public var cpf:String;
 
 	public function new(belNumber, cpf)
