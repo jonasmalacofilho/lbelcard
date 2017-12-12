@@ -23,16 +23,16 @@
         Antes de iniciarmos o processo, precisamos validar seu
         número de consultor. 
         </br>
-        Preencha os campos abaixo e clique em "Continuar"
+        Por favor, preencha os campos abaixo e clique em "Continuar"
 
         </p>   
         <div class="field">
-            <label>Número de Consultor L'BEL</label>
+            <label>número de consultor L'BEL</label>
             <input type='number' name='belNumber' tabindex=1>
         </div>
 
         <div class="field">
-            <label>CPF (Digite apenas os números)</label>
+            <label>CPF (apenas números)</label>
             <input id="CPF" type="text" name="cpf" tabindex=2>
         </div>
 
