@@ -66,8 +66,16 @@ class CardReq
 				if(val == null || val.length == 0)
 					continue;
 
-				var elem = new JQuery('input[name="${k}"]');
-				elem.val(val);
+				if(k.startsWith("sel|"))
+				{
+					k = k.substr(4);
+					untyped $('select[name="$k"]').dropdown('set selected', val);
+				}
+				else
+				{
+					var elem = new JQuery('input[name="${k}"]');
+					elem.val(val);
+				}
 			}
 		}
 
@@ -86,6 +94,11 @@ class CardReq
 								var cur = new JQuery(elem);
 								sess_storage.setItem(cur.attr('name'), cur.val());
 							});
+					new JQuery('select').each(function(i,elem)
+					{
+						var cur = new JQuery(elem);
+						sess_storage.setItem('sel|${cur.attr("name")}', cur.val());
+					});
 				});
 	}
 
