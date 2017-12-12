@@ -6,31 +6,41 @@
     js.CardReq.init();
 </script>
 <div class="ui text container">
+
+<h3 class="ui dividing header">Cadastro</h3>
+<h4 class="ui header">O primeiro passo para solicitar o seu cartão é o cadastramento
+                            de informações para que possamos identificar e 
+                               entrar em contato com você.
+                               </br>
+                               Por favor preencha todos os campso das fichas abaixo e clique em 
+                               "Prosseguir" quando terminar, você poderá confirmar as informações 
+                               ainda antes do envio. </h4>
+
 <form method="POST" action="/novo/dados" class="ui form error">
 
     <div class="ui segment">
-        <h3 class="ui dividing header">Dados Pessoais</h3>
+        <h3 class="ui dividing header">Identificação</h3>
 
             <!-- Full name -->
             <div class="field">
-                <label>Nome Completo</label>
+                <label>nome completo</label>
                 <input type="text" name="NomeCompleto" placeholder="Nome Completo" maxlength="100" required/>
             </div>
 
             <div class="two fields">
                 <!-- Sex -->
                 <div class="field">
-                    <label>Sexo</label>
+                    <label>sexo</label>
                     <select name="TpSexo">
-                        <option value="0">Não Informado</option>
-                        <option value="1">Masculino</option>
-                        <option value="2">Feminino</option>
+                        <option value="0">não informado</option>
+                        <option value="1">masculino</option>
+                        <option value="2">feminino</option>
                     </select>
                 </div>
 
                 <!-- Birth date -->
                 <div class="field">
-                    <label>Data de Nascimento</label>
+                    <label>data de nascimento</label>
                     <div class="ui calendar">
                         <div class="ui input left icon">
                             <i class="time icon"></i>
@@ -42,15 +52,15 @@
 
             <!-- Mom's name -->
             <div class="field">
-                <label>Nome completo de sua Mãe</label>
+                <label>nome completo de sua mãe</label>
                 <input type="text" name="NomeMae" placeholder="Nome da mãe" maxlength="100" required/>
             </div>
     </div>
 
     <div class="ui segment">
-        <h3 class="ui dividing header">Informações de Contato</h3>
+        <h3 class="ui dividing header">Telefone e endereço</h3>
 
-         <h4 class="ui">Telefone</h4>
+         <h4 class="ui">telefone celular</h4>
 
         <!-- Phone info -->
         <div class="fields">
@@ -66,7 +76,7 @@
             </div>
 
             <div class="ten field wide">
-                <label>Número de Celular</label>
+                <label>número</label>
                 <input type="text" name="NumeroTel" placeholder="XXXXX-XXXX" maxlength="11" id="cel"/>
             </div>
 
@@ -74,7 +84,7 @@
 
         </div>
 
-        <h4 class="ui">Endereço de Residencial</h4>
+        <h4 class="ui">Endereço</h4>
 
         <div class='ui dimmer' id="loader">
             <div class='ui centered text loader'>Carregando seu Endereço</div>
@@ -94,34 +104,34 @@
 
         <div class="two fields">
             <div class="field">
-                <label>Cidade</label>
+                <label>cidade</label>
                 <input type="text" name="Cidade" id="cidade" readonly/>
             </div>
 
             <div class="field">
-                <label>Bairro</label>
+                <label>bairro</label>
                 <input type="text" name="Bairro" id="bairro"/>
             </div>
         </div>
 
         <div class="fields">
             <div class="seven wide field">
-                <label>Rua</label>
+                <label>rua</label>
                 <input type="text" name="Logradouro" id="logradouro"/>
             </div>
 
             <div class="two wide field">
-                <label>Número</label>
+                <label>número</label>
                 <input type="text" name="NumeroEnd" maxlength="10" />
             </div>
 
             <div class="two wide field">
-                <label>Complemento</label>
+                <label>complemento</label>
                 <input type="text" name="Complemento" maxlength="20" />
             </div>
 
             <div class="five wide field">
-                <label>Tipo de Endereço</label>
+                <label>tipo de endereço</label>
                 <select name="TpEndereco">
                     <option value="0">Residencial</option>
                     <option value="1">Comercial</option>
@@ -134,10 +144,10 @@
 
     <div class="ui segment">
 
-        <h3 class="ui dividing header">Informações Complementares</h3>
+        <h3 class="ui dividing header">Email e documentos</h3>
         <div class="fields">
             <div class="six wide field">
-                <label>E-Mail pessoal</label>
+                <label>e-mail</label>
                 <div class="ui input left icon">
                     <i class="mail outline icon"></i>
                     <input type="email" name="Email" placeholder="E-Mail" maxlength="125"/>
@@ -150,25 +160,26 @@
             </div>
 
             <div class="five wide field">
-                <label>Tipo de Cliente</label>
+                <label>Nacionalidade</label>
                 <select name="TpCliente">
-                    <option value="0">Pessoa Física</option>
-                    <option value="1">Pessoa Jurídica</option>
-                    <option value="2">Estrangeiro</option>
+                    <option value="0">Brasileira</option>
+                    <option value="2">Estrangeira</option>
                 </select>
 
             </div>
         </div>
 
         <!-- Begin that nasty document (RG) block! -->
+        <h4 class="ui">documento de identificação</h4>
+        
         <div class="two fields">
             <div class="field">
-                <label>Documento de identificação</label>
+                <label>número</label>
                 <input type="text" name="NumDocumento"/>
             </div>
 
             <div class="field">
-                <label>Data de Emissão do Documento</label>
+                <label>data de emissão</label>
                 <div class="ui calendar">
                 <div class="ui input left icon">
                     <i class="time icon"></i>
@@ -181,7 +192,7 @@
         <div class="fields">
             <!-- DOC TYPE (RG;RNE;Pass) -->
             <div class="five wide field">
-                <label>Tipo de Documento</label>
+                <label>tipo</label>
                 <select name="TpDocumento">
                     <option value="0">RG</option>
                     <option value="1">RNE</option>
@@ -190,22 +201,22 @@
             </div>
 
             <div class="three wide field">
-                <label>Órgão expeditor </label>
+                <label>órgão emissor </label>
                 <input type="text" name="OrgaoExpedidor" placeholder="" maxlength="20"/>
             </div>
 
             <div class="four wide field">
-                <label>UF do Órgão Expeditor</label>
+                <label>UF do órgão emissorr</label>
                     (: views.Components.UF() :)
             </div>
 
             <div class="four wide field">
-                <label>País do Órgão Emissor</label>
+                <label>país do órgão emissor</label>
                 <input type="text" name="PaisOrgao" value="Brasil" maxlength="30"/>
             </div>
         </div>
 
-        <button class="ui button fundo3 inverted fluid">Enviar</button>
+        <button class="ui button fundo3 inverted fluid">Prosseguir</button>
 
     </div>
 </form>
