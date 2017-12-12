@@ -70,8 +70,9 @@ class GestaoBase {
 			log.responseData = responseData;
 			log.timing = t1;
 			log.update();
-			// FIXME should statusCode >= 400 return data or TransportError?
 			ret = haxe.Json.parse(responseData);
+			assert(ret != null && ret.ResultCode != null, statusCode,
+					Type.enumConstructor(Type.typeof(ret)), "unexpected message structure");
 		}
 
 		log.requestPayload = requestData;

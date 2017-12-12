@@ -45,7 +45,7 @@ class Novo {
 
 	public function new() {}
 
-	public function getDefault(?error : String)
+	public function getDefault(?error:String)
 	{
 		Web.setReturnCode(200);
 #if dev
@@ -83,9 +83,9 @@ class Novo {
 			}
 #else
 			if (user == null)
-				trace('abort: user not found (${args.belNumber})');
+				trace('abort: user not found (${args.belNumber})');  // TODO consider switching to SecurityError
 			else
-				trace('abort: cpf does not match user (user ${user.belNumber}, cpf ${args.cpf})');
+				trace('abort: cpf does not match user (user ${user.belNumber}, cpf ${args.cpf})');  // TODO consider switching to SecurityError
 			getDefault('Consultor não encontrado ou CPF não bate');
 			return;
 #end
@@ -93,7 +93,7 @@ class Novo {
 
 		if (limitReached(user)) {
 			trace('abort: card request limit reached (user ${user.belNumber})');
-			getDefault('Atingido o limite de solicitação de cartões para esse consultor');  // FIXME maybe show error view
+			getDefault('Atingido o limite de solicitação de cartões para esse consultor');
 			return;
 		}
 
@@ -106,15 +106,16 @@ class Novo {
 		Web.redirect(moveForward(card));
 	}
 
-	public function getDados()
+	public function getDados(?error:String)
 	{
 		var card = getCardRequest();
-		if (card == null) {
+		if (card == null || !card.state.match(AwaitingBearerData | AwaitingBearerConfirmation)) {
+			// /novo/confirm shows user data, never move the user there
 			Web.redirect(moveForward(null));
 			return;
 		}
 		Web.setReturnCode(200);
-		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render));
+		Sys.println(views.Base.render("Entre com suas informações", views.CardReq.render, error));
 	}
 
 	public function postDados(args:PersonalData)
@@ -131,12 +132,12 @@ class Novo {
 				Reflect.setField(args, f, StringTools.trim(val));
 		}
 
-		assert(!args.DDI.startsWith("0"), args.DDI);
-		assert(args.DDI != "55" || !args.DDD.startsWith("0"), args.DDI, args.DDD);
+		weakAssert(!args.DDI.startsWith("0"), args.DDI);  // TODO consider switching to assert
+		weakAssert(args.DDI != "55" || !args.DDD.startsWith("0"), args.DDI, args.DDD);  // TODO consider switching to assert
 
 		var card = getCardRequest();
-		if (card == null)
-			throw SecurityError('card request not found');
+		if (card == null || !card.state.match(AwaitingBearerData))
+			throw SecurityError("card request not found or in wrong state");
 		show(card.requestId);
 
 		if (card.bearer.cpf != args.CodCliente) {
@@ -144,7 +145,7 @@ class Novo {
 			trace('dev-build: ignoring mismatch between authorized and current bearers');
 #else
 			trace('abort: card bearer does not match user (user ${card.bearer.belNumber}, cpf ${args.CodCliente})');
-			Web.redirect('${moveForward(card)}?error=${'O CPF informado não pertence ao consultor'.urlEncode()}');  // FIXME show error view
+			getDados('O CPF informado não pertence ao consultor');
 			return;
 #end
 		}
@@ -193,7 +194,7 @@ class Novo {
 		Web.redirect(moveForward(card));
 	}
 
-	public function getConfirma(?error : String)
+	public function getConfirma()
 	{
 		var card = getCardRequest();
 		if (card == null || !card.state.match(AwaitingBearerConfirmation)) {
@@ -201,27 +202,25 @@ class Novo {
 			return;
 		}
 		Web.setReturnCode(200);
-		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(card.userData), error));
+		Sys.println(views.Base.render("Confirme suas informações",views.Confirm.render.bind(card.userData)));
 	}
 
 	public function postConfirma()
 	{
 		var card = getCardRequest();
-		if (card == null)
-			throw SecurityError('card request not found');
+		if (card == null || !card.state.match(AwaitingBearerConfirmation))
+			throw SecurityError("card request not found or in wrong state");
 		show(card.requestId);
 
-		if (card.state.match(AwaitingBearerConfirmation)) {
-			// might happen; we don't lock the BelUser when creating the CardRequest
-			assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
+		// might happen; we don't lock the BelUser when creating the CardRequest
+		assert(!limitReached(card.bearer), card.requestId, card.bearer.belNumber);
 
-			card.state = SendEmail;
-			card.queued = true;
-			card.update();
+		card.state = SendEmail;
+		card.queued = true;
+		card.update();
 
-			var q = async.Queue.global();
-			q.addTask(card.requestId);
-		}
+		var q = async.Queue.global();
+		q.addTask(card.requestId);
 
 		Web.redirect(moveForward(card));
 	}
@@ -230,7 +229,7 @@ class Novo {
 	{
 		var card = db.CardRequest.manager.select($requestId == key);
 		if (card == null)
-			throw SecurityError('card request not found ($key)', "Não encontramos o cartão na nossa base.");
+			throw SecurityError("card request not found", "Não encontramos o cartão na nossa base.");
 		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);
@@ -280,10 +279,10 @@ class Novo {
 		var ret = false;
 
 		var http = new haxe.Http(RECAPTCHA_URL);
+		http.addHeader("User-Agent", Server.userAgent);
 		http.addParameter("secret", RECAPTCHA_SECRET);
 		http.addParameter("response", challenge);
 		http.addParameter("remoteip", Web.getClientIP());
-		http.addHeader("User-Agent", Server.userAgent);
 
 		http.onError = function(msg : String){
 			throw 'recaptcha remote verification error: $msg';
