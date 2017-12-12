@@ -46,8 +46,8 @@ class GestaoPortador extends GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			return res.Data.TokenEfetivacao;
-		// case 1, 3:  // request token: expired, invalid
-		// 	throw JumpToError(res, AcessoCard(SolicitarAlteracaoEmailPortador(data.TokenAdesao)));
+		case 1, 3:  // request token: expired, invalid
+			throw JumpToError(res, AcessoCard(AcessoCardStep.SolicitarAlteracaoEmailPortador(data.TokenAdesao)));
 		case 4:  // invalid access token
 			throw AcessoTokenError(res);
 		case 8:  // error during persisting
@@ -65,8 +65,8 @@ class GestaoPortador extends GestaoBase {
 			// all ok, nothing more to do
 		case 3:  // data mismatch
 			throw AcessoUserOrDataError(res);
-		// case 4, 5:  // request token: expired, invalid
-		// 	throw JumpToError(res, AcessoStep.SolicitarAlteracaoEmailPortador(data.TokenAdesao));
+		case 4, 5:  // request token: expired, invalid
+			throw JumpToError(res, AcessoCard(AcessoCardStep.SolicitarAlteracaoEmailPortador(data.TokenAdesao)));
 		case 8, 10:  // error during: persisting, processing
 			throw AcessoTemporaryError(res);
 		case err:
@@ -98,8 +98,8 @@ class GestaoPortador extends GestaoBase {
 			// all ok, nothing more to do
 		case 1:  // data mismatch
 			throw AcessoUserOrDataError(res);
-		// case 2, 3:  // invalid request token
-		// 	throw JumpToError(res, AcessoStep.SolicitarAlteracaoEmailPortador(data.TokenAdesao));
+		case 2, 3:  // invalid request token
+			throw JumpToError(res, AcessoCard(AcessoCardStep.SolicitarAlteracaoEmailPortador(data.TokenAdesao)));
 		case 4, 5:  // error during persisting, processing
 			throw AcessoTemporaryError(res);
 		case err:
