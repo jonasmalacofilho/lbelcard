@@ -1,6 +1,10 @@
 (: using StringTools :)
 (: import db.types.* :)
 (: static function render (card : CardRequestState) :)
+
+(: do var err = switch(card) {case Failed(err, s): err; default: null;} :)
+
+
 <script>
     $(document).ready(function()
     {
@@ -9,41 +13,44 @@
 </script>
 <div class="ui vertical segment">
     <div class="ui container">
-        <div class="ui ordered steps">
+        <div class="ui four stackable steps">
             <div class="step (:compare(card,AwaitingBearerData).trim():)">
+                <i class="(:icon(card,AwaitingBearerData).trim():) icon"></i>
                 <div class="content">
                     <div class="title">Dados Pessoais</div>
-                    <div class="description">Entre com seus dados</div>
+                    
                 </div>
             </div>
 
             <div class="step (:compare(card,AwaitingBearerConfirmation).trim():)">
+                <i class="(:icon(card,AwaitingBearerConfirmation).trim():) icon"></i>
                 <div class="content">
                     <div class="title">Confirmação</div>
-                    <div class="description">Confirme que seus dados estão corretos</div>
+                    
                 </div>
             </div>
 
             <div class="step (:compare(card, AcessoCard(null)).trim():) negative">
+                <i class="(:icon(card,AcessoCard(null)).trim():) icon"></i>
                 <div class="content">
                     <div class='title'>Análise</div>
-                    <div class="description">Estamos validando se está tudo Ok.</div>
+                    
                 </div>
             </div>
 
             <div class="step (:compare(card, CardRequested).trim():)">
+                <i class="(:icon(card,CardRequested).trim():) icon"></i>
                 <div class="content">
-                <div class="title">Dados aprovados!</div>
-                <div class="description">Seu cartão será confeccionado!</div>
+                <div class="title">Concluído</div>
+                
                 </div>
             </div>
         </div>
     </div>
 </div>    
 
-    (: if card.match(Failed(err,s)) :)
+    (: if err.match(AcessoUserOrDataError(res)) || err.match(AcessoPermanentError(res)) :)
         
-        (: do var err = switch(card) {case Failed(err, s): err; default: null;} :)
         <div class="ui segment">
             <div class="ui container">
                 <div class="ui red message">
@@ -59,7 +66,7 @@
                                 </ul>
                             (:end:)
                         (: case AcessoTemporaryError(_), TransportError(_), AcessoTokenError(_), JumpToError(_), SendGridError(_) :)
-                            Tente acessar este sistema mais tarde.
+                            //Shouldnt be here
                     (: end :)
                 </div>
             </div>
@@ -69,6 +76,7 @@
 (:end:)
 
 (: static function compare(cur : CardRequestState, baseline : CardRequestState) :)
+    
     (: switch(cur) :)
     (: case Failed(err,s) :)
         (: do cur = s :)
@@ -85,4 +93,37 @@
     (: else if (curIndex < baseIndex) :)
         disabled
     (:else:) (:end:)
+(:end:)
+
+(: static function icon(cur : CardRequestState, baseline : CardRequestState) :)
+    (: do var isErr = false :)
+    (: switch(cur) :)
+    (: case Failed(err,s) :)
+        (: if err.match(AcessoPermanentError(_)) || err.match(AcessoUserOrDataError(_)) :)
+            (: do isErr = true :)
+        (:end:)
+        (: do cur = s :)
+    (: case v :)
+    (:end:)
+
+    (: if isErr && baseline != CardRequested :)
+        red remove
+    (: else :)
+        (: switch baseline :)
+            (: case AwaitingBearerData :)
+                add user
+            (: case AwaitingBearerConfirmation :)
+                info circle
+            (: case AcessoCard(_) :)
+                zoom in
+            (: case CardRequested if(!isErr) :)
+                checkmark
+            (: case CardRequested if(isErr) :)
+                remove
+            (: case CardRequested :)
+            (: case Failed(_),SendEmail:)
+        (:end:)
+    (:end:)
+
+
 (:end:)
