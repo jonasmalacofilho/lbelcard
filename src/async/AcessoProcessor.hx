@@ -47,7 +47,13 @@ class AcessoProcessor {
 			rateLimit(card.state);
 
 			switch card.state {
-			case Failed(TransportError(_)|AcessoTemporaryError(_), onState):
+			case Failed(AcessoUserOrDataError(_), _) | CardRequested:
+				// nothing to do for user errors or if request has finished processing
+				break;
+
+			case Failed(_, onState):
+				// consider that, if reenqueued, some errors that were otherwise
+				// permanent might have been fixed by an upgrade
 				card.state = onState;
 				continue;
 
@@ -193,9 +199,6 @@ class AcessoProcessor {
 			case AwaitingBearerData, AwaitingBearerConfirmation:
 				assert(false, card.state);
 				break;
-
-			case Failed(_), CardRequested:
-				break;  // nothing to do
 			}
 		}
 	}
