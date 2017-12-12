@@ -27,7 +27,6 @@ class GestaoBase {
 	function request(endpoint:String, api:String, data:Dynamic):Dynamic
 	{
 		var params:Params<Dynamic> = {
-			IpCliente : eweb.Web.getClientIP(),  // TODO get it as param
 			Language : REST,
 			NomeCanal : Webservice,
 			RecId : 42,  // TODO get it as a param (but it's ignored by Acesso at the moment)
