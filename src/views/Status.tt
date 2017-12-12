@@ -5,12 +5,14 @@
 (: do var err = switch(card) {case Failed(err, s): err; default: null;} :)
 
 
+(:if !card.match(CardRequested | Failed(AcessoUserOrDataError(_)|AcessoPermanentError(_), _)):)
 <script>
     $(document).ready(function()
     {
-        setTimeout(function(){window.location.reload();}, 30000);
+        setTimeout(function(){window.location.reload();}, 10000);
     });
 </script>
+(:end:)
 <div class="ui vertical segment">
     <div class="ui container">
         <div class="ui four stackable steps">
