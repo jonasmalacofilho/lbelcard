@@ -3,22 +3,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
 <!-- reCAPTCHA -->
 (:if recaptcha != null:)
-<script src='https://www.google.com/recaptcha/api.js'></script>
+ <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 (:end:)
 
+</script>
 <!-- TODO: Fix this: -->
 <script>
     js.Login.init();
-    function onSubmit()
-    {
-        $('.ui.form').form('validate form');
-        console.log($('.ui.form').form('is valid'));
-
-        if($('.ui.form').form('is valid'))
-            $('form').submit();
-        else
-            $('input').blur();
-    }
 </script>
 <div class='ui text container'>
     <form class='ui form' method="post">
@@ -38,13 +29,16 @@
         </div>
 
         <div class="field">
-            <label>CPF</label>
+            <label>CPF (apenas números)</label>
             <input id="CPF" type="text" name="cpf" tabindex=2>
         </div>
 
-        <button class="g-recaptcha ui purple buttonui button fluid large submit"
-            (:if recaptcha != null:)data-sitekey="(:recaptcha.siteKey:)"(:end:)
-            data-callback="onSubmit" tabindex=3>
+        <div class="field padded">
+            <div class="g-recaptcha" data-sitekey="(:recaptcha.siteKey:)"></div>
+            <br/>
+        </div>
+
+        <button class="ui purple buttonui button fluid large submit" type="submit"
           <i class="sign in icon"></i> Continuar
         </button>
     </div>
