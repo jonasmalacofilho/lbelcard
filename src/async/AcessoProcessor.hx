@@ -164,9 +164,11 @@ class AcessoProcessor {
 				card.state = AcessoCard(SolicitarCartaoIdentificado(client));
 				card.update();
 
+#if dev
 			case AcessoCard(_):
-				trace('acesso: stopping on ${card.state} (not implemented or unsafe at the moment)');
-				break;  // FIXME remove
+				trace('dev-build: stopping on ${card.state} due to failsafe');
+				break;  // do *not* remove this
+#end
 
 			case AcessoCard(SolicitarCartaoIdentificado(client)):
 				var data:SolicitarCartaoIdentificadoData = {
