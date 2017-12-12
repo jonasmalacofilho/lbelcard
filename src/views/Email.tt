@@ -4,9 +4,9 @@
     <body style="font-family: sans-serif; color: #666;">
         <table style="width:600px;" align="center">
             <tbody>
-                <tr style="height:50px;width:600px;background-color:rgb(75, 46, 104)">
+                <tr style="height:45px;width:600px;background-color:rgb(75, 46, 104)">
                     <td>
-                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:24px;margin-left:10px;">
+                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:15px;margin-left:15px;">
                     </td>
                 </tr>
                 <tr>
@@ -46,9 +46,9 @@
         </table>
         <table width="600px" align="center" cellspacing="0">
             <tbody style="margin-top:50px;background-color:rgb(75, 46, 104);color:#FFFFFF;padding:0px;border:none;margin:0px;">
-                <tr style="height:100px;">
+                <tr style="height:75px;">
                     <td style="width:92px">
-                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:24px;margin-left:10px;">
+                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:30px;margin-left:15px;">
                     </td>
                     <td style="font-size:10px;"> 
                         <a href="http://lbel.com.br/contato/" style="color:#FFFFFF;margin-left:10px;">BELCORP</a>

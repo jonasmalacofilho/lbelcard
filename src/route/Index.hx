@@ -23,6 +23,11 @@ class Index {
 	{
 		Sys.println(views.Base.render("ERRO", views.Error.render.bind(msg)));
 	}
+
+	public function doEmail(name:String, email:String, url:String)
+	{
+		Sys.println('<html><meta charset="utf-8">' + views.Email.render(name, email, url));
+	}
 	#end
 }
 
