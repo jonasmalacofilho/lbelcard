@@ -40,7 +40,7 @@ class CardReq
 
 			});
 
-			untyped $('#CPF').mask('000.000.000-00');
+			untyped $('#CPF').mask('000.000.000-00', {reverse : true});
 			untyped $('#CEP').mask('00000-000');
 			untyped $('#cel').mask('00000-0000');  // FIXME only if DDI == 55, if that
 			untyped $('#DtNascimento').mask('00/00/0000');
@@ -280,6 +280,10 @@ class CardReq
 					rules : [{
 						type : 'empty',
 						prompt : 'Digite seu CPF'
+					},
+					{
+						type: 'exactLength[14]',
+						prompt : 'Por favor, preencha com os 11 dígitos'
 					},
 					{
 						type : 'validaCPF',

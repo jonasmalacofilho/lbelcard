@@ -11,7 +11,7 @@ class Login
                 return MainJS.validaCPF(val);
             }
             validate();
-       		untyped $('#CPF').mask('000.000.000-00');
+       		untyped $('#CPF').mask('000.000.000-00', {reverse : true});
  });
     }
 
@@ -32,6 +32,10 @@ class Login
                         type : 'empty',
                         prompt : 'Digite seu CPF'
                     },
+                    {
+						type: 'exactLength[14]',
+						prompt : 'Por favor, preencha com os 11 dígitos'
+					},
                     {
                         type : 'validaCPF',
                         prompt : 'CPF Inválido'
