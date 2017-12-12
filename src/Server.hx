@@ -68,6 +68,8 @@ class Server {
 			sys.db.TableCreate.create(m);
 		}
 
+		Fixes.apply();
+
 		trace('time: ${since(ini_t)} ms on module initialization');
 	}
 

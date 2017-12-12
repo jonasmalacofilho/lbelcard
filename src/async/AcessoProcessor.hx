@@ -197,6 +197,7 @@ class AcessoProcessor {
 				new GestaoAquisicaoCartao(token).ConfirmarPagamento(data);
 				card.state = CardRequested;
 				card.queued = false;
+				card.update();
 
 			case AwaitingBearerData, AwaitingBearerConfirmation:
 				assert(false, card.state);
