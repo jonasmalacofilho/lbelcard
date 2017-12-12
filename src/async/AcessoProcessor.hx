@@ -194,6 +194,8 @@ class AcessoProcessor {
 					TpOperacao : Embossing_Carga_Cartao,
 					ValorPagamento : cost
 				}
+				if (cost >= 5)  // TODO reevaluate this failsafe
+					throw 'failsafe: card cost exceedes our expectations (R$$ $cost)';
 				new GestaoAquisicaoCartao(token).ConfirmarPagamento(data);
 				card.state = CardRequested;
 				card.queued = false;
