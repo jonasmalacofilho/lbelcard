@@ -49,7 +49,7 @@
     </div>
 </div>    
 
-    (: if err.match(AcessoUserOrDataError(_)) || err.match(AcessoPermanentError(_)) :)
+    (: if err != null && (err.match(AcessoUserOrDataError(_) | AcessoPermanentError(_))) :)
         
         <div class="ui vertical segment">
             <div class="ui container">
