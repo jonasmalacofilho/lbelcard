@@ -5,10 +5,21 @@
 (:if recaptcha != null:)
  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 (:end:)
-
-</script>
 <!-- TODO: Fix this: -->
 <script>
+    var ondatacallback = function(response)
+    {
+        var cur = $('#recaptcha');
+        cur.val(response);
+        cur.blur();
+    }
+
+    var onresetcallback = function(response)
+    {
+        var cur = $('#recaptcha');
+        cur.val('');
+        cur.blur();
+    }
     js.Login.init();
 </script>
 <div class='ui text container'>
@@ -33,10 +44,13 @@
             <input id="CPF" type="text" name="cpf" tabindex=2>
         </div>
 
+        (: if recaptcha != null :)
         <div class="field padded">
-            <div class="g-recaptcha" data-sitekey="(:recaptcha.siteKey:)"></div>
+            <div class="g-recaptcha" data-sitekey="(:recaptcha.siteKey:)" data-callback="ondatacallback" data-expired-callback="onresetcallback"></div>
+            <input type="hidden" name="recaptcha" id="recaptcha">
             <br/>
         </div>
+        (: end :)
 
         <button class="ui purple buttonui button fluid large submit" type="submit"
           <i class="sign in icon"></i> Continuar

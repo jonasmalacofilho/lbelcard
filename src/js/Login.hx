@@ -9,11 +9,27 @@ class Login
         new JQuery('document').ready(function(_){
             untyped $.fn.form.settings.rules.validaCPF = function(val){
                 return MainJS.validaCPF(val);
-            }
+            };
+            
+
             validate();
        		untyped $('#CPF').mask('000.000.000-00', {reverse : true});
- });
+
+            //prevent Enter to submit
+            new JQuery('input').keydown(function(evt){
+               //enter key
+                if(evt.keyCode == 13)
+                {
+                    evt.preventDefault();
+                    evt.stopImmediatePropagation();
+                }
+            });
+
+        });
     }
+    
+   
+
 
     static function validate()
     {
@@ -39,6 +55,14 @@ class Login
                     {
                         type : 'validaCPF',
                         prompt : 'CPF Inválido'
+                    }]
+                },
+                recaptcha: {
+                    identifier: 'recaptcha',
+                    rules: 
+                    [{
+                        type: 'empty',
+                        prompt: 'Por favor, faça a verificação de Recaptcha'
                     }]
                 }
             }
