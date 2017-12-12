@@ -13,8 +13,8 @@ class Email {
 			personalizations : [{
 				to : [{ name : username, email : email }]
 			}],
-			from : { name : "L'BELCARD", email : "no-reply@lbelcard.com.br"},
-			subject : "Obrigado por solicitar o seu L'BelCard",
+			from : { name : "L'BELcard", email : "no-reply@lbelcard.com.br"},
+			subject : "Obrigado por solicitar o seu L'BELCard",
 			content : [{ type : "text/html", value : views.Email.render(username,email,status_url)  }]
 		}
 	}
@@ -25,7 +25,7 @@ class Email {
 		var log = new db.RemoteCallLog(url, "POST");
 
 		req.setHeader("Content-Type", "application/json");
-		req.setHeader("User-Agent", "BELCARD");
+		req.setHeader("User-Agent", Server.userAgent);
 		req.setHeader("Authorization", 'Bearer ${Environment.SENDGRID_KEY}');
 		req.cnxTimeout = 20;  // TODO reevaluate
 

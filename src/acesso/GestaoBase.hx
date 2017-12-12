@@ -44,7 +44,7 @@ class GestaoBase {
 		var log = new db.RemoteCallLog(url, "POST");
 
 		req.addHeader("Content-Type", "application/json");
-		req.addHeader("User-Agent", "haxe/neko");
+		req.addHeader("User-Agent", Server.userAgent);
 		req.cnxTimeout = 12;  // recommended by AcessoCard
 
 		var requestData = haxe.Json.stringify(params);

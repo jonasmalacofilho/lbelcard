@@ -5,6 +5,7 @@ class Server {
 	public static var requestId(default,null):String;
 	public static var shortId(default,null):String;
 	public static var codeVersion(default,null):Float;
+	public static var userAgent = 'LBELcard/* (lbelcard.com.br) Neko/* Haxe/*';  // FIXME add versions
 
 	static var stderr = Sys.stderr();
 

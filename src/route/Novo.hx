@@ -283,7 +283,7 @@ class Novo {
 		http.addParameter("secret", RECAPTCHA_SECRET);
 		http.addParameter("response", challenge);
 		http.addParameter("remoteip", Web.getClientIP());
-		http.addHeader("User-Agent", "haxe/neko");
+		http.addHeader("User-Agent", Server.userAgent);
 
 		http.onError = function(msg : String){
 			throw 'recaptcha remote verification error: $msg';
