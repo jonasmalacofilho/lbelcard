@@ -49,24 +49,24 @@
     </div>
 </div>    
 
-    (: if err.match(AcessoUserOrDataError(res)) || err.match(AcessoPermanentError(res)) :)
+    (: if err.match(AcessoUserOrDataError(_)) || err.match(AcessoPermanentError(_)) :)
         
-        <div class="ui segment">
+        <div class="ui vertical segment">
             <div class="ui container">
                 <div class="ui red message">
-                    <div class="header">Ocorreu um erro nesta etapa</div>
+                    <div class="header">Não foi possível solicitar seu cartão.</div>
                     (: switch err :)
-                        (: case AcessoUserOrDataError(res),AcessoPermanentError(res) :)
-                            (:res.Message:)
+                        (: case AcessoUserOrDataError(res) :)
+                            Erro validando seus dados:
                             (: if res.FieldErrors != null :)
                                 <ul>
                                 (: for r in res.FieldErrors :)
-                                    <li>(:r.Message:)</li>
+                                    <li>(:translate(r.Message):)</li>
                                 (: end :)
                                 </ul>
                             (:end:)
-                        (: case AcessoTemporaryError(_), TransportError(_), AcessoTokenError(_), JumpToError(_), SendGridError(_) :)
-                            //Shouldnt be here
+                        (: case other :)
+                            (:*nothing to see here*:)
                     (: end :)
                 </div>
             </div>
@@ -127,3 +127,12 @@
 
 
 (:end:)
+
+(:static function translate(message:String):)
+	(:* TODO *:)
+	(:switch message:)
+	(:case other:)
+		(:other:)
+	(:end:)
+(:end:)
+
