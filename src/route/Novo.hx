@@ -228,9 +228,9 @@ class Novo {
 
 	public function getStatus(key:String)
 	{
-		var card = getCardRequest();
+		var card = db.CardRequest.manager.select($requestId == key);
 		if (card == null)
-			throw SecurityError('card request not found');
+			throw SecurityError('card request not found ($key)', "Não encontramos o cartão na nossa base.");
 		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);
