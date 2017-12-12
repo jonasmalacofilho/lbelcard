@@ -136,7 +136,7 @@ class Novo {
 		weakAssert(args.DDI != "55" || !args.DDD.startsWith("0"), args.DDI, args.DDD);  // TODO consider switching to assert
 
 		var card = getCardRequest();
-		if (card == null || !card.state.match(AwaitingBearerData))
+		if (card == null || !card.state.match(AwaitingBearerData | AwaitingBearerConfirmation))  // can resubmit if !confirmed
 			throw SecurityError("card request not found or in wrong state");
 		show(card.requestId);
 
