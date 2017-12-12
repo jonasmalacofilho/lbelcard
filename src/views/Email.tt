@@ -4,21 +4,21 @@
     <body style="font-family: sans-serif; color: #666;">
         <table style="width:600px;" align="center">
             <tbody>
-                <tr style="height:50px;background-color:rgb(75, 46, 104);width:600px;">
+                <tr style="height:50px;width:600px;background-color:rgb(75, 46, 104)">
                     <td>
-                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png">
+                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:24px;margin-left:10px;">
                     </td>
                 </tr>
                 <tr>
                     <table style="width:540px" align="center">
                         <tbody>
                             <tr>
-                                <td style="padding-top:32px;font-size:24px;color:rgb(75, 46, 104);">
+                                <td style="padding-top:32px;font-size:15px">
                                     Olá (:name:),
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding-top:20px;font-size:20px;color:rgb(75, 46, 104)">
+                                <td style="padding-top:20px;font-size:15px;">
                                     Recebemos o pedido de seu L'BELcard!
                                 </td>
                             </tr>
@@ -29,13 +29,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding-top:15px;font-size:14px">
+                                <td style="padding-top:15px;font-size:15px">
                                     Obrigado!
                                 </td>
                             </tr>
                             
                             <tr>
-                                <td style="padding-top:15px;padding-bottom:20px;font-size:20px">
+                                <td style="padding-top:15px;padding-bottom:20px;font-size:15px">
                                     Clique <a href="(:url:)">aqui</a> para acompanhar sua solicitação!
                                 </td>
                             </tr>
@@ -48,14 +48,14 @@
             <tbody style="margin-top:50px;background-color:rgb(75, 46, 104);color:#FFFFFF;padding:0px;border:none;margin:0px;">
                 <tr style="height:100px;">
                     <td style="width:92px">
-                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png">
+                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:24px;margin-left:10px;">
                     </td>
-                    <td style="font-size:10px"> 
-                        <a href="http://lbel.com.br/contato/">BELCORP</a>
+                    <td style="font-size:10px;"> 
+                        <a href="http://lbel.com.br/contato/" style="color:#FFFFFF;margin-left:10px;">BELCORP</a>
                         <br>
-                        <a href="tel:08007788992">SAC 0800 77 88 99 2</a>
+                        <a href="tel:08007788992" style="color:#FFFFFF;margin-left:10px;">SAC 0800 77 88 99 2</a>
                         <br>
-                        <a href="mailto:sac.belcorp@belcorp.biz">sac.belcorp@belcorp.biz</a>
+                        <a href="mailto:sac.belcorp@belcorp.biz" style="color:#FFFFFF;margin-left:10px;">sac.belcorp@belcorp.biz</a>
                     </td>
                 </tr>
             </tbody>
