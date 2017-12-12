@@ -5,7 +5,11 @@ class Server {
 	public static var requestId(default,null):String;
 	public static var shortId(default,null):String;
 	public static var codeVersion(default,null):Float;
+#if dev
+	public static var userAgent = 'LBELcard-dev (localhost) Neko Haxe';  // TODO add versions [automatically]
+#else
 	public static var userAgent = 'LBELcard (lbelcard.com.br) Neko Haxe';  // TODO add versions [automatically]
+#end
 
 	static var stderr = Sys.stderr();
 
