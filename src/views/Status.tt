@@ -88,7 +88,7 @@
     (: do var curIndex = Type.enumIndex(cur) :)
     (: do var baseIndex = Type.enumIndex(baseline) :)
 
-    (: if (curIndex > baseIndex) :)
+    (: if (curIndex > baseIndex || curIndex == Type.enumIndex(CardRequestState.CardRequested)) :)
         completed
     (: else if (curIndex == baseIndex) :)
         active
