@@ -3,9 +3,12 @@
 <div class="ui text container">
 
     <h3 class="ui dividing header">Confirmação</h3>
-    <p> Por favor, confira as informações cadastrais abaixo. </br>
+    <p>
+    Por favor, confira as informações cadastrais abaixo. 
+    </p> <p>
     Se estiverem erradas clique em "Voltar" 
-    para corrigí-las.</br>
+    para corrigí-las.
+    </p> <p>
     Se estiverem corretas clique em "Enviar" e aguarde o
     um email de confirmação.
     </p>

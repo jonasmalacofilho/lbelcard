@@ -30,9 +30,8 @@
         O cartão L'BELcard é exclusivo para os consultores L'BEL.
         Antes de iniciarmos o processo, precisamos validar seu
         número de consultor. 
-        </br>
+        </p><p>
         Por favor, preencha os campos abaixo e clique em "Continuar"
-
         </p>   
         <div class="field">
             <label>número de consultor L'BEL</label>
@@ -52,7 +51,7 @@
         </div>
         (: end :)
 
-        <button class="ui purple buttonui button fluid large submit" type="submit"
+        <button class="ui purple buttonui button fluid large submit" type="submit">
           <i class="sign in icon"></i> Continuar
         </button>
     </div>
