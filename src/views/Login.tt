@@ -19,9 +19,8 @@
         O cartão L'BELcard é exclusivo para os consultores L'BEL.
         Antes de iniciarmos o processo, precisamos validar seu
         número de consultor. 
-        </br>
+        </p><p>
         Por favor, preencha os campos abaixo e clique em "Continuar"
-
         </p>   
         <div class="field">
             <label>número de consultor L'BEL</label>
@@ -31,11 +30,6 @@
         <div class="field">
             <label>CPF (apenas números)</label>
             <input id="CPF" type="text" name="cpf" tabindex=2>
-        </div>
-
-        <div class="field padded">
-            <div class="g-recaptcha" data-sitekey="(:recaptcha.siteKey:)"></div>
-            <br/>
         </div>
 
         <button class="ui purple buttonui button fluid large submit" type="submit"
