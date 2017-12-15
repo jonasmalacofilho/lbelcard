@@ -223,9 +223,12 @@ class AcessoProcessor {
 	{
 		switch state {
 		case SendEmail:
-			Sys.sleep(0.01);  // less than SendGrid's 1000 req/s max
+			// SendGrid rate limit is 1000 req/s
+			Sys.sleep(0.001);
 		case AcessoCard(_):
-			Sys.sleep(0.2);  // at most AcessoCard's 5 req/s max
+			// AcessoCard rate limit is 5 req/s; however, the fastest logged request
+			// took 160 ms and we see no possibility of being able to sustain 5 req/s
+			Sys.sleep(0.005);
 		case _:
 			// nothing to do
 		}
