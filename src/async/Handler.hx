@@ -47,6 +47,8 @@ class Handler {
 				trace('async: shutdown loop');
 				lock.release();
 				break;
+			} else if (task != null) {
+				trace('async: queue size is ${queue.length + 1}');
 			}
 			lock.release();
 			if (task == null) {
