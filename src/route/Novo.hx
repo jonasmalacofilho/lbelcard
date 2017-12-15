@@ -99,7 +99,7 @@ class Novo {
 		var card = new db.CardRequest(user);
 		card.product = Environment.ACESSO_PRODUCT;
 		card.insert();
-		show(card.requestId);
+		show(user.belNumber, card.requestId);
 
 		Web.setCookie(CARD_COOKIE, card.requestId, DateTools.delta(Date.now(), DateTools.days(1)));
 		Web.redirect(moveForward(card));
