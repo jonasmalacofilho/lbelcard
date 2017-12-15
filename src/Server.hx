@@ -5,10 +5,11 @@ class Server {
 	public static var requestId(default,null):String;
 	public static var shortId(default,null):String;
 	public static var codeVersion(default,null):Float;
+	public static var serverVersion(default,null) = "1.0.0-rc1";
 #if dev
-	public static var userAgent = 'LBELcard-dev (localhost) Neko Haxe';  // TODO add versions [automatically]
+	public static var userAgent = 'LBELcard-dev/$serverVersion (localhost) Neko Haxe';  // TODO add neko and haxe versions [automatically]
 #else
-	public static var userAgent = 'LBELcard (lbelcard.com.br) Neko Haxe';  // TODO add versions [automatically]
+	public static var userAgent = 'LBELcard/$serverVersion (lbelcard.com.br) Neko Haxe';  // TODO add neko and haxe versions [automatically]
 #end
 
 	static var stderr = Sys.stderr();
