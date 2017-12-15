@@ -22,3 +22,5 @@ December 12th, 2017.
 
 Fully functional server.
 
+ - Fix #1: call update() after setting the last (successful) state
+
