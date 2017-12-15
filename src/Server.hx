@@ -88,7 +88,10 @@ class Server {
 				var q = async.Queue.global();
 				for (card in db.CardRequest.manager.search($queued == true)) {
 					// this is heuristic, the queue handler is supposed to figure out
-					// wheather it should actually process the request
+					// wheather it should actually process the request; however, we are
+					// confident that we can never recover from user/data errors
+					if (card.state.match(Failed(AcessoUserOrDataError(_), _)))
+						continue;
 					q.addTask(card.requestId);
 				}
 				share.set(codeVersion);

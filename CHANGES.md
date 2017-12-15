@@ -6,6 +6,7 @@ To be released.
 
  - Fix typo in the main form
  - Add server version to the User-Agent string
+ - Don't re-enqueue AcessoUserOrDataError
 
 ## First release candidate: v1.0.0-rc1
 
