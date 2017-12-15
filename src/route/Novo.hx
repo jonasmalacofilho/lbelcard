@@ -240,15 +240,15 @@ class Novo {
 		var cards = db.CardRequest.manager.search($bearer == user);
 		for (i in cards) {
 			if (!i.state.match(AwaitingBearerData | AwaitingBearerConfirmation | Failed(_))) {
-				weakAssert(i.queued, Type.enumConstructor(i.state), "informative, not sure yet how queued x state should work for all states");
 #if dev
 				trace('dev-build: overriding maxed out limit of cards per user');
 				return false;
 #else
+				weakAssert(i.queued || i.state.match(CardRequested),
+						i.requestId, i.queued, Type.enumConstructor(i.state),
+						"blocking on queued or failed, but cannot recover");
 				return true;
 #end
-			} else {
-				weakAssert(!i.queued, Type.enumConstructor(i.state), "incorrect queued x state");
 			}
 		}
 		return false;

@@ -87,6 +87,9 @@ class Server {
 				trace('recovery: reenqueue requests');
 				var q = async.Queue.global();
 				for (card in db.CardRequest.manager.search($queued == true)) {
+					weakAssert(card.state.match(SendEmail | AcessoCard(_) | Failed(_)),
+							card.requestId, card.queued, Type.enumConstructor(card.state),
+							"forgot to set queued to off");
 					// this is heuristic, the queue handler is supposed to figure out
 					// wheather it should actually process the request; however, we are
 					// confident that we can never recover from user/data errors

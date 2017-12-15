@@ -14,6 +14,7 @@ To be released.
  - Add failsafe to prevent accidental card fabrication during local builds
  - Trace the user number when starting a new card request
  - Fix storage of remote call timings (see #3)
+ - Fix warning asserts on queued vs. state
 
 
 ## First release candidate: v1.0.0-rc1
