@@ -175,7 +175,7 @@ class AcessoProcessor {
 				card.state = AcessoCard(SolicitarCartaoIdentificado(client));
 				card.update();
 
-#if dev
+#if (dev || !unlock_actual_cards)
 			case AcessoCard(_):
 				trace('dev-build: stopping on ${card.state} due to failsafe');
 				break;  // do *not* remove this
