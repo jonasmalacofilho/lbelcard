@@ -50,7 +50,7 @@ class Handler {
 			}
 			lock.release();
 			if (task == null) {
-				Sys.sleep(.1);
+				Sys.sleep(.05);
 				continue;
 			}
 			try {
