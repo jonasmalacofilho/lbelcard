@@ -41,7 +41,7 @@ class Email {
 			var err = TransportError(msg);
 			log.responseCode = statusCode;
 			log.responseData = Std.string(err);
-			log.timing = t1;
+			log.timing = t1 - t0;
 			log.update();
 			throw err;
 		}
@@ -50,7 +50,7 @@ class Email {
 			trace('sendgrid: received $statusCode after ${Math.round((t1 - t0)*1e3)} ms');
 			log.responseCode = statusCode;
 			log.responseData = responseData;
-			log.timing = t1;
+			log.timing = t1 - t0;
 			log.update();
 			if (statusCode >= 400)
 				throw SendGridError(statusCode, responseData);

@@ -59,7 +59,7 @@ class GestaoBase {
 			var err = TransportError(msg);
 			log.responseCode = statusCode;
 			log.responseData = Std.string(err);
-			log.timing = t1;
+			log.timing = t1 - t0;
 			log.update();
 			throw err;
 		}
@@ -68,7 +68,7 @@ class GestaoBase {
 			trace('acesso: got $statusCode after ${Math.round((t1 - t0)*1e3)} ms');
 			log.responseCode = statusCode;
 			log.responseData = responseData;
-			log.timing = t1;
+			log.timing = t1 - t0;
 			log.update();
 			ret = haxe.Json.parse(responseData);
 			assert(ret != null && ret.ResultCode != null, statusCode,
