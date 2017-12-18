@@ -15,6 +15,7 @@ To be released.
  - Trace the user number when starting a new card request
  - Fix storage of remote call timings (see #3)
  - Fix warning asserts on queued vs. state
+ - Do not discard a module after a dispatch error
 
 
 ## First release candidate: v1.0.0-rc1
