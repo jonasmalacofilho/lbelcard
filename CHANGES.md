@@ -16,6 +16,7 @@ To be released.
  - Fix storage of remote call timings (see #3)
  - Fix warning asserts on queued vs. state
  - Do not discard a module after a dispatch error
+ - Add empty robots.txt
 
 
 ## First release candidate: v1.0.0-rc1
