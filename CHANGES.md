@@ -17,6 +17,7 @@ To be released.
  - Do not discard a module after a dispatch error
  - Add empty robots.txt
  - Fix datestring conversion into timestamps and SerializedDate
+ - Count Failed states other than user error towards the request limit
 
 
 ## First release candidate: v1.0.0-rc1
