@@ -1,5 +1,12 @@
 # Changelog
 
+## Current patch
+
+To be released.
+
+ - Log the human-attributed system version during init
+
+
 ## Second release candidate: v1.0.0-rc2
 
 December 19th, 2017.

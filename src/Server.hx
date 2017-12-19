@@ -38,6 +38,7 @@ class Server {
 		ManagedModule.log = function (msg, ?pos) ctrace("eweb", msg, pos);
 		ManagedModule.addModuleFinalizer(crypto.Random.global.close, "random");
 
+		trace('init: L\'BELcard v$serverVersion');
 		assert(Math.abs(vehjo.Timezone.localTimezone()/1000/3600) < 9,
 				"might fail to convert datestrings into timestamps or SerializedDate");
 
