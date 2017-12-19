@@ -1,8 +1,8 @@
 # Changelog
 
-## Current patch
+## Second release candidate: v1.0.0-rc2
 
-To be released.
+December 19th, 2017.
 
  - Fix typo in the main form
  - Add server version to the User-Agent string
@@ -18,6 +18,7 @@ To be released.
  - Add empty robots.txt
  - Fix datestring conversion into timestamps and SerializedDate
  - Count Failed states other than user error towards the request limit
+ - Change favicon to L'
 
 
 ## First release candidate: v1.0.0-rc1
