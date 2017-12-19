@@ -10,7 +10,7 @@ class Index {
 	public function get()
 	{
 		Web.setReturnCode(200);
-		Sys.println(views.Base.render("O cartão definitivo do consultor!", views.Index.render));
+		Sys.println(views.Base.render("O cartão de negócios do consultor!", views.Index.render));
 	}
 
 	public function doNovo(d:Dispatch)
