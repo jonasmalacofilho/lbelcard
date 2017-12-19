@@ -25,7 +25,7 @@ December 19th, 2017.
  - Add empty robots.txt
  - Fix datestring conversion into timestamps and SerializedDate
  - Count Failed states other than user error towards the request limit
- - Change favicon to L'
+ - _Change favicon to L'_
 
 
 ## First release candidate: v1.0.0-rc1
