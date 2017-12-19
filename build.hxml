@@ -6,6 +6,7 @@
 -lib eweb
 # to enable the ManagedModule
 -lib tora
+-lib vehjo
 
 -main Server
 -neko serve/index.n

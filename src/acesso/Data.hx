@@ -58,7 +58,7 @@ abstract SerializedDate(String) to String {
 		assert(day >= 1 && day <= 31, day);
 		assert(month >= 0 && month <= 11, month + 1);
 		assert(year >= 1900 && year <= Date.now().getFullYear(), year);
-		var t = new Date(year, month, day, 0, 0, 0).getTime();
+		var t = new Date(year, month, day, 12, 0, 0).getTime();
 		return new SerializedDate('/Date($t)/');
 	}
 

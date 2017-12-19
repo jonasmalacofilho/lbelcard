@@ -38,15 +38,18 @@ class Server {
 		ManagedModule.log = function (msg, ?pos) ctrace("eweb", msg, pos);
 		ManagedModule.addModuleFinalizer(crypto.Random.global.close, "random");
 
-		var modulePath = '${neko.vm.Module.local().name}.n';
-		codeVersion = sys.FileSystem.stat(modulePath).mtime.getTime();
+		assert(Math.abs(vehjo.Timezone.localTimezone()/1000/3600) < 9,
+				"might fail to convert datestrings into timestamps or SerializedDate");
 
 		assert(Environment.ACESSO_USERNAME != null);
 		assert(Environment.ACESSO_PASSWORD != null);
 		assert(Environment.ACESSO_PRODUCT != null);
 
-		assert(Environment.MAIN_DB != null && Environment.MAIN_DB.indexOf("sqlite3://") == 0, Environment.MAIN_DB);
+		var modulePath = '${neko.vm.Module.local().name}.n';
+		codeVersion = sys.FileSystem.stat(modulePath).mtime.getTime();
 
+		assert(Environment.MAIN_DB != null && Environment.MAIN_DB.indexOf("sqlite3://") == 0,
+				Environment.MAIN_DB);
 		var dbPath = Environment.MAIN_DB.substr("sqlite3://".length);
 		trace('sqlite: open $dbPath');
 		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(dbPath);

@@ -1,11 +1,6 @@
 {
   "dependencies": [
     {
-      "name": "tink_template",
-      "type" : "haxelib",
-      "version" : null
-    },
-    {
       "name": "assertion",
       "type": "git",
       "dir": null,
@@ -27,16 +22,28 @@
       "url": "https://github.com/jonasmalacofilho/record-macros"
     },
     {
+      "name": "tink_template",
+      "type": "haxelib",
+      "version": null
+    },
+    {
       "name": "tora",
       "type": "haxelib",
       "version": null
     },
     {
-      "name": "webmaniabr-correios",
-      "type":"git",
+      "name": "vehjo",
+      "type": "git",
       "dir": null,
       "ref": "master",
-      "url" : "https://github.com/protocubo/webmaniabr-correios.hx"
+      "url": "https://github.com/jonasmalacofilho/vehjo.hx"
+    },
+    {
+      "name": "webmaniabr-correios",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/protocubo/webmaniabr-correios.hx"
     }
   ]
 }
