@@ -11,7 +11,7 @@ To be released.
  - _Refuse to authorize users if the queue is already too long_
  - _Add text to the status page for context_
  - Fix missing HTML5 DOCTYPE declaration
- - _Fix footer links_
+ - Fix footer links
  - _Add phone numbers to the footer_
  - _Make styling and content changes requested by BELCORP's marketing department_
 
