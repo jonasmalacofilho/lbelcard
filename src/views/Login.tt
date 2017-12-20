@@ -27,7 +27,7 @@
     <div class='ui segment'>
         <h3 class="ui dividing header">Verificação</h3>
         <p> 
-        O cartão L'BELcard é exclusivo para os consultores L'BEL.
+        O cartão L'BEL Card é exclusivo para os consultores L'BEL.
         Antes de iniciarmos o processo, precisamos validar seu
         número de consultor. 
         </p><p>
@@ -51,7 +51,7 @@
         </div>
         (: end :)
 
-        <button class="ui purple buttonui button fluid large submit" type="submit">
+        <button class="ui button fundo3 inverted fluid large submit" type="submit">
           <i class="sign in icon"></i> Continuar
         </button>
     </div>
