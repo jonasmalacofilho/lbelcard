@@ -5,8 +5,7 @@
 
 <div class="ui container">
     <div class="ui vertical stripe segment">
-        <!-- TODO: fix this -->
-        <img class="ui image fluid" src="img/meucartaolandscape8.jpg">		 
+        <img class="ui image fluid" src="img/meucartaolandscape9.jpg">		 
     </div> <!--ui vertical stripe segment-->
 </div>
 
@@ -16,17 +15,15 @@
        
         Um cartão de crédito pré-pago, oferecido com exclusividade
         para os consultores L'BEL em mais uma iniciativa para 
-        apoiar ainda mais os seus negócios:
+        apoiar ainda mais os seus negócios!
 
        </p>
 
        <ul class="fontgp2">
-          <li> aceito em todos os estabelecimentos que aceitam pagamentos com a bandeira Mastercard</li>
-          <li> recarga em celular </li>
-          <li> pagamento de contas sem precisar sair de casa </li>
-          <li> aceito internacionalmente</li>
-          <li> o único que tem a marca L'BEL</li>
-          <li> mais uma opção para recebimento de suas bonificações</li>
+           <li> Único que tem a marca L'BEL</li>
+           <li> Mais uma opção para recebimento de suas bonificações</li>
+           <li> Aceito em todos os estabelecimentos credenciados na rede Mastercard</li>
+           <li> Cartão internacional</li>
       </ul>
 
       <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
@@ -55,35 +52,40 @@
         combustível ou serviços online.
         </p>
         <p class="fontgp2">
-        Você recarrega o crédito (coloca dinheiro no cartão) de diversas formas:
+        Além de receber sua bonificação pelo cartão, você pode recarregar o crédito (adicionar dinheiro) das seguintes formas formas:
         </p>
         <ul class="fontgp2">
-             <li> caixas de supermercados:
+            <li> débito a partir conta corrente</li>
+            <li> depósito identificado</li>
+            <li> transferência bancária (DOC/TED)</li>
+            <li> gerando boletos bancários para você ou outras pessoas pagarem </li>
+            <li> caixas de supermercados:
         Extra, Pão de Açúcar, Walmart e Lojas Americanas </li> 
-             <li> débito a partir conta corrente</li>
-             <li> depósito identificado</li>
-             <li> transferência bancária (DOC/TED)</li>
-             <li> gerando boletos bancários para você ou outras pessoas pagarem </li>
         </ul>
         <p class="fontgp2">
         Você gasta os créditos utilizando o cartão de crédito normalmente. Também pode sacar o dinheiro em caixas Banco24Horas e transferir o crédito para outro cartão.
         </p> 
         <img class="ui medium right floated image rounded" src="img/card-back.jpg">
         <p class="fontgp2">
-        Você só pode gastar o que o que for carregado no cartão. Consulte o saldo e controle o movimento de depósitos e despesas através do extrato no website ou no aplicativo para o seu smartphone.
+        <b>Mas atenção,</b>você só pode gastar o que o que for carregado no cartão. Consulte o saldo e controle o movimento de depósitos e despesas através do extrato no website <a href="https://cliente.acessocard.com.br/belcorp">https://cliente.acessocard.com.br/belcorp</a>.
         </p> 
-        <p class="fontgp2">
-        A Belcorp fez uma parceria com a Acessocard, para oferecer a emissão do L'BELcard aos nossos consultores sem custo inicial:
+        <p class="fontgp2 cor2">
+        *Custo do cartão de R$ 4,99 – debitado de sua próxima bonificação
+        </p>
+        <p class="fontgp2 cor2">
+        A Belcorp fez uma parceria com a Acessocard, para oferecer a emissão do L'BELcard aos nossos consultores.
+        </p> 
+        <p class="fontgp2 cor2">
+        <b>Custos e tempo de entrega:</b>
         </p> 
         <ul class="fontgp2">
-            <li> é entregue em aproximadamente 10 dias úteis</li>
-            <li> a manutenção custa 5 reais por mês, apenas se houver crédito</li>
-            <!-- Removed for space
-            <li> em algumas ocasiões, como saques nacionais e internacionais taxas de serviço podem ser cobradas</li>
-            -->
+            <li>Custo do cartão de R$ 4,99 – debitado de sua próxima bonificaçãoi</li>
+            <li>Custo de manutenção de R$5,00/mês caso haja crédito no seu cartão pré-pago – valor debitado do cartão. </li>
+            <li>Caso não haja crédito, não haverá cobrança de custo de manutenção.</li>
+            <li>Entrega feita em aproximadamente 10 dias úteis.</li>
         </ul>
       <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
-          <a class="ui massive button fundo3 cor0" href="/novo">Peça seu cartão L'BEL<i class="right arrow icon"></i></a>
+          <a class="ui massive button fundo3 cor0" href="/novo">Peça seu L'BEL Card<i class="right arrow icon"></i></a>
       </div>
     </div>
 </div>
@@ -97,21 +99,31 @@
     </div>
 
     <div class="ui container text">
-         <p class="fontgp2">
-         O cartão PRÉ-PAGO L'BELcard é  uma solução para facilitar o seu dia-a-dia.
+
+         
+
+
+É uma alternativa para administrar melhor o seu negócio! 
+
+
+
+  
+       
+      
+      <p class="fontgp2">
+         O cartão PRÉ-PAGO L'BEL Card é uma solução para facilitar o seu dia-a-dia.
          </p> 
          <p class="fontgp2">
-         Com ele vocẽ terá mais uma opção para recebimento de suas bonificações.
+         Você terá mais uma opção para recebimento de suas bonificações! 
          </p> 
          <p class="fontgp2">
-          Hoje quem recebe o pagamento de sua bonificação por ordem de pagamento (OP), 
-          poderá optar por receber através do cartão pré-pago L’BEL e não precisará ir
-          até uma agência bancária para receber sua bonificação. Você ainda poderá 
-          optar pelo saque em qualquer caixa eletrônico da rede Banco24horas.
+         Em breve quem recebe o pagamento de bonificação por ordem de pagamento (OP),
+         poderá optar por receber esse valor pelo cartão pré-pago L’BEL e não precisará ir 
+         até uma agência bancária. 
          </p> 
          <p class="fontgp2">
-         Mesmo se você possui uma conta corrente, você poderá receber sua bonificação
-         através do L'BELcard e depois transferir para a conta corrente.
+         Lembrando ainda que você poderá realizar o saque do valor de seu cartão em qualquer
+         caixa eletrônico da rede Banco24horas e até transferir para uma conta corrente que você queira.
          </p> 
          <p class="fontgp2">
          É uma alternativa para administrar melhor o seu negócio.  
@@ -127,7 +139,6 @@
                  <img class="medium center float image" src="img/card-front.jpg">		 
               </div> <!--ui container-->
          </div> <!--ui vertical stripe segment-->
-        --> 
     </div>
 </div>
 

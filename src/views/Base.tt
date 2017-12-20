@@ -137,23 +137,25 @@
             <div class="ui vertical footer segment inverted fundo3">
                 <div class="ui container">
                     <div class="ui stackable equal height stackable grid">
-                        <div class="three wide column">
+                        <div class="five wide column">
                             <h4 class="ui header fontgp2 inverted">Redes sociais</h4>
                             <div class="ui link list fontgp2 inverted">
-                            <a href="https://www.facebook.com/lbelevoce/" class="item"><i class="facebook icon"></i> Facebook</a>
-                            <a href="https://twitter.com/lbelbrasil" class="item"><i class="twitter icon"></i> Twitter</a>
-                            <a href="https://www.youtube.com/channel/UC7Gv77JgJdiY47f1UiL_fFA" class="item"><i class="youtube icon"></i> Youtube</a>
-                            <a href="https://instagram.com/lbelbrasil/" class="item"><i class="instagram icon"></i> Instagram</a>
+                            <a href="https://twitter.com/lbelbrasil" class="item"><i class="world icon"></i>lbel.com.br</a>
+                            <a href="https://www.facebook.com/lbelevoce/" class="item"><i class="facebook icon"></i>/lbelevoce</a>
+                            <a href="https://www.youtube.com/user/lbelbrasil" class="item"><i class="youtube icon"></i>/lbelbrasil</a>
+                            <a href="https://instagram.com/lbelbrasil/" class="item"><i class="instagram icon"></i>/lbelbrasil</a>
                             </div>
                         </div>
-                        <div class="ten wide column center aligned">
+                        <div class="six wide column center aligned">
                             <h4 class="ui header fontgp2 inverted">L'BEL Card</h4>
                             <p class="fontgp2 inverted">O SEU CARTÃO DE NEGÓCIOS!</p>
                         </div>
-                        <div class="three wide column right aligned">
-                            <h4 class="ui header fontgp2 inverted">L'BEL</h4>
+                        <div class="five wide column">
+                            <h4 class="ui header fontgp2 inverted">SAC</h4>
                             <div class="ui link list fontgp2 inverted">
-                                <a href="http://lbel.com.br/" class="item">Site</a>
+                                <a href="tel:08007788992" class="item"><i class="phone icon"></i>0800-77-88-992 (ligação gratuíta)</a>
+                                <a href="tel:30045560" class="item"><i class="mobile icon"></i>celular 3004-5560 (custo de ligação local)</a>
+                                <a href="mailto:sac.belcorp@belcorp.biz" class="item"><i class="mail outline icon"></i>sac.belcorp@belcorp.biz</a>
                             </div>
                         </div>
                     </div>

@@ -51,7 +51,7 @@
         </div>
         (: end :)
 
-        <button class="ui purple buttonui button fluid large submit" type="submit">
+        <button class="ui button fundo3 inverted fluid large submit" type="submit">
           <i class="sign in icon"></i> Continuar
         </button>
     </div>

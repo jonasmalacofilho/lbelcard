@@ -1,6 +1,6 @@
 (:static function render(hideCel : Bool = false) :)
-<a class="item fontgp2 (:if hideCel :)escondenocelular(:end:)" href="/#inicio">Conheça</a>
-<a class="item fontgp2 (:if hideCel :)escondenocelular(:end:)" href="/#detalhes">Entenda</a>
-<a class="item fontgp2 (:if hideCel :)escondenocelular(:end:)" href="/#facilidades">Facilite</a>
-<a class="item fontgp2 (:if hideCel :)escondenocelular(:end:)" href="/novo">Solicite</a>
+<a class="item fontgp2 (:if hideCel :)escondenocelular(:end:)" href="/#inicio">Início</a>
+<a class="item fontgp2 (:if hideCel :)escondenocelular(:end:)" href="/#detalhes">Detalhes</a>
+<a class="item fontgp2 (:if hideCel :)escondenocelular(:end:)" href="/#facilidades">Facilidades</a>
+<a class="item fontgp2 (:if hideCel :)escondenocelular(:end:)" href="/novo">Solicitação</a>
 (:end:)
