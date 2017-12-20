@@ -13,8 +13,8 @@ class Email {
 			personalizations : [{
 				to : [{ name : username, email : email }]
 			}],
-			from : { name : "L'BELcard", email : "no-reply@lbelcard.com.br"},
-			subject : "Obrigado por solicitar o seu L'BELCard",
+			from : { name : "L'BEL Card", email : "no-reply@lbelcard.com.br"},
+			subject : "Obrigado por solicitar o seu L'BEL Card",
 			content : [{ type : "text/html", value : views.Email.render(username,email,status_url)  }]
 		}
 	}
