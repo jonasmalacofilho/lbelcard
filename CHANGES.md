@@ -9,6 +9,7 @@ To be released.
  - Add failsafe against going over the card limit per user (related to #4)
  - _Rename L'BELcard to L'BEL Card_
  - _Refuse to authorize users if the queue is already too long_
+ - _Add text to the status page for context_
 
 
 ## Second release candidate: v1.0.0-rc2

@@ -13,13 +13,23 @@
     });
 </script>
 (:end:)
+
 <div class="ui vertical segment">
-    <div class="ui container">
+	<div class="ui text container">
+		<h3 class="ui dividing header">Progresso da solicitação</h3>
+		<p>Aqui você pode acompanhar a solicitação do seu L'BEL Card.</p>
+		<p>Analisaremos seus dados e encomendaremos a fabricação do seu cartão.  Se encontramos algum problema com as suas informações pessoais, você poderá corrigí-las e tentar novamente.</p>
+		<p>Esse processo pode levar alguns minutos, mas não se preocupe: essa página se atualiza automaticamente.</p>
+	</div>
+</div>
+
+<div class="ui vertical segment">
+    <div class="ui text container">
         <div class="ui four stackable steps">
             <div class="step (:compare(card,AwaitingBearerData).trim():)">
                 <i class="(:icon(card,AwaitingBearerData).trim():) icon"></i>
                 <div class="content">
-                    <div class="title">Dados Pessoais</div>
+                    <div class="title">Dados</div>
                     
                 </div>
             </div>
@@ -54,12 +64,12 @@
     (: if err != null && (err.match(AcessoUserOrDataError(_) | AcessoPermanentError(_))) :)
         
         <div class="ui vertical segment">
-            <div class="ui container">
+            <div class="ui text container">
                 <div class="ui red message">
-                    <div class="header">Não foi possível solicitar seu cartão.</div>
+                    <div class="header">Não foi possível solicitar seu cartão</div>
                     (: switch err :)
                         (: case AcessoUserOrDataError(res) :)
-                            Erro validando seus dados:
+                            <p>Erro validando seus dados:</p>
                             (: if res.FieldErrors != null :)
                                 <ul>
                                 (: for r in res.FieldErrors :)
@@ -67,6 +77,7 @@
                                 (: end :)
                                 </ul>
                             (:end:)
+														<p>Você pode tentar novamente.</p>
                         (: case other :)
                             (:*nothing to see here*:)
                     (: end :)
