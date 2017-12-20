@@ -35,12 +35,12 @@
         </p>   
         <div class="field">
             <label>número de consultor L'BEL</label>
-            <input type='number' name='belNumber' tabindex=1>
+            <input type='number' name='belNumber'>
         </div>
 
         <div class="field">
             <label>CPF (apenas números)</label>
-            <input id="CPF" type="text" name="cpf" tabindex=2>
+            <input id="CPF" type="text" name="cpf">
         </div>
 
         (: if recaptcha != null :)

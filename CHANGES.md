@@ -1,5 +1,18 @@
 # Changelog
 
+## Current merge window
+
+To be released December 20th, 2017.
+
+Fully functional server, open to the general public.
+
+This release includes many fixes and improvements over the initial v1.0.0-rc1,
+including adaptive rate limiting since there will be no throttling of
+invitations.
+
+ - Fix tabindices for /novo, /novo/dados and /novo/confirma
+
+
 ## Third release candidate: v1.0.0-rc3
 
 December 20th, 2017.
