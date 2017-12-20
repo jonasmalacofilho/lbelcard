@@ -113,14 +113,14 @@
         </div>
     </div>
 
-    <form method="POST" class='ui form'>
+    <form method="POST" class="ui form" onsubmit="this.submit.disabled = true; return false;">
         <div class="ui two buttons">
             <button type="button" class="ui button labeled icon" onclick="window.history.back();">
                 <i class="arrow left icon"></i>
                 Voltar
             </button>
 
-            <button type="submit" class="ui button inverted fundo3 right labeled icon" style="box-shadow:0 0 0 0 #FFF !important">
+            <button name="submit" type="submit" class="ui button inverted fundo3 right labeled icon" style="box-shadow:0 0 0 0 #FFF !important">
                 <i class="save icon"></i>
                 Confirmar
             </button>
