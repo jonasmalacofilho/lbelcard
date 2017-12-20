@@ -93,7 +93,7 @@
                 </a>
                 (:views.Menu.render(true):)
                 <div class="right item">
-                    <img src="/img/lbel_img_logo_branco.png" />
+                    <img src="/img/lbel_img_logo_branco.png"  style="height: 20px; width: 96px" />
                 </div>
             </div>
         </div>
