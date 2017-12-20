@@ -1,6 +1,6 @@
 # Changelog
 
-## Current merge window
+## Current merge window: v1.0.0
 
 To be released December 20th, 2017.
 
