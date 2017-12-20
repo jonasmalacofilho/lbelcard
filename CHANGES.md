@@ -1,8 +1,8 @@
 # Changelog
 
-## Current merge window: v1.0.0
+## Release to the general public: v1.0.0
 
-To be released December 20th, 2017.
+December 20th, 2017.
 
 Fully functional server, open to the general public.
 
