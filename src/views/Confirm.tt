@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <form method="POST" class="ui form" onsubmit="this.submit.disabled = true; return false;">
+    <form method="POST" class="ui form" onsubmit="this.submit.disabled = true; return true;">
         <div class="ui two buttons">
             <button type="button" class="ui button labeled icon" onclick="window.history.back();">
                 <i class="arrow left icon"></i>
