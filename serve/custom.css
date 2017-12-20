@@ -181,7 +181,10 @@
   .cor4 {
     color: rgb(208, 187, 126)!important;
   }
-
+  }
+  .cor5 {
+    color: rgb(0, 0,0)!important;
+  }
   .gradiente {
     background-color: #4B2E68; /* Old browsers */
     background: url(img/lbel_img_elemento_gradiente.png), -moz-linear-gradient(top, #4B2E68 0%, #FFFFFF 100%); /* FF3.6-15 */
