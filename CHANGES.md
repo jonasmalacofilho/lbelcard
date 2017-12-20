@@ -11,6 +11,7 @@ including adaptive rate limiting since there will be no throttling of
 invitations.
 
  - Fix tabindices for /novo, /novo/dados and /novo/confirma
+ - Fix bottom padding for main content
 
 
 ## Third release candidate: v1.0.0-rc3
