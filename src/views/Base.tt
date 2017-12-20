@@ -123,7 +123,7 @@
                 </div>
             </div>
 
-						<div style="flex: 1;">
+						<div style="flex:1; padding-bottom:40px">
             (:if message != null && message.length > 0:)
                 (: views.Components.message(message) :)
             (:end:)
