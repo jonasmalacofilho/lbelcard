@@ -58,11 +58,19 @@
     display: none;
   }
 
+  .top.fixed.menu .toc.item {
+    display: none;
+  }
+
+
   @media only screen and (max-width: 700px) {
+    .top.fixed.menu .item,
+    .top.fixed.menu .menu,
     .secondary.menu .item,
     .secondary.menu .menu {
       display: none;
     }
+    .top.fixed.menu .toc.item,
     .secondary.menu .toc.item {
       display: block;
     }
