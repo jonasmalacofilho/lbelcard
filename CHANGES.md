@@ -10,6 +10,7 @@ To be released.
  - _Rename L'BELcard to L'BEL Card_
  - _Refuse to authorize users if the queue is already too long_
  - _Add text to the status page for context_
+ - Fix missing HTML5 DOCTYPE declaration
 
 
 ## Second release candidate: v1.0.0-rc2
