@@ -54,7 +54,7 @@ class Queue {
 	/**
 	Add a new task to the queue
 	**/
-	public function addTask(task:String)
+	public function addTask(task:String):Void
 	{
 		trace('async: add $task (${this.codeVersion})');
 		lock.acquire();
@@ -62,7 +62,17 @@ class Queue {
 		lock.release();
 	}
 
-	public function upgrade(master:Module, toCodeVersion:Float)
+	public function peekSize(exact=false):Int
+	{
+		if (!exact)
+			return queue.length;
+		lock.acquire();
+		var size = queue.length;
+		lock.release();
+		return size;
+	}
+
+	public function upgrade(master:Module, toCodeVersion:Float):Void
 	{
 		lock.acquire();
 		if (toCodeVersion > this.codeVersion) {  // FIXME use load time

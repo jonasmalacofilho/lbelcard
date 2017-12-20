@@ -58,6 +58,14 @@ class Novo {
 
 	public function postDefault(args:{ belNumber:Int, cpf:String})
 	{
+		var queued = async.Queue.global().peekSize();
+		show(queued);
+		if (queued > 10) {
+			trace('abort: queue too long (size $queued)');
+			getDefault('Há muito interesse no cartão, por favor tente novamente em algumas horas');
+			return;
+		}
+
 		args.cpf = notDigits.replace(args.cpf, "").trim();
 
 #if dev

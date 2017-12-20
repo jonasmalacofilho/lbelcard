@@ -48,7 +48,7 @@ class Handler {
 				lock.release();
 				break;
 			} else if (task != null) {
-				trace('async: queue size is ${queue.length + 1}');
+				trace('async: ${queue.length + 1} tasks in the system');
 			}
 			lock.release();
 			if (task == null) {
