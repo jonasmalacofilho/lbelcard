@@ -182,6 +182,14 @@ class AcessoProcessor {
 #end
 
 			case AcessoCard(SolicitarCartaoIdentificado(client)):
+				var reqs = 0;
+				for (i in db.CardRequest.manager.search($bearer == card.bearer)) {
+					if (i.state.match(CardRequested))
+						reqs++;
+				}
+				show(reqs);
+				if (reqs >= 1)
+					trace('failsafe: request limit reached (user ${card.bearer.belNumber})');  // TODO replace with proper error
 				var data:SolicitarCartaoIdentificadoData = {
 					CodCliente : card.userData.CodCliente,
 					CodEspecieProduto : card.product,
@@ -206,7 +214,7 @@ class AcessoProcessor {
 					ValorPagamento : cost
 				}
 				show(cost);
-				if (cost >= 5)  // TODO reevaluate this failsafe
+				if (cost >= 5)
 					throw 'failsafe: card cost exceedes our expectations (R$$ $cost)';
 				new GestaoAquisicaoCartao(token).ConfirmarPagamento(data);
 				card.state = CardRequested;
