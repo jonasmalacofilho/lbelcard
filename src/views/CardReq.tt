@@ -24,7 +24,7 @@
             <!-- Full name -->
             <div class="field">
                 <label>nome completo</label>
-                <input type="text" name="NomeCompleto" autocomplete="name" placeholder="Nome Completo" maxlength="100" required/>
+                <input type="text" name="NomeCompleto" autocomplete="name" placeholder="Nome Completo" maxlength="100" required autofocus/>
             </div>
 
             <div class="two fields">

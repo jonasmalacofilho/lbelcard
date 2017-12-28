@@ -7,6 +7,7 @@ To be released.
  - Fix favicon manifest paths
  - Fix DENotFound errors for UptimeRobot: _add HEAD / route_
  - Fix autocomplete settings in the main form (closes #6)
+ - Set autofocus on /novo and /novo/dados to first input field
 
 
 ## Release to the general public: v1.0.0
