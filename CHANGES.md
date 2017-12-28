@@ -1,8 +1,10 @@
 # Changelog
 
-## Current merge window: v1.0.1 patch
+## Patch release: v1.0.1
 
-To be released.
+December 28th, 2017.
+
+Small fixes to improve both user and bot experiences.
 
  - Fix favicon manifest paths
  - Fix DENotFound errors for UptimeRobot: _add HEAD / route_
