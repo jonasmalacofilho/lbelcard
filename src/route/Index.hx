@@ -7,6 +7,11 @@ import eweb.Web;
 class Index {
 	public function new() {}
 
+	public function head()
+	{
+		Web.setReturnCode(200);
+	}
+
 	public function get()
 	{
 		Web.setReturnCode(200);

@@ -5,6 +5,7 @@
 To be released.
 
  - Fix favicon manifest paths
+ - Fix DENotFound errors for UptimeRobot: _add HEAD / route_
 
 
 ## Release to the general public: v1.0.0
