@@ -16,7 +16,7 @@
                                "Prosseguir" quando terminar, você poderá confirmar as informações 
                                ainda antes do envio. </p>
 
-<form method="POST" action="/novo/dados" class="ui form error">
+<form method="POST" action="/novo/dados" class="ui form error" autocomplete="off">
 
     <div class="ui segment">
         <h3 class="ui dividing header">Identificação</h3>
@@ -24,7 +24,7 @@
             <!-- Full name -->
             <div class="field">
                 <label>nome completo</label>
-                <input type="text" name="NomeCompleto" placeholder="Nome Completo" maxlength="100" required/>
+                <input type="text" name="NomeCompleto" autocomplete="name" placeholder="Nome Completo" maxlength="100" required/>
             </div>
 
             <div class="two fields">
@@ -68,16 +68,16 @@
 
             <div class="three two field wide">
                 <label>DDI</label>
-                <input type="number" name="DDI" value="55" maxlength="3">
+                <input type="number" name="DDI" autocomplete="tel-country-code" value="55" maxlength="3">
             </div>
             <div class="three field wide">
                 <label>DDD</label>
-                <input type="number" name="DDD" placeholder="XX" maxlength="2"/>(:*FIXME maxlength=2 only if DDI == 55*:)
+                <input type="number" name="DDD" autocomplete="tel-area-code" placeholder="XX" maxlength="2"/>(:*FIXME maxlength=2 only if DDI == 55*:)
             </div>
 
             <div class="ten field wide">
                 <label>número</label>
-                <input type="text" name="NumeroTel" placeholder="XXXXX-XXXX" maxlength="11" id="cel"/>
+                <input type="text" name="NumeroTel" autocomplete="tel-local" placeholder="XXXXX-XXXX" maxlength="11" id="cel"/>
             </div>
 
             <input type='hidden' name='TpTelefone' value='0'/>
@@ -93,7 +93,7 @@
         <div class="two fields">
             <div class="field">
                 <label>CEP</label>
-                <input type="text" name="CEP" id="CEP" maxlength="8" placeholder="XXXXX-XXX" title="Preencha este campo primeiro para autocompletar as informações">
+                <input type="text" name="CEP" autocomplete="postal-code" id="CEP" maxlength="8" placeholder="XXXXX-XXX" title="Preencha este campo primeiro para autocompletar as informações">
             </div>
 
             <div class="field">
@@ -150,7 +150,7 @@
                 <label>e-mail</label>
                 <div class="ui input left icon">
                     <i class="mail outline icon"></i>
-                    <input type="email" name="Email" placeholder="E-Mail" maxlength="125"/>
+                    <input type="email" name="Email" autocomplete="email" placeholder="E-Mail" maxlength="125"/>
                 </div>
             </div>
 
