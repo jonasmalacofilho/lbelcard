@@ -1,5 +1,12 @@
 # Changelog
 
+## Current merge window: v1.0.1 patch
+
+To be released.
+
+ - Fix favicon manifest paths
+
+
 ## Release to the general public: v1.0.0
 
 December 20th, 2017.
