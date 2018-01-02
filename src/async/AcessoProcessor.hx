@@ -210,7 +210,7 @@ class AcessoProcessor {
 					DataPagamento : Date.now(),
 					TokenOperacao : req,
 					TpMeioPagamento : Outros,
-					TpOperacao : Embossing_Carga_Cartao,
+					TpOperacao : Embossing_Cartao,
 					ValorPagamento : cost
 				}
 				show(cost);

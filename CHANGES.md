@@ -1,5 +1,14 @@
 # Changelog
 
+## Patch release: v1.0.2
+
+January 2nd, 2018...  Happy new year!
+
+Fix call parameter per request from Acesso Card.
+
+ - Change payment confirmation type to embossing only
+
+
 ## Patch release: v1.0.1
 
 December 28th, 2017.
