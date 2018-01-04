@@ -8,13 +8,14 @@ L'BEL Card Unserializer
 Unserializes persisted data.
 
 Usage:
-  unserialize [--fields=<list>] [--separator=<char>]
+  unserialize [options]
   unserialize -h | --help
 	unserialize --version
 
 Options:
   --fields=<list>     Fields to serialize (by default, all)
   --separator=<char>  Separator [default: \t]
+  --skip-headers      Don't unserialize the headers line
 
 **/
 @:rtti
@@ -31,6 +32,8 @@ class Unserialize {
 			separator = "\t";
 
 		try {
+			if (args["--skip-headers"])
+				Sys.println(Sys.stdin().readLine());
 			while (true) {
 				var data = Sys.stdin().readLine();
 				if (fields != null) {
