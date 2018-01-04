@@ -58,6 +58,8 @@ class Server {
 		sys.db.Manager.initialize();
 
 		assert(cnx.dbName() == "SQLite");
+		cnx.request("PRAGMA busy_timeout=5000");
+		trace('sqlite: busy_timeout set');
 		var journalMode = cnx.request("PRAGMA journal_mode").getResult(0);
 		if (journalMode == "delete") {
 			cnx.request("PRAGMA page_size=4096");

@@ -29,7 +29,8 @@ class Handler {
 		var inst:Queue = Module.local().getExports()[NAME];
 		if (inst != null) {
 			Server.shortId = Server.requestId = 'async-${crypto.Random.global.readHex(2)}';
-			trace('async: init handler (${Server.codeVersion})');
+			sys.db.Manager.cnx.request("PRAGMA busy_timeout=10000");
+			trace('async: init handler, busy_timeout extended (${Server.codeVersion})');
 			var h = new Handler(inst);
 			h.loop();
 			return true;
