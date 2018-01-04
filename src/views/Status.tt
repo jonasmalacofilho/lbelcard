@@ -144,8 +144,9 @@
 (:end:)
 
 (:static function translate(message:String):)
-	(:* TODO *:)
 	(:switch message:)
+  (:case "O tamanho do campo deve ser entre 1 e 5":)
+    O número do endereço deve ter entre 1 e 5 caracteres
 	(:case other:)
 		(:other:)
 	(:end:)
