@@ -7,6 +7,8 @@ To be released.  Expected January 4th, 2018.
 Fixes after first day of heavy load.
 
  - Set SQLite busy_timeout to prevent SQLITE_BUSY errors (see #8)
+ - Add offline Unserialize command line helper
+ - Show AcessoUserOrDataError main messages if FieldErrors is absent or empty
 
 
 ## Patch release: v1.0.2
