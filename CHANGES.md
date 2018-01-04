@@ -1,8 +1,8 @@
 # Changelog
 
-## Current merge window
+## Patch release: v1.0.3
 
-To be released.  Expected January 4th, 2018.
+January 4th, 2018.
 
 Fixes after first day of heavy load.
 
