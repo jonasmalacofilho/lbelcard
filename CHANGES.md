@@ -13,6 +13,7 @@ Fixes after first day of heavy load.
  - Label code 4 replies from complementar-dados-principais as user/data errors
  - Label code 19 replies from alterar-endereco-portador as user/data errors
  - Add translation/improvement to address:number field error
+ - Finish the fix for HEAD requests by patching eweb.Dispatch
 
 
 ## Patch release: v1.0.2
