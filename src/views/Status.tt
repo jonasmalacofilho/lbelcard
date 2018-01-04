@@ -70,12 +70,14 @@
                     (: switch err :)
                         (: case AcessoUserOrDataError(res) :)
                             <p>Erro validando seus dados:</p>
-                            (: if res.FieldErrors != null :)
+                            (: if res.FieldErrors != null && res.FieldErrors.length > 0 :)
                                 <ul>
                                 (: for r in res.FieldErrors :)
                                     <li>(:translate(r.Message):)</li>
                                 (: end :)
                                 </ul>
+                            (:else:)
+                            <p>(:translate(res.Message):)</p>
                             (:end:)
 														<p>Você pode tentar novamente.</p>
                         (: case other :)
