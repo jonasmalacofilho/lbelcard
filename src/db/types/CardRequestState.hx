@@ -1,5 +1,6 @@
 package db.types;
 
+@:keep
 enum CardRequestState {
 	AwaitingBearerData;  // !queued
 	AwaitingBearerConfirmation;  // !queued

@@ -20,3 +20,12 @@
 -main MainJS
 -js serve/haxe.js
 
+--next
+
+-cp src
+-lib assertion
+-lib record-macros
+
+-main tools.Unserialize
+-neko bin/unserialize.n
+

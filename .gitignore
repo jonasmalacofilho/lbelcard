@@ -1,4 +1,6 @@
-runtime
-serve/index.n
-serve/haxe.js
 .haxelib/
+bin/
+runtime/
+serve/haxe.js
+serve/index.n
+
