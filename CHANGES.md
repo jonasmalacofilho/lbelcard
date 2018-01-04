@@ -9,6 +9,9 @@ Fixes after first day of heavy load.
  - Set SQLite busy_timeout to prevent SQLITE_BUSY errors (see #8)
  - Add offline Unserialize command line helper
  - Show AcessoUserOrDataError main messages if FieldErrors is absent or empty
+ - Label code 2 replies from solicitar-adesao-cliente as user/data errors
+ - Label code 4 replies from complementar-dados-principais as user/data errors
+ - Label code 19 replies from alterar-endereco-portador as user/data errors
 
 
 ## Patch release: v1.0.2

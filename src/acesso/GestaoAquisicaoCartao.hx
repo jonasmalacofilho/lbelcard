@@ -15,7 +15,7 @@ class GestaoAquisicaoCartao extends GestaoBase {
 			return { newUser:true, client:res.Data };
 		case 1:
 			return { newUser:false, client:res.Data };
-		case 5, 6:
+		case 2, 5, 6:
 			throw AcessoUserOrDataError(res);
 		case 99:
 			throw AcessoTokenError(res);

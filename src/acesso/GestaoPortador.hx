@@ -15,7 +15,7 @@ class GestaoPortador extends GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			// all ok, nothing more to do
-		case 4, 14, 15, 16:  // error in cep, neighborhood, city or state
+		case 4, 14, 15, 16, 19:  // error in cep, neighborhood, city or state... or when updating
 			throw AcessoUserOrDataError(res);
 		case err:
 			throw AcessoPermanentError(res);
@@ -101,7 +101,7 @@ class GestaoPortador extends GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			// all ok, nothing more to do
-		case 5, 6, 7, 8:  // data error: birthday|min, birthday|max, credit bureau search, mother's name
+		case 4, 5, 6, 7, 8:  // data error: persisting (i.e. validation), birthday|min, birthday|max, credit bureau search, mother's name
 			throw AcessoUserOrDataError(res);
 		case err:
 			throw AcessoPermanentError(res);
