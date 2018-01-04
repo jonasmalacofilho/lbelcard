@@ -25,6 +25,8 @@
 -cp src
 -lib assertion
 -lib record-macros
+-lib docopt
+-D use_rtti_doc
 
 -main tools.Unserialize
 -neko bin/unserialize.n

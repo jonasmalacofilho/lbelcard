@@ -1,5 +1,12 @@
 # Changelog
 
+## Current merge window
+
+To be released.
+
+ - Add CSV support to the offline Unserialize helper
+
+
 ## Patch release: v1.0.3
 
 January 4th, 2018.

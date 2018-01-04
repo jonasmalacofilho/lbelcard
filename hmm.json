@@ -8,6 +8,11 @@
       "url": "https://github.com/protocubo/assertion.hx"
     },
     {
+      "name": "docopt",
+      "type": "haxelib",
+      "version": null
+    },
+    {
       "name": "eweb",
       "type": "git",
       "dir": null,
