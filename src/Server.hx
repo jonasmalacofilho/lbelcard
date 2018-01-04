@@ -5,7 +5,7 @@ class Server {
 	public static var requestId(default,null):String;
 	public static var shortId(default,null):String;
 	public static var codeVersion(default,null):Float;
-	public static var serverVersion(default,null) = "1.0.2";
+	public static var serverVersion(default,null) = "1.0.3";
 #if dev
 	public static var userAgent = 'LBELCard-dev (localhost) Neko Haxe';  // TODO add neko and haxe versions [automatically]
 #else
