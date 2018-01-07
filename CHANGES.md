@@ -14,6 +14,7 @@ To be released as _minor_ upgrade (v1.1.0).
  - **Hack: set payment as confirmed hours before to avoid bug at Acesso Card**
  - Prevent bad autocompletion (second iteration) (related to #6)
  - Hide the DDI field to solve 35% of user/data errors (see #9)
+ - Fix rendered whitespace in /novo/confirma
 
 Also:
 

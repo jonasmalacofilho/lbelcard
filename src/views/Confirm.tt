@@ -4,9 +4,9 @@
 
     <h3 class="ui dividing header">Confirmação</h3>
     <p>
-    Por favor, confira as informações cadastrais abaixo. 
+    Por favor, confira as informações cadastrais abaixo.
     </p> <p>
-    Se estiverem erradas clique em "Voltar" 
+    Se estiverem erradas clique em "Voltar"
     para corrigí-las.
     </p> <p>
     Se estiverem corretas clique em "Enviar" e aguarde o
@@ -54,11 +54,11 @@
             </div>
 
             <div class="ui segment">
-                <p>(:d.Endereco.Logradouro:) , (:d.Endereco.Numero:) (:if d.Endereco.Complemento != null && d.Endereco.Complemento != "":),(:d.Endereco.Complemento:)(:end:)</p>
+                <p>(:d.Endereco.Logradouro:), (:d.Endereco.Numero:)(:if d.Endereco.Complemento != null && d.Endereco.Complemento != "":), (:d.Endereco.Complemento:)(:end:)</p>
             </div>
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                <p>(:d.Endereco.Bairro:), (:d.Endereco.Cidade:),(:d.Endereco.UF:)<span style="float:right">
+                <p>(:d.Endereco.Bairro:), (:d.Endereco.Cidade:), (:d.Endereco.UF:)<span style="float:right">
                 </div>
                 <div class="ui segment">
                     <b>CEP:</b> (:d.Endereco.CEP:)</span></p>
@@ -74,7 +74,7 @@
 
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>e-mail:</b>(:d.Email:)</p>
+                    <p><b>e-mail:</b> (:d.Email:)</p>
                 </div>
                 <div class="ui segment">
                     <p><b>CPF:</b> (:d.CodCliente:)</p>
