@@ -16,7 +16,7 @@
                                "Prosseguir" quando terminar, você poderá confirmar as informações 
                                ainda antes do envio. </p>
 
-<form method="POST" action="/novo/dados" class="ui form error" autocomplete="off">
+<form method="POST" action="/novo/dados" class="ui form error">
 
     <div class="ui segment">
         <h3 class="ui dividing header">Identificação</h3>
@@ -44,7 +44,7 @@
                     <div class="ui calendar">
                         <div class="ui input left icon">
                             <i class="time icon"></i>
-                            <input type="text" name="DtNascimento" id='DtNascimento'>
+                            <input type="text" name="DtNascimento" autocomplete="lbelcard-birthday" id='DtNascimento'>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
             <!-- Mom's name -->
             <div class="field">
                 <label>nome completo de sua mãe</label>
-                <input type="text" name="NomeMae" placeholder="Nome da mãe" maxlength="100" required/>
+                <input type="text" name="NomeMae" autocomplete="lbelcard-mother-name" placeholder="Nome da mãe" maxlength="100" required/>
             </div>
     </div>
 
@@ -72,15 +72,15 @@
             </div>
             <div class="three field wide">
                 <label>DDD</label>
-                <input type="number" name="DDD" autocomplete="tel-area-code" placeholder="XX" maxlength="2"/>(:*FIXME maxlength=2 only if DDI == 55*:)
+                <input type="number" name="DDD" autocomplete="tel-area-code" placeholder="XX" maxlength="2"/>
             </div>
 
-            <div class="ten field wide">
+            <div class="six field wide">
                 <label>número</label>
                 <input type="text" name="NumeroTel" autocomplete="tel-local" placeholder="XXXXX-XXXX" maxlength="11" id="cel"/>
             </div>
 
-            <input type='hidden' name='TpTelefone' value='0'/>
+            <input type='hidden' name='TpTelefone' value='0' readonly/>
 
         </div>
 
@@ -90,47 +90,13 @@
             <div class='ui centered text loader'>Carregando seu Endereço</div>
         </div>
 
-        <div class="two fields">
-            <div class="field">
+        <div class="fields">
+            <div class="eight wide field">
                 <label>CEP</label>
                 <input type="text" name="CEP" autocomplete="postal-code" id="CEP" maxlength="8" placeholder="XXXXX-XXX" title="Preencha este campo primeiro para autocompletar as informações">
             </div>
 
-            <div class="field">
-                <label>UF</label>
-                <input type="text" name="UF" id="uf" readonly/>
-            </div>
-        </div>
-
-        <div class="two fields">
-            <div class="field">
-                <label>cidade</label>
-                <input type="text" name="Cidade" id="cidade" readonly/>
-            </div>
-
-            <div class="field">
-                <label>bairro</label>
-                <input type="text" name="Bairro" id="bairro"/>
-            </div>
-        </div>
-
-        <div class="fields">
-            <div class="seven wide field">
-                <label>rua</label>
-                <input type="text" name="Logradouro" id="logradouro"/>
-            </div>
-
-            <div class="two wide field">
-                <label>número</label>
-                <input type="text" name="NumeroEnd" maxlength="10" />
-            </div>
-
-            <div class="two wide field">
-                <label>complemento</label>
-                <input type="text" name="Complemento" maxlength="20" />
-            </div>
-
-            <div class="five wide field">
+            <div class="eight wide field">
                 <label>tipo de endereço</label>
                 <select name="TpEndereco">
                     <option value="0">Residencial</option>
@@ -138,8 +104,43 @@
                     <option value="2">Outros</option>
                 </select>
             </div>
+        </div>
+
+        <div class="fields">
+            <div class="ten wide field">
+                <label>logradouro (rua, praça, etc.)</label>
+                <input type="text" name="Logradouro" autocomplete="lbelcard-logradouro" id="logradouro"/>
+            </div>
+
+            <div class="two wide field">
+                <label>número</label>
+                <input type="text" name="NumeroEnd" autocomplete="lbelcard-logradouro-numero" maxlength="10" />
+            </div>
+
+            <div class="four wide field">
+                <label>complemento</label>
+                <input type="text" name="Complemento" autocomplete="lbelcard-complemento" maxlength="20" />
+            </div>
 
         </div>
+
+        <div class="fields">
+            <div class="seven wide field">
+                <label>bairro</label>
+                <input type="text" name="Bairro" autocomplete="lbelcard-neighborhood" id="bairro"/>
+            </div>
+
+            <div class="seven wide field">
+                <label>cidade</label>
+                <input type="text" name="Cidade" id="cidade" readonly/>
+            </div>
+
+            <div class="two wide field">
+                <label>UF</label>
+                <input type="text" name="UF" id="uf" readonly/>
+            </div>
+        </div>
+
     </div>
 
     <div class="ui segment">
@@ -156,7 +157,7 @@
 
             <div class="five wide field">
                 <label>CPF</label>
-                <input type="text" name="CodCliente" placeholder="XXX.XXX.XXX-XX" id="CPF">
+                <input type="text" name="CodCliente" autocomplete="lbelcard-cpf" placeholder="XXX.XXX.XXX-XX" id="CPF">
             </div>
 
             <div class="five wide field">
@@ -175,7 +176,7 @@
         <div class="two fields">
             <div class="field">
                 <label>número</label>
-                <input type="text" name="NumDocumento"/>
+                <input type="text" name="NumDocumento" autocomplete="lbelcard-document"/>
             </div>
 
             <div class="field">
@@ -183,7 +184,7 @@
                 <div class="ui calendar">
                 <div class="ui input left icon">
                     <i class="time icon"></i>
-                    <input type="text" name="DtExpedicao" id="DtExpedicao">
+                    <input type="text" name="DtExpedicao" autocomplete="lbelcard-document-date" id="DtExpedicao">
                 </div>
                 </div>
             </div>
@@ -202,7 +203,7 @@
 
             <div class="three wide field">
                 <label>órgão emissor </label>
-                <input type="text" name="OrgaoExpedidor" placeholder="" maxlength="20"/>
+                <input type="text" name="OrgaoExpedidor" autocomplete="lbelcard-document-agency" placeholder="" maxlength="20"/>
             </div>
 
             <div class="four wide field">
@@ -212,7 +213,7 @@
 
             <div class="four wide field">
                 <label>país do órgão emissor</label>
-                <input type="text" name="PaisOrgao" value="Brasil" maxlength="30"/>
+                <input type="text" name="PaisOrgao" autocomplete="lbelcard-document-country" value="Brasil" maxlength="30"/>
             </div>
         </div>
 
