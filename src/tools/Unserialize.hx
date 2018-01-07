@@ -26,7 +26,7 @@ class Unserialize {
 		var doc = haxe.rtti.Rtti.getRtti(Unserialize).doc;
 		assert(doc != null);
 
-		var args = org.docopt.Docopt.parse(doc, Sys.args(), "L'BEL Card Unserialize v1.0.3");  // FIXME get serverVersion automatically
+		var args = org.docopt.Docopt.parse(doc, Sys.args(), "L'BEL Card Unserialize v1.1.0");  // FIXME get serverVersion automatically
 		var unserialize:Array<Int> = args["--fields"] != "all" ? args["--fields"].split(",").map(Std.parseInt) : null;
 		var timestring:Array<Int> = args["--timestamps"] != "none" ? args["--timestamps"].split(",").map(Std.parseInt) : null;
 		var separator:String = args["--separator"];
