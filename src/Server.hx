@@ -84,6 +84,11 @@ class Server {
 
 		Fixes.apply();
 
+		/*
+		Check the database schema version; assuming a single tora instance and no
+		manual changes to the schemaVersion metadata it's enough to check it here,
+		instead of before handling every request.
+		*/
 		var dbVersion = db.Metadata.manager.get("schemaVersion");
 		assert(dbVersion != null && dbVersion.value == schemaVersion, dbVersion, schemaVersion);
 
