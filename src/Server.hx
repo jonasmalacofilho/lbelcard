@@ -58,7 +58,16 @@ class Server {
 		ManagedModule.addModuleFinalizer(cnx.close, "db/main");
 		sys.db.Manager.initialize();
 
+		// this init and setup code can only handle SQLite
 		assert(cnx.dbName() == "SQLite");
+
+		var integrityCheck = cnx.request("PRAGMA integrity_check(1)");
+		if (integrityCheck.getResult(0) != "ok") {
+			show(integrityCheck.getResult(0));
+			throw('sqlite: failed integrity check');
+		}
+		trace('sqlite: passed integrity check');
+
 		cnx.request("PRAGMA busy_timeout=5000");
 		trace('sqlite: busy_timeout set');
 		var journalMode = cnx.request("PRAGMA journal_mode").getResult(0);
