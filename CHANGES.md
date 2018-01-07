@@ -10,6 +10,7 @@ To be released as _minor_ upgrade (v1.1.0).
  - _Add schema versionning and migration from implicit version 1_
  - _Check database integrity at module initialization_
  - Fix: resume and recover from jump-to-errors
+ - Label code 20 replies from alterar-endereco-portador as user/data errors
 
 Also:
 

@@ -15,7 +15,7 @@ class GestaoPortador extends GestaoBase {
 		switch res.ResultCode {
 		case 0:
 			// all ok, nothing more to do
-		case 4, 14, 15, 16, 19:  // error in cep, neighborhood, city or state... or when updating
+		case 4, 14, 15, 16, 19, 20:  // error in cep, neighborhood, city or state... or when updating... or generic
 			throw AcessoUserOrDataError(res);
 		case err:
 			throw AcessoPermanentError(res);
