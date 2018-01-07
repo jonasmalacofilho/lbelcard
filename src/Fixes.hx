@@ -42,8 +42,9 @@ class Fixes {
 			if (dbVersion.value != Server.schemaVersion)
 				throw 'database upgrade failed: expected ${Server.schemaVersion}, only got to ${dbVersion.value}';
 			cnx.request("COMMIT");
-		} catch (e:Dynamic) {
+		} catch (err:Dynamic) {
 			cnx.request("ROLLBACK");
+			neko.Lib.rethrow(err);
 		}
 	}
 }

@@ -56,7 +56,6 @@ class Server {
 		trace('sqlite: open $dbPath');
 		var cnx = sys.db.Manager.cnx = sys.db.Sqlite.open(dbPath);
 		ManagedModule.addModuleFinalizer(cnx.close, "db/main");
-		sys.db.Manager.initialize();
 
 		// this init and setup code can only handle SQLite
 		assert(cnx.dbName() == "SQLite");
@@ -78,17 +77,34 @@ class Server {
 			trace('sqlite: page_size and journal_mode set');
 		}
 
+		sys.db.Manager.initialize();
 		var allTables:Array<sys.db.Manager<Dynamic>> = [
 			db.BelUser.manager,
 			db.CardRequest.manager,
 			db.Metadata.manager,
 			db.RemoteCallLog.manager
 		];
-		for (m in allTables) {
-			if (sys.db.TableCreate.exists(m))
-				continue;  // it would be nice to also assert the schema
-			sys.db.TableCreate.create(m);
-			trace('sqlite: created missing table ${m.dbInfos().name}');
+
+		cnx.request("BEGIN TRANSACTION");
+		try {
+			var missing = 0;
+			for (m in allTables) {
+				if (sys.db.TableCreate.exists(m))
+					continue;  // it would be nice to also assert the schema
+				missing++;
+				sys.db.TableCreate.create(m);
+				trace('sqlite: created missing table ${m.dbInfos().name}');
+			}
+			if (missing == allTables.length) {
+				// if we created the entire schema, it's current
+				var dbVersion = new db.Metadata("schemaVersion");
+				dbVersion.value = schemaVersion;
+				dbVersion.insert();
+			}
+			cnx.request("COMMIT");
+		} catch (err:Dynamic) {
+			cnx.request("ROLLBACK");
+			neko.Lib.rethrow(err);
 		}
 
 		Fixes.apply();
@@ -99,7 +115,7 @@ class Server {
 		instead of before handling every request.
 		*/
 		var dbVersion = db.Metadata.manager.get("schemaVersion");
-		assert(dbVersion != null && dbVersion.value == schemaVersion, dbVersion, schemaVersion);
+		assert(dbVersion != null && dbVersion.value == schemaVersion, dbVersion.value, schemaVersion);
 
 		trace('time: ${since(ini_t)} ms on module initialization');
 	}
