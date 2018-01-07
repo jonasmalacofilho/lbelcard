@@ -37,13 +37,14 @@ class AcessoProcessor {
 				weakAssert(res.Message.indexOf("ValidarToken") >= 0, res);
 				token = null;
 				async.Queue.global().addTask(key);  // renqueue this task
-			case TransportError(msg):
+			case TransportError(_):
 				trace('processor: network error, waiting a bit and reenqueuing');
 				Sys.sleep(10);
 				async.Queue.global().addTask(key);  // renqueue this task
-			case AcessoTemporaryError(err):
+			case AcessoTemporaryError(_) | JumpToError(_):
 				trace('processor: (presumably) temporary AcessoCard error, reenqueuing');
-				weakAssert(token == null, "error dispatched by something other than CriarToken");
+				weakAssert(token == null, "error dispatched by something other than CriarToken",
+						Type.enumConstructor(err));
 				Sys.sleep(60);
 				async.Queue.global().addTask(key);  // renqueue this task
 			case _:
@@ -61,6 +62,11 @@ class AcessoProcessor {
 			case Failed(AcessoUserOrDataError(_), _) | CardRequested:
 				// nothing to do for user errors or if request has finished processing
 				break;
+
+			case Failed(JumpToError(_, resume), _):
+				// jump to errors require as to jump (back) before retrying
+				card.state = resume;
+				continue;
 
 			case Failed(_, onState):
 				// consider that, if reenqueued, some errors that were otherwise
