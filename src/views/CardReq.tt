@@ -66,11 +66,11 @@
         <div class="fields">
 
 
-            <div class="three two field wide">
-                <label>DDI</label>
-                <input type="number" name="DDI" autocomplete="tel-country-code" value="55" maxlength="3">
-            </div>
-            <div class="three field wide">
+            (:*<div class="three two field wide">
+                <label>DDI</label>*:)
+                <input type="hidden" name="DDI" value="55" maxlength="3" readonly/>
+            (:*</div>*:)
+            <div class="two field wide">
                 <label>DDD</label>
                 <input type="number" name="DDD" autocomplete="tel-area-code" placeholder="XX" maxlength="2"/>
             </div>

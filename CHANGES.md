@@ -13,6 +13,7 @@ To be released as _minor_ upgrade (v1.1.0).
  - Label code 20 replies from alterar-endereco-portador as user/data errors
  - **Hack: set payment as confirmed hours before to avoid bug at Acesso Card**
  - Prevent bad autocompletion (second iteration) (related to #6)
+ - Hide the DDI field to solve 35% of user/data errors (see #9)
 
 Also:
 
