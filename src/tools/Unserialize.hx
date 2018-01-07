@@ -13,9 +13,10 @@ Usage:
 	unserialize --version
 
 Options:
-  --fields=<list>     Fields to serialize (by default, all)
-  --separator=<char>  Separator [default: \t]
-  --skip-headers      Don't unserialize the headers line
+  --fields=<list>      Fields to unserialize [default: all]
+  --timestamps=<list>  Timestamps to stringify [default: none]
+  --separator=<char>   Separator [default: \t]
+  --skip-headers       Don't unserialize the headers line
 
 **/
 @:rtti
@@ -26,7 +27,8 @@ class Unserialize {
 		assert(doc != null);
 
 		var args = org.docopt.Docopt.parse(doc, Sys.args(), "L'BEL Card Unserialize v1.0.3");  // FIXME get serverVersion automatically
-		var fields:Array<Int> = args["--fields"] != null ? args["--fields"].split(",").map(Std.parseInt) : null;
+		var unserialize:Array<Int> = args["--fields"] != "all" ? args["--fields"].split(",").map(Std.parseInt) : null;
+		var timestring:Array<Int> = args["--timestamps"] != "none" ? args["--timestamps"].split(",").map(Std.parseInt) : null;
 		var separator:String = args["--separator"];
 		if (separator == "\\t")
 			separator = "\t";
@@ -36,13 +38,22 @@ class Unserialize {
 				Sys.println(Sys.stdin().readLine());
 			while (true) {
 				var data = Sys.stdin().readLine();
-				if (fields != null) {
-					var i = 0;
-					var out = [ for (f in data.split(separator)) if (fields.indexOf(i++) >= 0 && f != "") haxe.Unserializer.run(f) else f ];
-					Sys.println(out.join(separator));
-				} else {
-					Sys.println(haxe.Unserializer.run(data));
+				var out = [];
+				var i = 0;
+				for (f in data.split(separator)) {
+					out.push(
+						if (f.length == 0)
+							f;
+						else if (timestring != null && timestring.indexOf(i) >= 0)
+							Date.fromTime(Std.parseFloat(f)).toString();
+						else if (unserialize == null || unserialize.indexOf(i) >= 0)
+							haxe.Unserializer.run(f)
+						else
+							f
+					);
+					i++;
 				}
+				Sys.println(out.join(separator));
 			}
 		} catch (eof:haxe.io.Eof) {
 			Sys.exit(0);

@@ -4,7 +4,8 @@
 
 To be released.
 
- - Add CSV support to the offline Unserialize helper
+ - Add support for CSV field filters to Unserialize
+ - Add support for timestamp stringification to Unserilize
 
 
 ## Patch release: v1.0.3
