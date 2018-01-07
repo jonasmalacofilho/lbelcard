@@ -1,8 +1,13 @@
 # Changelog
 
-## Current merge window
+## Database reliability and data inspection improvements: v1.1.0
 
-To be released as _minor_ upgrade (v1.1.0).
+January 7th, 2018.
+
+Minor upgrade to the v1.0.x series that records schema versions and saves
+creation and last update timestamps for CardRequest and RemoteCallLog in the
+DB.  In addition, this release also includes a few fixes, workarounds and UI
+improvements.
 
  - _Add creation & last update timestamps to CardRequest (see #5)_
  - _Add creation timestamp to RemoteCallLog (see #5)_
