@@ -6,6 +6,8 @@ To be released.
 
  - Add support for CSV field filters to Unserialize
  - Add support for timestamp stringification to Unserilize
+ - _Add creation & last update timestamps to CardRequest_
+ - _Add creation timestamp to RemoteCallLog_
 
 
 ## Patch release: v1.0.3
