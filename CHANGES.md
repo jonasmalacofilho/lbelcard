@@ -11,6 +11,7 @@ To be released as _minor_ upgrade (v1.1.0).
  - _Check database integrity at module initialization_
  - Fix: resume and recover from jump-to-errors
  - Label code 20 replies from alterar-endereco-portador as user/data errors
+ - **Hack: set payment as confirmed hours before to avoid bug at Acesso Card**
 
 Also:
 

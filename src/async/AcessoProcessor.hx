@@ -209,11 +209,20 @@ class AcessoProcessor {
 				card.update();
 
 			case AcessoCard(ConfirmarPagamento(req, cost)):
+				/**
+				Acesso does not correctly validate payment timestamps when after
+				midnight UTC until midnight BRT.
+
+				They have been alerted to the issue, but have yet to fix it.
+
+				For now, lets supply a timestamp older enough (see hack bellow) that it
+				doesn't trigger the issue (even considering unsynchronized time).
+				**/
 				var data:ConfirmarPagamentoData = {
 					AgenciaRecebedora : "",
 					AgenciaRecebedoraDV : "",
 					BancoRecebedor : "",
-					DataPagamento : Date.now(),
+					DataPagamento : DateTools.delta(Date.now(), - DateTools.hours(6)),  // hack
 					TokenOperacao : req,
 					TpMeioPagamento : Outros,
 					TpOperacao : Embossing_Cartao,
