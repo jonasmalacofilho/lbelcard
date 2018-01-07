@@ -4,13 +4,16 @@
 
 To be released as _minor_ upgrade (v1.1.0).
 
- - Add support for CSV field filters to Unserialize
- - Add support for timestamp stringification to Unserilize
  - _Add creation & last update timestamps to CardRequest (see #5)_
  - _Add creation timestamp to RemoteCallLog (see #5)_
  - _Add a Metadata table (see #5)_
  - _Add schema versionning and migration from implicit version 1_
  - _Check database integrity at module initialization_
+
+Also:
+
+ - Add support for CSV field filters to Unserialize
+ - Add support for timestamp stringification to Unserilize
 
 
 ## Patch release: v1.0.3
@@ -20,13 +23,16 @@ January 4th, 2018.
 Fixes after first day of heavy load.
 
  - Set SQLite busy_timeout to prevent SQLITE_BUSY errors (see #8)
- - Add offline Unserialize command line helper
  - Show AcessoUserOrDataError main messages if FieldErrors is absent or empty
  - Label code 2 replies from solicitar-adesao-cliente as user/data errors
  - Label code 4 replies from complementar-dados-principais as user/data errors
  - Label code 19 replies from alterar-endereco-portador as user/data errors
  - Add translation/improvement to address:number field error
  - Finish the fix for HEAD requests by patching eweb.Dispatch
+
+Also:
+
+ - Add offline Unserialize command line helper
 
 
 ## Patch release: v1.0.2
