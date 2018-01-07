@@ -5,7 +5,8 @@ class Server {
 	public static var requestId(default,null):String;
 	public static var shortId(default,null):String;
 	public static var codeVersion(default,null):Float;
-	public static var serverVersion(default,null) = "1.0.3";
+	public static var serverVersion(default,null) = "1.1.0";
+	public static var schemaVersion(default,null) = 2;
 #if dev
 	public static var userAgent = 'LBELCard-dev (localhost) Neko Haxe';  // TODO add neko and haxe versions [automatically]
 #else
@@ -69,17 +70,22 @@ class Server {
 		}
 
 		var allTables:Array<sys.db.Manager<Dynamic>> = [
-			db.RemoteCallLog.manager,
 			db.BelUser.manager,
-			db.CardRequest.manager
+			db.CardRequest.manager,
+			db.Metadata.manager,
+			db.RemoteCallLog.manager
 		];
 		for (m in allTables) {
 			if (sys.db.TableCreate.exists(m))
 				continue;  // it would be nice to also assert the schema
 			sys.db.TableCreate.create(m);
+			trace('sqlite: created missing table ${m.dbInfos().name}');
 		}
 
 		Fixes.apply();
+
+		var dbVersion = db.Metadata.manager.get("schemaVersion");
+		assert(dbVersion != null && dbVersion.value == schemaVersion, dbVersion, schemaVersion);
 
 		trace('time: ${since(ini_t)} ms on module initialization');
 	}

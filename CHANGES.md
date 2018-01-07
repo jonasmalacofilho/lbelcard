@@ -2,12 +2,14 @@
 
 ## Current merge window
 
-To be released.
+To be released as _minor_ upgrade (v1.1.0).
 
  - Add support for CSV field filters to Unserialize
  - Add support for timestamp stringification to Unserilize
- - _Add creation & last update timestamps to CardRequest_
- - _Add creation timestamp to RemoteCallLog_
+ - _Add creation & last update timestamps to CardRequest (see #5)_
+ - _Add creation timestamp to RemoteCallLog (see #5)_
+ - _Add a Metadata table (see #5)_
+ - _Add schema versionning and migration from implicit version 1_
 
 
 ## Patch release: v1.0.3
