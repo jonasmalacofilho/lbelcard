@@ -1,5 +1,13 @@
 # Changelog
 
+## Patch release: v1.1.1
+
+To be released.  Expected January 9th, 2018.
+
+ - Trim off extra UF details returned by Correios (see #13)
+
+
+
 ## Database reliability and data inspection improvements: v1.1.0
 
 January 7th, 2018.

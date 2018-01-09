@@ -138,6 +138,12 @@ class CardReq
 		switch(d)
 		{
 		case Some(addr):
+			var complexUf = ~/^([A-Z][A-Z]) - .+$/;
+			if (complexUf.match(addr.uf)) {
+				var simplified = complexUf.matched(1);
+				show(addr.uf, simplified);
+				addr.uf = simplified;
+			}
 			new JQuery('#uf').val(addr.uf);
 			new JQuery('#cidade').val(addr.cidade);
 			new JQuery('#bairro').val(addr.bairro);
