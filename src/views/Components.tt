@@ -1,6 +1,6 @@
 (: static function UF(?selected : String) :)
 <!-- TODO: Set selected val -->
-<select name="UFOrgao" class="ui fluid dropdown search">
+<select name="UFOrgao" id="ufemissor" class="ui fluid dropdown search">
     <option value="AC" (:if selected == "AC":)selected(:end:)>Acre</option>
     <option value="AL" (:if selected == "AL":)selected(:end:)>Alagoas</option>
     <option value="AM" (:if selected == "AM":)selected(:end:)>Amazonas</option>

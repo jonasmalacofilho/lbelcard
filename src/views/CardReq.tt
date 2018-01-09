@@ -194,7 +194,7 @@
             <!-- DOC TYPE (RG;RNE;Pass) -->
             <div class="five wide field">
                 <label>tipo</label>
-                <select name="TpDocumento">
+                <select name="TpDocumento" id="tpdoc">
                     <option value="0">RG</option>
                     <option value="1">RNE</option>
                     <option value="2">Passaporte</option>
@@ -202,12 +202,12 @@
             </div>
 
             <div class="three wide field">
-                <label>órgão emissor </label>
-                <input type="text" name="OrgaoExpedidor" autocomplete="lbelcard-document-agency" placeholder="" maxlength="20"/>
+                <label>órgão emissor</label>
+                <input type="text" name="OrgaoExpedidor" autocomplete="lbelcard-document-agency" placeholder="" maxlength="20" id="docnum"/>
             </div>
 
             <div class="four wide field">
-                <label>UF do órgão emissorr</label>
+                <label>UF do órgão emissor</label>
                     (: views.Components.UF() :)
             </div>
 

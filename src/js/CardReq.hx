@@ -1,5 +1,6 @@
 package js;
 import js.jquery.JQuery;
+import js.jquery.Helper.*;
 import webmaniabr.*;
 using StringTools;
 
@@ -148,6 +149,16 @@ class CardReq
 			new JQuery('#cidade').val(addr.cidade);
 			new JQuery('#bairro').val(addr.bairro);
 			new JQuery('#logradouro').val(addr.endereco);
+
+			var doctype = J("#tpdoc option:selected");
+			if (doctype.val() == "0" && J("#docnum").val() == "") {
+				var selector = J("#ufemissor");
+				var uf = selector.find('option[value="${addr.uf}"]');
+				weakAssert(uf.length == 1, addr.uf);
+				uf.detach();
+				selector.prepend(uf);
+				selector.val(addr.uf).change();
+			}
 		case None:
 			// FIXME ??
 			js.Browser.alert('CEP inválido; por favor, verifique se o número está correto');
