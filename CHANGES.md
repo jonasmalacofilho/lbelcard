@@ -5,6 +5,7 @@
 January 9th, 2018.
 
  - Activate failsafe against requesting more than one card per user
+ - Change the status page slightly: we usually recover from permanent errors
 
 
 ## Patch release: v1.1.1

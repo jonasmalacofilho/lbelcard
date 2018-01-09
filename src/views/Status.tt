@@ -81,7 +81,7 @@
                             (:end:)
 														<p>Você pode tentar novamente.</p>
                         (: case other :)
-                            (:*nothing to see here*:)
+														<p>Você pode tentar novamente or voltar a esta página mais tarde.</p>
                     (: end :)
                 </div>
             </div>
