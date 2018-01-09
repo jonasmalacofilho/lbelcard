@@ -7,6 +7,7 @@ To be released.  Expected January 9th, 2018.
  - Trim off extra UF details returned by Correios (see #13)
  - Sort UFs alphabetically, not by population (see #14)
  - Set the first UFOrgao option based on the current address (see #14)
+ - Change UFOrgao label, type and validation if document is not a RG (see #15)
 
 
 ## Database reliability and data inspection improvements: v1.1.0

@@ -41,6 +41,37 @@ class CardReq
 
 			});
 
+			// hide/disable UF selector (and replace with input) if the document type is not RG
+			var ufSelector = null;
+			J("#tpdoc").change(function (e) {
+				if (J(e.target).val() != "0") {
+					// hack: remote the parent div that's added by semantic ui
+					var div = J('select[name="UFOrgao"]').parent("div").replaceWith('<input type="text" name="UFOrgao" autocomplete="lbelcard-uforgao" required>');
+					ufSelector = {
+						parent: div,
+						label: J('label[for="UFOrgao"]').text()
+					};
+					// hack: reinstall the form validation
+					validate();
+
+					J('label[for="UFOrgao"]').text("estado/província emissora");
+				} else if (ufSelector != null) {
+					var stored = ufSelector;
+					var select = stored.parent.children("select");
+					J('input[name="UFOrgao"]').replaceWith(select);
+					ufSelector = null;
+
+					J('label[for="UFOrgao"]').text(stored.label);
+					// hack: apply the necessary classes to prevent bad rendering
+					select.attr("class", "ui fluid dropdown search");
+					// hack: reinitialize the semantic ui dropdown
+					untyped select.dropdown();
+					// hack: reset the form validation
+					validate();
+					select.change();
+				}
+			});
+
 			untyped $('#CPF').mask('000.000.000-00', {reverse : true});
 			untyped $('#CEP').mask('00000-000');
 			untyped $('#cel').mask('00000-0000');  // FIXME only if DDI == 55, if that
@@ -342,7 +373,7 @@ class CardReq
 				UFOrgao : {
 					rules : [{
 						type : 'empty',
-						prompt : 'Preencha o estado onde o documento foi emitido'
+						prompt : 'Preencha o local (estado, província, etc.) onde o documento foi emitido'
 					}]
 				},
 				PaisOrgao : {

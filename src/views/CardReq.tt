@@ -192,27 +192,27 @@
 
         <div class="fields">
             <!-- DOC TYPE (RG;RNE;Pass) -->
-            <div class="five wide field">
+            <div class="four wide field">
                 <label>tipo</label>
-                <select name="TpDocumento" id="tpdoc">
+                <select name="TpDocumento" id="tpdoc" class="ui fluid dropdown search">
                     <option value="0">RG</option>
                     <option value="1">RNE</option>
                     <option value="2">Passaporte</option>
                 </select>
             </div>
 
-            <div class="three wide field">
+            <div class="four wide field">
                 <label>órgão emissor</label>
                 <input type="text" name="OrgaoExpedidor" autocomplete="lbelcard-document-agency" placeholder="" maxlength="20" id="docnum"/>
             </div>
 
             <div class="four wide field">
-                <label>UF do órgão emissor</label>
+                <label for="UFOrgao">estado emissor</label>
                     (: views.Components.UF() :)
             </div>
 
             <div class="four wide field">
-                <label>país do órgão emissor</label>
+                <label>país emissor</label>
                 <input type="text" name="PaisOrgao" autocomplete="lbelcard-document-country" value="Brasil" maxlength="30"/>
             </div>
         </div>
