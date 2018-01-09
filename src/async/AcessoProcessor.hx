@@ -56,6 +56,23 @@ class AcessoProcessor {
 	function loop()
 	{
 		while (true) {
+			if (card.state.match(SendEmail | AcessoCard(_))) {
+				var reqs = 0;
+				for (i in db.CardRequest.manager.search($bearer == card.bearer)) {
+					if (i.state.match(CardRequested))
+						reqs++;
+				}
+				show(reqs);
+				if (reqs >= 1) {
+					trace('failsafe: request limit reached (user ${card.bearer.belNumber})');  // TODO replace with proper error
+					// FIXME switch to proper error
+					var msg = "Atingido o limite de solicitação de cartões para esse consultor";
+					card.state = Failed(AcessoUserOrDataError({ ResultCode:-1, Message:msg, FieldErrors:[{ ResultCode:-1, Message:msg }], Data:null }), card.state);
+					card.update();
+					break;
+				}
+			}
+
 			rateLimit(card.state);
 
 			switch card.state {
@@ -188,14 +205,6 @@ class AcessoProcessor {
 #end
 
 			case AcessoCard(SolicitarCartaoIdentificado(client)):
-				var reqs = 0;
-				for (i in db.CardRequest.manager.search($bearer == card.bearer)) {
-					if (i.state.match(CardRequested))
-						reqs++;
-				}
-				show(reqs);
-				if (reqs >= 1)
-					trace('failsafe: request limit reached (user ${card.bearer.belNumber})');  // TODO replace with proper error
 				var data:SolicitarCartaoIdentificadoData = {
 					CodCliente : card.userData.CodCliente,
 					CodEspecieProduto : card.product,

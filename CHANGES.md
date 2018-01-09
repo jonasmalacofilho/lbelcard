@@ -1,5 +1,12 @@
 # Changelog
 
+## Patch release: v1.1.2
+
+January 9th, 2018.
+
+ - Activate failsafe against requesting more than one card per user
+
+
 ## Patch release: v1.1.1
 
 January 9th, 2018.
