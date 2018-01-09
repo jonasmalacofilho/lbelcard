@@ -143,8 +143,12 @@ class Novo {
 		weakAssert(args.DDI != "55" || !args.DDD.startsWith("0"), args.DDI, args.DDD);  // TODO consider switching to assert
 
 		var card = getCardRequest();
-		if (card == null || !card.state.match(AwaitingBearerData | AwaitingBearerConfirmation))  // can resubmit if !confirmed
+		if (card == null || !card.state.match(AwaitingBearerData | AwaitingBearerConfirmation)) {  // can resubmit if !confirmed
+			show(Web.getCookies().get(CARD_COOKIE));
+			if (card != null)
+				show(Type.enumConstructor(card.state));
 			throw SecurityError("card request not found or in wrong state");
+		}
 		show(card.requestId);
 
 		if (card.bearer.cpf != args.CodCliente) {
@@ -215,8 +219,12 @@ class Novo {
 	public function postConfirma()
 	{
 		var card = getCardRequest();
-		if (card == null || !card.state.match(AwaitingBearerConfirmation))
+		if (card == null || !card.state.match(AwaitingBearerConfirmation)) {
+			show(Web.getCookies().get(CARD_COOKIE));
+			if (card != null)
+				show(Type.enumConstructor(card.state));
 			throw SecurityError("card request not found or in wrong state");
+		}
 		show(card.requestId);
 
 		// might happen; we don't lock the BelUser when creating the CardRequest
