@@ -2,7 +2,9 @@
 
 ## Patch release: v1.1.1
 
-To be released.  Expected January 9th, 2018.
+January 9th, 2018.
+
+Fix UF handling throughout the request form.
 
  - Trim off extra UF details returned by Correios (see #13)
  - Sort UFs alphabetically, not by population (see #14)
