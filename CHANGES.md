@@ -5,6 +5,7 @@
 To be released.  Expected January 9th, 2018.
 
  - Trim off extra UF details returned by Correios (see #13)
+ - Sort UFs alphabetically, not by population (see #14)
 
 
 
