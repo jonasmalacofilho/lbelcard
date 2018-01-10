@@ -7,6 +7,10 @@ January 9th, 2018.
  - Activate failsafe against requesting more than one card per user
  - Change the status page slightly: we usually recover from permanent errors
 
+Also:
+
+ - Allow Unserialize to read filenames, instead of just stdin/stdout
+
 
 ## Patch release: v1.1.1
 

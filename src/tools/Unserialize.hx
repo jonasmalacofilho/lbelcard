@@ -1,6 +1,7 @@
 package tools;
 
 import db.types.CardRequestState;
+import sys.io.File;
 
 /**
 L'BEL Card Unserializer
@@ -8,7 +9,7 @@ L'BEL Card Unserializer
 Unserializes persisted data.
 
 Usage:
-  unserialize [options]
+  unserialize [options] <input> <output>
   unserialize -h | --help
 	unserialize --version
 
@@ -26,18 +27,26 @@ class Unserialize {
 		var doc = haxe.rtti.Rtti.getRtti(Unserialize).doc;
 		assert(doc != null);
 
-		var args = org.docopt.Docopt.parse(doc, Sys.args(), "L'BEL Card Unserialize v1.1.0 (Server v1.1.x compatible)");
+		var args = org.docopt.Docopt.parse(doc, Sys.args(), "L'BEL Card Unserialize v2.0.0 (Server v1.1.x compatible)");
 		var unserialize:Array<Int> = args["--fields"] != "all" ? args["--fields"].split(",").map(Std.parseInt) : null;
 		var timestring:Array<Int> = args["--timestamps"] != "none" ? args["--timestamps"].split(",").map(Std.parseInt) : null;
 		var separator:String = args["--separator"];
 		if (separator == "\\t")
 			separator = "\t";
 
+		var fin = args["<input>"] != "-" ? File.read(args["<input>"]) : Sys.stdin();
+		var fou = args["<output>"] != "-" ? File.write(args["<output>"]) : Sys.stdout();
+
+		inline function println(s:String) {
+			fou.writeString(s);
+			fou.writeString("\n");
+		}
+
 		try {
 			if (args["--skip-headers"])
-				Sys.println(Sys.stdin().readLine());
+				println(fin.readLine());
 			while (true) {
-				var data = Sys.stdin().readLine();
+				var data = fin.readLine();
 				var out = [];
 				var i = 0;
 				for (f in data.split(separator)) {
@@ -53,7 +62,7 @@ class Unserialize {
 					);
 					i++;
 				}
-				Sys.println(out.join(separator));
+				println(out.join(separator));
 			}
 		} catch (eof:haxe.io.Eof) {
 			Sys.exit(0);
