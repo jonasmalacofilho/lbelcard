@@ -187,8 +187,8 @@ class Server {
 			}
 		} catch (err:RequestError) {
 			switch err {
-			case SecurityError(err, userMsg):
-				abort(req_t, err, 400, userMsg);
+			case SecurityError(err, userMsg, clean):
+				abort(req_t, err, 400, userMsg, clean);
 			}
 		} catch (err:Dynamic) {
 			abort(req_t, err, 500);
@@ -197,7 +197,7 @@ class Server {
 		shortId = requestId = null;
 	}
 
-	static function abort(req_t:Float, err:Dynamic, status:Int, ?userMessage:String)
+	static function abort(req_t:Float, err:Dynamic, status:Int, ?userMessage:String, clean=false)
 	{
 		try
 			Web.setReturnCode(status)
@@ -209,9 +209,11 @@ class Server {
 			trace('could not return error view anymore');
 		var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 		trace('ERROR after ${since(req_t)} ms: $err', stack);
-		if (ManagedModule.cacheEnabled)
-			ManagedModule.uncache();
-		ManagedModule.callFinalizers();
+		if (!clean) {
+			if (ManagedModule.cacheEnabled)
+				ManagedModule.uncache();
+			ManagedModule.callFinalizers();
+		}
 	}
 
 	static inline function since(ref:Float)

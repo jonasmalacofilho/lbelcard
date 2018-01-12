@@ -90,9 +90,9 @@ class Novo {
 			}
 #else
 			if (user == null)
-				trace('abort: user not found (${args.belNumber})');  // TODO consider switching to SecurityError
+				trace('abort: user not found (${args.belNumber})');
 			else
-				trace('abort: cpf does not match user (user ${user.belNumber}, cpf ${args.cpf})');  // TODO consider switching to SecurityError
+				trace('abort: cpf does not match user (user ${user.belNumber}, cpf ${args.cpf})');
 			getDefault('Consultor não encontrado ou CPF não bate');
 			return;
 #end
@@ -147,7 +147,7 @@ class Novo {
 			show(Web.getCookies().get(CARD_COOKIE));
 			if (card != null)
 				show(Type.enumConstructor(card.state));
-			throw SecurityError("card request not found or in wrong state");
+			throw SecurityError("card request not found or in wrong state", "Você precisa começar uma nova solicitação.", true);
 		}
 		show(card.requestId);
 
@@ -223,7 +223,7 @@ class Novo {
 			show(Web.getCookies().get(CARD_COOKIE));
 			if (card != null)
 				show(Type.enumConstructor(card.state));
-			throw SecurityError("card request not found or in wrong state");
+			throw SecurityError("card request not found or in wrong state", "Você precisa começar uma nova solicitação.", true);
 		}
 		show(card.requestId);
 
@@ -244,7 +244,7 @@ class Novo {
 	{
 		var card = db.CardRequest.manager.select($requestId == key);
 		if (card == null)
-			throw SecurityError("card request not found", "Não encontramos o cartão na nossa base.");
+			throw SecurityError("card request not found", "Não encontramos o cartão na nossa base.", true);
 		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);

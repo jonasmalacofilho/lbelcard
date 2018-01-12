@@ -1,4 +1,4 @@
 enum RequestError {
-	SecurityError(err:String, ?userMsg:String);
+	SecurityError(err:String, ?userMsg:String, clean:Bool);
 }
 
