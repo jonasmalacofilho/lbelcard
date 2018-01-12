@@ -74,7 +74,7 @@ class Novo {
 		var recaptcha = Web.getParams().get("g-recaptcha-response");
 		weakAssert(recaptcha != null);
 		if(recaptcha == null || !recapChallenge(recaptcha)) {
-			trace('abort: invalid recaptcha');
+			trace('abort: invalid recaptcha (user ${args.belNumber})');
 			getDefault('Não conseguimos verificar que você não é um robô, aguarde um pouco e tente novamente');
 			return;
 		}

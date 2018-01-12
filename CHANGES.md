@@ -8,6 +8,7 @@ January 12th, 2018.
  - Add specification for each CardRequestError
  - Optmize failsafe check for 1 card/user and count total cards as well
  - Increase maximum allowed queue size for long-term operation
+ - Log belNumber when aborting due to invalid captcha
 
 
 ## Patch release: v1.1.3
