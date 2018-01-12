@@ -239,10 +239,20 @@ class Server {
 
 	static function ctrace(id:String, msg:Dynamic, ?pos:haxe.PosInfos)
 	{
+		var pri = "";
+#if systemd
+		if (msg.charCodeAt(0) == "<") {
+			var p = msg.indexOf(">", 1);
+			if (p <= 4) {  // the syslog spec allows up to the <191> prefix (even though systemd doesn't)
+				pri = msg.substr(0, p);
+				msg = msg.substr(p);
+			}
+		}
+#end
 		var lines = [msg].concat(pos.customParams != null ? pos.customParams : []).join("\n").split("\n");
-		stderr.writeString('[$id] ${lines[0]}  @${pos.className}:${pos.methodName}  (${pos.fileName}:${pos.lineNumber})\n');
+		stderr.writeString('$pri[$id] ${lines[0]}  @${pos.className}:${pos.methodName}  (${pos.fileName}:${pos.lineNumber})\n');
 		for (i in 1...lines.length)
-			stderr.writeString('[$id] .. ${lines[i]}\n');
+			stderr.writeString('$pri[$id] .. ${lines[i]}\n');
 	}
 }
 
