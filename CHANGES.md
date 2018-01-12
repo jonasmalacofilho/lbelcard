@@ -1,5 +1,12 @@
 # Changelog
 
+## Patch release: v1.1.3
+
+January 11th, 2018.
+
+ - Fix: AcessoPermanentError must not count agains user's request limit
+
+
 ## Patch release: v1.1.2
 
 January 9th, 2018.

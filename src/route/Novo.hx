@@ -256,7 +256,7 @@ class Novo {
 		var cards = db.CardRequest.manager.search($bearer == user);
 		for (i in cards) {
 			if (!i.state.match(AwaitingBearerData | AwaitingBearerConfirmation |
-						Failed(AcessoUserOrDataError(_), _))) {
+						Failed(AcessoUserOrDataError(_)|AcessoPermanentError(_), _))) {
 #if dev
 				trace('dev-build: overriding maxed out limit of cards per user');
 				return false;
