@@ -1,12 +1,19 @@
 # Changelog
 
+## Patch release: v1.1.4
+
+January 12th, 2018.
+
+ - Fix: SendGridError should not count against user's request limit
+
+
 ## Patch release: v1.1.3
 
 January 11th, 2018.
 
 Critical fix.
 
- - Fix: AcessoPermanentError must not count agains user's request limit
+ - Fix: AcessoPermanentError must not count against user's request limit
 
 Also:
 

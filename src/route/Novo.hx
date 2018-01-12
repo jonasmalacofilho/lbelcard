@@ -256,14 +256,14 @@ class Novo {
 		var cards = db.CardRequest.manager.search($bearer == user);
 		for (i in cards) {
 			if (!i.state.match(AwaitingBearerData | AwaitingBearerConfirmation |
-						Failed(AcessoUserOrDataError(_)|AcessoPermanentError(_), _))) {
+					Failed(AcessoUserOrDataError(_)|AcessoPermanentError(_)|SendGridError(_), _))) {
 #if dev
 				trace('dev-build: overriding maxed out limit of cards per user');
 				return false;
 #else
 				weakAssert(i.queued || i.state.match(CardRequested),
 						i.requestId, i.queued, Type.enumConstructor(i.state),
-						"blocking on queued or failed, but cannot recover");
+						"blocking, but offending request is not sucessfull nor queued (cannot recover)");
 				return true;
 #end
 			}
