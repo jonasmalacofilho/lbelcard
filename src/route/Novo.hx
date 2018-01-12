@@ -109,7 +109,7 @@ class Novo {
 		card.insert();
 		show(user.belNumber, card.requestId);
 
-		Web.setCookie(CARD_COOKIE, card.requestId, DateTools.delta(Date.now(), DateTools.days(1)));
+		Web.setCookie(CARD_COOKIE, card.requestId, false, true);  // !Secure but HttpOnly
 		Web.redirect(moveForward(card));
 	}
 
