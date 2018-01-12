@@ -60,7 +60,7 @@ class Novo {
 	{
 		var queued = async.Queue.global().peekSize();
 		show(queued);
-		if (queued > 10) {
+		if (queued > 122) {
 			trace('abort: queue too long (size $queued)');
 			getDefault('Há muito interesse no cartão, por favor tente novamente em algumas horas');
 			return;
