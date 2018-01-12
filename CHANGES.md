@@ -12,6 +12,7 @@ January 12th, 2018.
  - Disable requests by foreigners, AcessoCard can't handle them (see #16)
  - Simplify /novo/confirma display of documents' fields
  - Show informative error message for failed foreigners' requests (see #16)
+ - Add SendGridError handling missing from /novo/status
 
 
 ## Patch release: v1.1.3

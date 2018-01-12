@@ -5,7 +5,7 @@
 (: do var err = switch(card) {case Failed(err, s): err; default: null;} :)
 
 
-(:if !card.match(CardRequested | Failed(AcessoUserOrDataError(_)|AcessoPermanentError(_), _)):)
+(:if !card.match(CardRequested | Failed(AcessoUserOrDataError(_)|AcessoPermanentError(_)|SendGridError(_), _)):)
 <script>
     $(document).ready(function()
     {
@@ -117,7 +117,7 @@
     (: do var isErr = false :)
     (: switch(cur) :)
     (: case Failed(err,s) :)
-        (: if err.match(AcessoPermanentError(_)) || err.match(AcessoUserOrDataError(_)) :)
+        (: if err.match(AcessoPermanentError(_) | AcessoUserOrDataError(_) | SendGridError) :)
             (: do isErr = true :)
         (:end:)
         (: do cur = s :)
