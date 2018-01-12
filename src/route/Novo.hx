@@ -251,6 +251,16 @@ class Novo {
 		Sys.println(views.Base.render("Acompanhe o progresso da sua solicitação",views.Status.render.bind(card.state)));
 	}
 
+	/**
+	Estimate if the user's request limit has been reached.
+
+	Besides sucessfull requests, considers in-progress requests (that might
+	succeed) and transient failures (that should eventually result in either
+	failures or successes).
+	
+	In this instance, AcessoPermanentErrors are treated as final, since even if
+	recoverable, they might take to do so.
+	**/
 	static function limitReached(user:db.BelUser)
 	{
 		var cards = db.CardRequest.manager.search($bearer == user);

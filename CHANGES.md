@@ -5,6 +5,7 @@
 January 12th, 2018.
 
  - Fix: SendGridError should not count against user's request limit
+ - Add specification for each CardRequestError
 
 
 ## Patch release: v1.1.3
