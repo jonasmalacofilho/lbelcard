@@ -11,6 +11,7 @@ January 12th, 2018.
  - Log belNumber when aborting due to invalid captcha
  - Disable requests by foreigners, AcessoCard can't handle them (see #16)
  - Simplify /novo/confirma display of documents' fields
+ - Show informative error message for failed foreigners' requests (see #16)
 
 
 ## Patch release: v1.1.3

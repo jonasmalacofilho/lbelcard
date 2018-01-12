@@ -61,14 +61,14 @@
     </div>
 </div>    
 
-    (: if err != null && (err.match(AcessoUserOrDataError(_) | AcessoPermanentError(_))) :)
+    (: if err != null && (err.match(AcessoUserOrDataError(_) | AcessoPermanentError(_) | SendGridError(_))) :)
         
         <div class="ui vertical segment">
             <div class="ui text container">
                 <div class="ui red message">
                     <div class="header">Não foi possível solicitar seu cartão</div>
-                    (: switch err :)
-                        (: case AcessoUserOrDataError(res) :)
+                    (: switch card :)
+                        (: case Failed(AcessoUserOrDataError(res), _) :)
                             <p>Erro validando seus dados:</p>
                             (: if res.FieldErrors != null && res.FieldErrors.length > 0 :)
                                 <ul>
@@ -80,6 +80,9 @@
                             <p>(:translate(res.Message):)</p>
                             (:end:)
 														<p>Você pode tentar novamente.</p>
+												(: case Failed(AcessoPermanentError({ ResultCode:82, Message:"Erro_tipo_cliente_nao_permitido" }), AcessoCard(SolicitarAdesaoCliente)) :)
+														<p>Infelizmente ainda não conseguimos emitir cartões para estrangeiros.</p>
+														<p>Se você também possui nacionalidade brasileira, você pode tentar novamente com ela.</p>
                         (: case other :)
 														<p>Você pode tentar novamente or voltar a esta página mais tarde.</p>
                     (: end :)
