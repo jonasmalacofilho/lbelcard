@@ -241,11 +241,11 @@ class Server {
 	{
 		var pri = "";
 #if systemd
-		if (msg.charCodeAt(0) == "<") {
-			var p = msg.indexOf(">", 1);
+		if (Std.is(msg, String) && (msg:String).charAt(0) == "<") {
+			var p = (msg:String).indexOf(">", 1);
 			if (p <= 4) {  // the syslog spec allows up to the <191> prefix (even though systemd doesn't)
-				pri = msg.substr(0, p);
-				msg = msg.substr(p);
+				pri = (msg:String).substr(0, p + 1);
+				msg = (msg:String).substr(p + 1);
 			}
 		}
 #end
