@@ -1,3 +1,4 @@
+-cp include
 -cp src
 -lib tink_template
 -lib assertion
@@ -13,6 +14,7 @@
 
 --next
 
+-cp include
 -cp src
 -lib assertion
 -lib webmaniabr-correios
@@ -22,6 +24,7 @@
 
 --next
 
+-cp include
 -cp src
 -lib assertion
 -lib record-macros

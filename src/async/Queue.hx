@@ -31,7 +31,7 @@ class Queue {
 		// thus, it's safe to lock the share now, so that we can initialize a queue
 		inst = share.get(true);
 		if (inst == null) {
-			trace('async: init queue');
+			trace(NOTICE + 'async: init queue');
 			inst = new Queue();
 			share.set(inst);
 			share.commit();
@@ -76,7 +76,7 @@ class Queue {
 	{
 		lock.acquire();
 		if (toCodeVersion > this.codeVersion) {  // FIXME use load time
-			trace('async: upgrade (${this.codeVersion} => ${toCodeVersion})');
+			trace(NOTICE + 'async: upgrade (${this.codeVersion} => ${toCodeVersion})');
 			// update the master module and code version
 			this.master = master;
 			this.codeVersion = toCodeVersion;

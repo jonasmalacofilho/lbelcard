@@ -18,7 +18,7 @@ class AcessoProcessor {
 
 	public function execute()
 	{
-		trace('processor: working on $key');
+		trace(NOTICE + 'processor: working on $key');
 		card = db.CardRequest.manager.select($requestId == key);
 		assert(card != null, key);
 		try {
@@ -29,26 +29,26 @@ class AcessoProcessor {
 
 			switch err {
 			case AcessoTokenError(_):
-				trace('processor: bad AcessoCard access token, discarding and reenqueing');
+				trace(WARNING + 'processor: bad AcessoCard access token, discarding and reenqueing');
 				token = null;
 				async.Queue.global().addTask(key);  // renqueue this task
 			case AcessoTemporaryError(res) | AcessoPermanentError(res) if (res.ResultCode == 99):
-				trace('processor: (presumably) bad AcessoCard access token, discarding and reenqueing');
+				trace(WARNING + 'processor: (presumably) bad AcessoCard access token, discarding and reenqueing');
 				weakAssert(res.Message.indexOf("ValidarToken") >= 0, res);
 				token = null;
 				async.Queue.global().addTask(key);  // renqueue this task
 			case TransportError(_):
-				trace('processor: network error, waiting a bit and reenqueuing');
+				trace(WARNING + 'processor: network error, waiting a bit and reenqueuing');
 				Sys.sleep(10);
 				async.Queue.global().addTask(key);  // renqueue this task
 			case AcessoTemporaryError(_) | JumpToError(_):
-				trace('processor: (presumably) temporary AcessoCard error, reenqueuing');
+				trace(WARNING + 'processor: (presumably) temporary AcessoCard error, reenqueuing');
 				weakAssert(token == null, "error dispatched by something other than CriarToken",
 						Type.enumConstructor(err));
 				Sys.sleep(60);
 				async.Queue.global().addTask(key);  // renqueue this task
 			case _:
-				trace('processor: cannot recover from $err');
+				trace(ERR + 'processor: cannot recover from $err');
 			}
 		}
 	}
@@ -73,7 +73,7 @@ class AcessoProcessor {
 				globalCnt = db.CardRequest.manager.count($state == requested);
 				show(userCnt, globalCnt);
 				if (userCnt > 0) {
-					trace('failsafe: request limit reached (user ${card.bearer.belNumber})');
+					trace(ERR + 'failsafe: request limit reached (user ${card.bearer.belNumber})');
 					// FIXME switch to proper error
 					var msg = "Atingido o limite de solicitação de cartões para esse consultor";
 					throw AcessoUserOrDataError({ ResultCode:-1, Message:msg, FieldErrors:[{ ResultCode:-1, Message:msg }], Data:null });

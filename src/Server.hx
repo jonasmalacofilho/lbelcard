@@ -36,10 +36,28 @@ class Server {
 		var ini_t = Sys.time();
 
 		haxe.Log.trace = function (msg, ?pos) ctrace(shortId, msg, pos);
+		assertion.Tools.runtime = function (type:assertion.Type, traces:Array<assertion.Trace>, ?pos:haxe.PosInfos):Bool {
+			var prefix = "", finalWarning = null;
+			switch type {
+			case Assert(_):
+				prefix = ERR + "[assert] ";
+			case WeakAssert(cond):
+				prefix = WARNING + "[weak assert] ";
+				finalWarning = 'would have FAILED: $cond';
+			case _:
+				prefix = DEBUG;
+			}
+			for (t in traces)
+				haxe.Log.trace(prefix + (t.expr != null ? t.expr + "=" : "") + t.value, pos);
+			if (finalWarning != null)
+				haxe.Log.trace(prefix + finalWarning, pos);
+			return true;
+		}
+
 		ManagedModule.log = function (msg, ?pos) ctrace("eweb", msg, pos);
 		ManagedModule.addModuleFinalizer(crypto.Random.global.close, "random");
 
-		trace('init: L\'BEL Card v$serverVersion');
+		trace(NOTICE + 'init: L\'BEL Card v$serverVersion');
 		assert(Math.abs(vehjo.Timezone.localTimezone()/1000/3600) < 9,
 				"might fail to convert datestrings into timestamps or SerializedDate");
 
@@ -63,7 +81,7 @@ class Server {
 		var integrityCheck = cnx.request("PRAGMA integrity_check(1)");
 		if (integrityCheck.getResult(0) != "ok") {
 			show(integrityCheck.getResult(0));
-			throw('sqlite: failed integrity check');
+			throw(EMERG + 'sqlite: failed integrity check');
 		}
 		trace('sqlite: passed integrity check');
 
@@ -93,7 +111,7 @@ class Server {
 					continue;  // it would be nice to also assert the schema
 				missing++;
 				sys.db.TableCreate.create(m);
-				trace('sqlite: created missing table ${m.dbInfos().name}');
+				trace(NOTICE + 'sqlite: created missing table ${m.dbInfos().name}');
 			}
 			if (missing == allTables.length) {
 				// if we created the entire schema, it's current
@@ -126,7 +144,7 @@ class Server {
 		var lastRecovery:Null<Float> = share.get(true);
 		try {
 			if (lastRecovery == null || codeVersion > lastRecovery) {
-				trace('recovery: reenqueue requests');
+				trace(NOTICE + 'recovery: reenqueue requests');
 				var q = async.Queue.global();
 				for (card in db.CardRequest.manager.search($queued == true)) {
 					weakAssert(card.state.match(SendEmail | AcessoCard(_) | Failed(_)),
@@ -202,13 +220,13 @@ class Server {
 		try
 			Web.setReturnCode(status)
 		catch (_:Dynamic)
-			trace('could not set response status to $status anymore');
+			trace(WARNING + 'could not set response status to $status anymore');
 		try
 			Sys.println(views.Base.render("Ops", views.Error.render.bind(userMessage)))
 		catch (_:Dynamic)
-			trace('could not return error view anymore');
+			trace(WARNING + 'could not return error view anymore');
 		var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
-		trace('ERROR after ${since(req_t)} ms: $err', stack);
+		trace(ERR + 'error after ${since(req_t)} ms: $err', stack);
 		if (!clean) {
 			if (ManagedModule.cacheEnabled)
 				ManagedModule.uncache();

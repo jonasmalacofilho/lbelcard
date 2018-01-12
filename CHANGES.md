@@ -15,6 +15,7 @@ January 12th, 2018.
  - Add SendGridError handling missing from /novo/status
  - Improve handling of card request not found/wrong state errors (see #12)
  - Set card request cookie to session and http only, but not secure
+ - Add (experimental) priority log prefixes (both systemd and text variants)
 
 
 ## Patch release: v1.1.3

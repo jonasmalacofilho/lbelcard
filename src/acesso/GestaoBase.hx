@@ -55,7 +55,7 @@ class GestaoBase {
 		req.onStatus = function (code) statusCode = code;
 		req.onError = function (msg) {
 			var t1 = Sys.time();
-			trace('acesso: call FAILED with $msg ($statusCode) after ${Math.round((t1 - t0)*1e3)} ms');
+			trace(ERR + 'acesso: call failed with $msg ($statusCode) after ${Math.round((t1 - t0)*1e3)} ms');
 			var err = TransportError(msg);
 			log.responseCode = statusCode;
 			log.responseData = Std.string(err);

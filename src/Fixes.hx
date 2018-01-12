@@ -32,7 +32,7 @@ class Fixes {
 				cnx.request("ALTER TABLE RemoteCallLog ADD COLUMN created DOUBLE");
 				dbVersion.value = 2;
 				dbVersion.update();
-				trace('database: upgraded to version ${dbVersion.value}');
+				trace(NOTICE + 'database: upgraded to version ${dbVersion.value}');
 			}
 
 			// place additional migration steps here;

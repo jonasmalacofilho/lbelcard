@@ -18,7 +18,7 @@
 
 			"hmm install",
 			"haxelib list",
-			"haxe -D unlock-actual-cards build.hxml",
+			"haxe -D unlock-actual-cards -D systemd build.hxml",
 
 			"cp -r serve/. $ROBRT_OUTPUT_DIR"
 		]

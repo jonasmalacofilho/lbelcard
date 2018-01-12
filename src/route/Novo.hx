@@ -61,7 +61,7 @@ class Novo {
 		var queued = async.Queue.global().peekSize();
 		show(queued);
 		if (queued > 122) {
-			trace('abort: queue too long (size $queued)');
+			trace(CRIT + 'abort: queue too long (size $queued)');
 			getDefault('Há muito interesse no cartão, por favor tente novamente em algumas horas');
 			return;
 		}
@@ -74,7 +74,7 @@ class Novo {
 		var recaptcha = Web.getParams().get("g-recaptcha-response");
 		weakAssert(recaptcha != null);
 		if(recaptcha == null || !recapChallenge(recaptcha)) {
-			trace('abort: invalid recaptcha (user ${args.belNumber})');
+			trace(ERR + 'abort: invalid recaptcha (user ${args.belNumber})');
 			getDefault('Não conseguimos verificar que você não é um robô, aguarde um pouco e tente novamente');
 			return;
 		}
@@ -90,16 +90,16 @@ class Novo {
 			}
 #else
 			if (user == null)
-				trace('abort: user not found (${args.belNumber})');
+				trace(ERR + 'abort: user not found (${args.belNumber})');
 			else
-				trace('abort: cpf does not match user (user ${user.belNumber}, cpf ${args.cpf})');
+				trace(ERR + 'abort: cpf does not match user (user ${user.belNumber}, cpf ${args.cpf})');
 			getDefault('Consultor não encontrado ou CPF não bate');
 			return;
 #end
 		}
 
 		if (limitReached(user)) {
-			trace('abort: card request limit reached (user ${user.belNumber})');
+			trace(ERR + 'abort: card request limit reached (user ${user.belNumber})');
 			getDefault('Atingido o limite de solicitação de cartões para esse consultor');
 			return;
 		}
@@ -155,7 +155,7 @@ class Novo {
 #if dev
 			trace('dev-build: ignoring mismatch between authorized and current bearers');
 #else
-			trace('abort: card bearer does not match user (user ${card.bearer.belNumber}, cpf ${args.CodCliente})');
+			trace(ERR + 'abort: card bearer does not match user (user ${card.bearer.belNumber}, cpf ${args.CodCliente})');
 			getDados('O CPF informado não pertence ao consultor');
 			return;
 #end

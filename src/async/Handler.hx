@@ -30,7 +30,7 @@ class Handler {
 		if (inst != null) {
 			Server.shortId = Server.requestId = 'async-${crypto.Random.global.readHex(2)}';
 			sys.db.Manager.cnx.request("PRAGMA busy_timeout=10000");
-			trace('async: init handler, busy_timeout extended (${Server.codeVersion})');
+			trace(NOTICE + 'async: init handler, busy_timeout extended (${Server.codeVersion})');
 			var h = new Handler(inst);
 			h.loop();
 			return true;
@@ -66,11 +66,11 @@ class Handler {
 				}
 			} catch (err:Dynamic) {
 				var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
-				trace('async ERROR: $err', stack);
+				trace(ERR + 'async: task errored with $err', stack);
 			}
 			sys.db.Manager.cleanup();
 		}
-		trace('async: loop terminated');
+		trace(WARNING + 'async: loop terminated');
 	}
 }
 
