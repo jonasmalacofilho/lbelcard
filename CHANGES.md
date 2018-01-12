@@ -4,7 +4,13 @@
 
 January 11th, 2018.
 
+Critical fix.
+
  - Fix: AcessoPermanentError must not count agains user's request limit
+
+Also:
+
+ - Allow Unserialize to read filenames, instead of just stdin/stdout
 
 
 ## Patch release: v1.1.2
