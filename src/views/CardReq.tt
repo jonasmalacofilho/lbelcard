@@ -147,7 +147,7 @@
 
         <h3 class="ui dividing header">E-mail e documentos</h3>
         <div class="fields">
-            <div class="six wide field">
+            <div class="eight wide field">
                 <label>e-mail</label>
                 <div class="ui input left icon">
                     <i class="mail outline icon"></i>
@@ -155,19 +155,21 @@
                 </div>
             </div>
 
-            <div class="five wide field">
+            <div class="eight wide field">
                 <label>CPF</label>
                 <input type="text" name="CodCliente" autocomplete="lbelcard-cpf" placeholder="XXX.XXX.XXX-XX" id="CPF">
             </div>
 
+            <input type='hidden' name='TpCliente' value='0' readonly/>
+						(:*
             <div class="five wide field">
                 <label>nacionalidade</label>
                 <select name="TpCliente">
                     <option value="0">brasileira</option>
                     <option value="2">estrangeira</option>
                 </select>
-
             </div>
+						*:)
         </div>
 
         <!-- Begin that nasty document (RG) block! -->

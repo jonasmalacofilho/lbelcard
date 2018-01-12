@@ -9,6 +9,7 @@ January 12th, 2018.
  - Optmize failsafe check for 1 card/user and count total cards as well
  - Increase maximum allowed queue size for long-term operation
  - Log belNumber when aborting due to invalid captcha
+ - Disable requests by foreigners, AcessoCard can't handle them (see #16)
 
 
 ## Patch release: v1.1.3

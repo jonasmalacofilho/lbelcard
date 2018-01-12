@@ -80,9 +80,12 @@
                     <p><b>CPF:</b> (:d.CodCliente:)</p>
                 </div>
             </div>
+
+						(:*
             <div class="ui segment">
-                <p><b>nacionalidade:</b> (: switch d.TpCliente:)(:case Nacional_pessoa_fisica:)brasileira(:case Nacional_pessoa_juridica:)Pessoa Jurídica(:case Estrangeiro:)estrangeira(:end:)</p>
+                <p><b>nacionalidade:</b> (: switch d.TpCliente:)(:case Nacional_pessoa_fisica:)brasileira(:case Nacional_pessoa_juridica:)pessoa jurídica brasileira(:case Estrangeiro:)estrangeira(:end:)</p>
             </div>
+						*:)
 
             <div class="ui horizontal segments">
                 <div class="ui segment">
