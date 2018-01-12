@@ -117,7 +117,7 @@
     (: do var isErr = false :)
     (: switch(cur) :)
     (: case Failed(err,s) :)
-        (: if err.match(AcessoPermanentError(_) | AcessoUserOrDataError(_) | SendGridError) :)
+        (: if err.match(AcessoPermanentError(_) | AcessoUserOrDataError(_) | SendGridError(_)) :)
             (: do isErr = true :)
         (:end:)
         (: do cur = s :)
