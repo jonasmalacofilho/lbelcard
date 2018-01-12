@@ -53,23 +53,30 @@ class AcessoProcessor {
 		}
 	}
 
+
 	function loop()
 	{
+		var userCnt = null, globalCnt = null;
 		while (true) {
-			if (card.state.match(SendEmail | AcessoCard(_))) {
-				var reqs = 0;
-				for (i in db.CardRequest.manager.search($bearer == card.bearer)) {
-					if (i.state.match(CardRequested))
-						reqs++;
+			// only need to check once, but loop might start Failed
+			if (userCnt == null && card.state.match(SendEmail | AcessoCard(_))) {
+				// to count within SQLite, compute the serialized value of CardRequested
+				var requested = {
+					var s = new haxe.Serializer();
+#if RECORD_MACROS_USE_ENUM_NAME
+					s.useEnumIndex = false;
+#end
+					s.serialize(CardRequested);
+					haxe.io.Bytes.ofString(s.toString());
 				}
-				show(reqs);
-				if (reqs >= 1) {
-					trace('failsafe: request limit reached (user ${card.bearer.belNumber})');  // TODO replace with proper error
+				userCnt = db.CardRequest.manager.count($bearer == card.bearer && $state == requested);
+				globalCnt = db.CardRequest.manager.count($state == requested);
+				show(userCnt, globalCnt);
+				if (userCnt > 0) {
+					trace('failsafe: request limit reached (user ${card.bearer.belNumber})');
 					// FIXME switch to proper error
 					var msg = "Atingido o limite de solicitação de cartões para esse consultor";
-					card.state = Failed(AcessoUserOrDataError({ ResultCode:-1, Message:msg, FieldErrors:[{ ResultCode:-1, Message:msg }], Data:null }), card.state);
-					card.update();
-					break;
+					throw AcessoUserOrDataError({ ResultCode:-1, Message:msg, FieldErrors:[{ ResultCode:-1, Message:msg }], Data:null });
 				}
 			}
 
