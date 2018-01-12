@@ -10,6 +10,7 @@ January 12th, 2018.
  - Increase maximum allowed queue size for long-term operation
  - Log belNumber when aborting due to invalid captcha
  - Disable requests by foreigners, AcessoCard can't handle them (see #16)
+ - Simplify /novo/confirma display of documents' fields
 
 
 ## Patch release: v1.1.3

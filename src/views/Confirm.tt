@@ -89,28 +89,18 @@
 
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>número:</b> (:d.Documento.NumDocumento:)</p>
+                    <p><b>documento:</b> (:switch d.Documento.TpDocumento:)(:case RG:)RG(:case RNE:)RNE(:case Passaporte:)passaporte(:end:) (:d.Documento.NumDocumento:)</p>
                 </div>
                 <div class="ui segment">
-                    <p><b>tipo de documento:</b> (:switch d.Documento.TpDocumento:)(:case RG:)RG(:case RNE:)RNE(:case Passaporte:)Passaporte(:end:)</p>
-                </div>
-            </div>
-            <div class="ui horizontal segments">
-                <div class="ui segment">
-                    <!-- TODO: Fix -->
                     <p><b>data de emissão:</b> (: d.Documento.DtExpedicao.getDate().format('%d/%m/%Y'):)</p>
                 </div>
-
-                <div class="ui segment">
-                    <p><b>órgao emissor:</b> (:d.Documento.OrgaoExpedidor:)</p>
-                </div>
             </div>
             <div class="ui horizontal segments">
                 <div class="ui segment">
-                    <p><b>UF do órgão:</b> (:d.Documento.UFOrgao:)</p>
+                    <p><b>orgão emissor:</b> (:d.Documento.OrgaoExpedidor:)/(:d.Documento.UFOrgao:)</p>
                 </div>
                 <div class="ui segment">
-                    <p><b>país do órgão:</b> (:d.Documento.PaisOrgao:)</p>
+                    <p><b>país emissor:</b> (:d.Documento.PaisOrgao:)</p>
                 </div>
             </div>
         </div>
