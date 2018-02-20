@@ -66,6 +66,13 @@ class Novo {
 			return;
 		}
 
+		var disabled = db.Metadata.manager.select($name == "disabled");
+		if (disabled != null) {
+			trace(NOTICE + 'abort: server disabled (${disabled.value})');
+			getDefault(disabled.value);
+			return;
+		}
+
 		args.cpf = notDigits.replace(args.cpf, "").trim();
 
 #if dev
