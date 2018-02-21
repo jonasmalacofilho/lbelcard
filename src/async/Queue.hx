@@ -6,12 +6,20 @@ import neko.vm.*;
 class Queue {
 	static inline var NAME = "global-processing-queue";
 
+	public var lastAck(default,null) = 0.;  // eq. to "a long time ago"
+
 	var queue:Array<Null<String>> = [];
 	var lock:Mutex = new Mutex();
 	var master:Module = Module.local();
 	var codeVersion = Server.codeVersion;
 
 	function new() {}
+
+	@:allow(async.Handler)
+	function doAck()
+	{
+		lastAck = Sys.time();
+	}
 
 	/**
 		Access the global processing queue

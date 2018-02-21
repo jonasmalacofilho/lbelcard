@@ -1,6 +1,5 @@
 package route;
 
-import Sys;
 import eweb.Dispatch;
 import eweb.Web;
 
@@ -21,6 +20,11 @@ class Index {
 	public function doNovo(d:Dispatch)
 	{
 		d.dispatch(new Novo());
+	}
+
+	public function getHealthCheck(d:Dispatch)
+	{
+		d.dispatch(new HealthCheck());
 	}
 
 	#if dev

@@ -5,14 +5,16 @@ import neko.vm.*;
 class Handler {
 	static inline var NAME = "global-processing-queue";
 
-	var queue:Array<Null<String>> = [];
-	var lock:Mutex = new Mutex();
+	var queue:Array<Null<String>>;
+	var lock:Mutex;
+	var doAck:Void->Void;
 
 	@:access(async.Queue)
 	function new(inst:Queue)
 	{
 		queue = inst.queue;
 		lock = inst.lock;
+		doAck = inst.doAck;
 	}
 
 	/**
@@ -43,6 +45,7 @@ class Handler {
 		trace('async: init loop (${Server.codeVersion})');
 		while (true) {
 			lock.acquire();
+			doAck();
 			var task = queue.shift();
 			if (task == "shutdown") {
 				trace('async: shutdown loop');

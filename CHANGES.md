@@ -1,5 +1,15 @@
 # Changelog
 
+## Patch release: v1.2.0
+
+To be released.
+
+More features for long-term unassisted operation.
+
+ - Allow users to be refused at /novo with the 'disabled' metadata
+ - Add /healtCheck API
+
+
 ## Patch release: v1.1.4
 
 January 12th, 2018.

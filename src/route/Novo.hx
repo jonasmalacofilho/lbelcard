@@ -35,6 +35,7 @@ typedef PersonalData = {
 }
 
 class Novo {
+	public static inline var LIMIT_QUEUE_SIZE = 122;
 	static inline var CARD_COOKIE = "CARD_REQUEST";
 	static inline var RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
 	static inline var RECAPTCHA_SITE_KEY = "6LehwTwUAAAAAAhZ2Ffyn7R9sHpr7PHN2vnv0zKM";  // FIXME get from environment
@@ -60,14 +61,15 @@ class Novo {
 	{
 		var queued = async.Queue.global().peekSize();
 		show(queued);
-		if (queued > 122) {
+		if (queued > LIMIT_QUEUE_SIZE) {
 			trace(CRIT + 'abort: queue too long (size $queued)');
 			getDefault('Há muito interesse no cartão, por favor tente novamente em algumas horas');
 			return;
 		}
 
-		var disabled = db.Metadata.manager.select($name == "disabled");
+		var disabled = db.Metadata.manager.get("disabled");
 		if (disabled != null) {
+			assert(Std.is(disabled.value, String));
 			trace(NOTICE + 'abort: server disabled (${disabled.value})');
 			getDefault(disabled.value);
 			return;
