@@ -7,6 +7,7 @@ To be released.
 More features for long-term unassisted operation.
 
  - _Allow users to be refused at /novo with the 'disabled' metadata_
+ - Add 2018 to the copyright notice
  - _Add /healtCheck API_
  - Simplify the output of trace location
 
