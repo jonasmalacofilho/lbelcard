@@ -6,8 +6,9 @@ To be released.
 
 More features for long-term unassisted operation.
 
- - Allow users to be refused at /novo with the 'disabled' metadata
- - Add /healtCheck API
+ - _Allow users to be refused at /novo with the 'disabled' metadata_
+ - _Add /healtCheck API_
+ - Simplify the output of trace location
 
 
 ## Patch release: v1.1.4

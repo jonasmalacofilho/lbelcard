@@ -250,7 +250,7 @@ class Server {
 		}
 #end
 		var lines = [msg].concat(pos.customParams != null ? pos.customParams : []).join("\n").split("\n");
-		stderr.writeString('$pri[$id] ${lines[0]}  @${pos.className}:${pos.methodName}  (${pos.fileName}:${pos.lineNumber})\n');
+		stderr.writeString('$pri[$id] ${lines[0]}  @${pos.className}:${pos.methodName}:${pos.lineNumber}\n');
 		for (i in 1...lines.length)
 			stderr.writeString('$pri[$id] .. ${lines[i]}\n');
 	}
