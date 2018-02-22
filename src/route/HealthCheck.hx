@@ -28,7 +28,7 @@ class HealthCheck {
 		var buf = [];
 		var errors = [];
 		try {
-			// use prime cache times to prevent refrishing more than one value at a time
+			// use prime cache times to prevent refreshing more than one value at a time
 			withCache(checkDb, "database", 929, buf, errors);
 			checkHandler(buf, errors);
 			checkQueueSize(buf, errors);
@@ -179,7 +179,6 @@ class HealthCheck {
 		// are there any permanent failed requests? (warn only)
 		// ignore requests already analyzed and for which recovery has been disabled
 		var permanentError = genLikePattern(Failed(AcessoPermanentError(untyped "__stop__"), null), "__stop__");
-		show(permanentError);
 		var broken = db.CardRequest.manager.count($queued == true && $state.like(permanentError));
 		if (broken == 0)
 			buf.push('broken requests: $broken');
