@@ -24,11 +24,14 @@ class HealthCheck {
 			throw eweb.Dispatch.DispatchError.DENotFound("healthCheck");
 		}
 
+		// assumption: both warnings and errors generate notifications, but over
+		// different priorities (e.g. warnings go to slack/emails, errors go to phones)
+
 		now = Sys.time();
 		var buf = [];
-		var errors = [];
+		var errors = [];  // not seen by the client
 		try {
-			// use prime cache times to prevent refreshing more than one value at a time
+			// use prime cache times to minimize refreshing more than one value at a time
 			withCache(checkDb, "database", 929, buf, errors);
 			checkHandler(buf, errors);
 			checkQueueSize(buf, errors);
@@ -37,6 +40,7 @@ class HealthCheck {
 			withCache(checkRequests, "permament-errors", 67, buf, errors);
 		} catch (err:Dynamic) {
 			var stack = StringTools.trim(CallStack.toString(CallStack.exceptionStack()));
+			buf.push('health check: uncaught exception (ERR)');
 			errors.push('uncaught exception: $err\n$stack');
 		}
 
@@ -121,6 +125,8 @@ class HealthCheck {
 		if (queueSize < Novo.LIMIT_QUEUE_SIZE >> 1) {
 			buf.push('queue size: $queueSize');
 		} else {
+			// while the server is expected to handle this gracefully, this is very
+			// abnormal and a human should be notified immediately
 			buf.push('queue size: $queueSize (CRIT)');
 			errors.push('critical queue size: $queueSize');
 		}
@@ -135,22 +141,40 @@ class HealthCheck {
 
 	function checkAcessoCard(buf, errors)
 	{
-		// can we talk to Acesso? (warn only)
-		var params = { Email:Environment.ACESSO_USERNAME, Senha:Environment.ACESSO_PASSWORD };
+		// did we successfully talk to Acesso recently? (warn only)
+
+		// call now
 		try {
-			var start = Sys.time();
+			var params = { Email:Environment.ACESSO_USERNAME, Senha:Environment.ACESSO_PASSWORD };
 			var token = acesso.GestaoBase.CriarToken(params);
-			var timing = Sys.time() - start;
 			assert(token != null);
-			buf.push('acesso card: ${timing < 1 ? "good" : "slow (WARNING)"}');
-		} catch (err:db.types.CardRequestError) {
-			buf.push("acesso card: unreacheable (ERR)");
-			errors.push('acesso card unreacheable: $err');
+		} catch (err:db.types.CardRequestError) {}
+
+		// compute successfull calls over a period of time
+		var recently = now*1000 - DateTools.hours(1);  // RemoteCallLog.created is a Haxe timestamp in ms
+		var recentCalls = db.RemoteCallLog.manager.search($url.like("https://servicos.acessocard.com.br/%") &&
+				$responseCode == 200 && $created != null && $created > recently && $timing != null);
+		var timings = [];
+		for (i in recentCalls) {
+			var res = try haxe.Json.parse(i.responseData) catch (_:Dynamic) {};
+			if (res == null || res.ResultCode != 0 ||
+					(res.ResultCode == 1 && StringTools.endsWith(i.url, "solicitar-adesao-cliente")))
+				continue;
+			timings.push(i.timing);
+		}
+
+		if (timings.length != 0) {
+			var avg = Lambda.fold(timings, function (i, pre) return pre + i, 0)/timings.length;
+			buf.push('acesso card: ${avg < 2 ? "good" : "slow"}');
+		} else {
+			buf.push("acesso card: unreacheable (WARNING)");
 		}
 	}
 
 	function checkRequests(buf, errors)
 	{
+		// are there any permanent failed requests? (warn only)
+
 		function serialize(v:Dynamic)
 		{
 			var s = new haxe.Serializer();
@@ -176,7 +200,6 @@ class HealthCheck {
 		var total = db.CardRequest.manager.count($state == requested);
 		buf.push('total requests: $total');
 
-		// are there any permanent failed requests? (warn only)
 		// ignore requests already analyzed and for which recovery has been disabled
 		var permanentError = genLikePattern(Failed(AcessoPermanentError(untyped "__stop__"), null), "__stop__");
 		var broken = db.CardRequest.manager.count($queued == true && $state.like(permanentError));

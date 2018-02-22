@@ -58,7 +58,7 @@ class GestaoBase {
 			trace(ERR + 'acesso: call failed with $msg ($statusCode) after ${Math.round((t1 - t0)*1e3)} ms');
 			var err = TransportError(msg);
 			log.responseCode = statusCode;
-			log.responseData = Std.string(err);
+			log.responseData = Std.string(err);  // fixed behavior since in use by the health check api
 			log.timing = t1 - t0;
 			log.update();
 			throw err;
