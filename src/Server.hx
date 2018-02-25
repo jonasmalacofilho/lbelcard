@@ -206,17 +206,17 @@ class Server {
 			}
 		} catch (err:RequestError) {
 			switch err {
-			case SecurityError(err, userMsg, clean):
-				abort(req_t, err, CRIT, 400, userMsg, clean);  // security errors are CRIT even if common
+			case SecurityError(err, userMsg, dirty):
+				abort(req_t, err, CRIT, 400, userMsg, dirty);  // security errors are CRIT even if common
 			}
 		} catch (err:Dynamic) {
-			abort(req_t, err, CRIT, 500, true);  // unexpected errors are CRIT
+			abort(req_t, err, CRIT, 500);  // unexpected errors are CRIT
 		}
 
 		shortId = requestId = null;
 	}
 
-	static function abort(req_t:Float, err:Dynamic, level:LogLevel, status:Int, ?userMessage:String, clean=false)
+	static function abort(req_t:Float, err:Dynamic, level:LogLevel, status:Int, ?userMessage:String, dirty=true)
 	{
 		try
 			Web.setReturnCode(status)
@@ -228,7 +228,7 @@ class Server {
 			trace(WARNING + 'could not return error view anymore');
 		var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
 		trace(level + 'error after ${since(req_t)} ms: $err', stack);
-		if (!clean) {
+		if (dirty) {
 			if (ManagedModule.cacheEnabled)
 				ManagedModule.uncache();
 			ManagedModule.callFinalizers();
