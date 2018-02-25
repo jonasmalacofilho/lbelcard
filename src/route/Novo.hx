@@ -156,7 +156,7 @@ class Novo {
 			show(Web.getCookies().get(CARD_COOKIE));
 			if (card != null)
 				show(Type.enumConstructor(card.state));
-			throw SecurityError("card request not found or in wrong state", "Você precisa começar uma nova solicitação.", true);
+			throw SecurityError("card request not found or in wrong state", "Você precisa começar uma nova solicitação.", false);
 		}
 		show(card.requestId);
 
@@ -232,7 +232,7 @@ class Novo {
 			show(Web.getCookies().get(CARD_COOKIE));
 			if (card != null)
 				show(Type.enumConstructor(card.state));
-			throw SecurityError("card request not found or in wrong state", "Você precisa começar uma nova solicitação.", true);
+			throw SecurityError("card request not found or in wrong state", "Você precisa começar uma nova solicitação.", false);
 		}
 		show(card.requestId);
 
@@ -253,7 +253,7 @@ class Novo {
 	{
 		var card = db.CardRequest.manager.select($requestId == key);
 		if (card == null)
-			throw SecurityError("card request not found", "Não encontramos o cartão na nossa base.", true);
+			throw SecurityError("card request not found", "Não encontramos o cartão na nossa base.", false);
 		show(Type.enumConstructor(card.state));
 
 		Web.setReturnCode(200);
