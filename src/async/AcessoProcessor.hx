@@ -251,6 +251,7 @@ class AcessoProcessor {
 				card.state = CardRequested;
 				card.queued = false;
 				card.update();
+				trace(NOTICE + 'processor: sucessfully requested $key');
 
 			case AwaitingBearerData, AwaitingBearerConfirmation:
 				assert(false, card.state);
