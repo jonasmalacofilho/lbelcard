@@ -10,6 +10,9 @@ More features for long-term unassisted operation.
  - Add 2018 to the copyright notice
  - _Add /healtCheck API_
  - Simplify the output of trace location
+ - Prefix all errors with ERR or greater, even if DispatchError
+ - Don't force module cleanup because of missing or unknown request id
+ - Notice requests as successful after sucess from `confirmar-pagamento`
 
 
 ## Patch release: v1.1.4
