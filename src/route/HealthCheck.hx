@@ -62,7 +62,7 @@ class HealthCheck {
 			buf.push("summary: ERR");
 			Web.setReturnCode(500);
 		}
-		Web.setHeader("Content-Type", "text/plain");
+		Web.setHeader("Content-Type", "text/plain; charset=utf-8");
 		Sys.println(buf.join("\n"));
 	}
 
