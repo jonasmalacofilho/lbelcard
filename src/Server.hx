@@ -189,33 +189,34 @@ class Server {
 			trace('done: ${since(req_t)} ms to $method $uri');
 
 		} catch (err:eweb.Dispatch.DispatchError) {
-			var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
-			trace('done: could not route after ${since(req_t)} ms: $err', stack);
+			trace(ERR + 'done: could not route after ${since(req_t)} ms: $err (stack omitted)');
 			try {
 				switch err {
 				case DENotFound(part):
 					Web.setReturnCode(404);
-					Sys.println(views.Base.render("Ops", views.Error.render.bind("Não encontramos a página que você buscava.")));
+					Sys.println(views.Base.render("Ops",
+							views.Error.render.bind("Não encontramos a página que você buscava.")));
 				case DEInvalidValue | DEMissing | DEMissingParam(_) | DETooManyValues:
 					Web.setReturnCode(404);
 					Sys.println(views.Base.render("Ops", views.Error.render.bind(null)));
 				}
 			} catch (err2:Dynamic) {
-				abort(req_t, err2, 400);
+				var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
+				trace(ERR + 'failed while replying to DispatchError: $err2, $stack');
 			}
 		} catch (err:RequestError) {
 			switch err {
 			case SecurityError(err, userMsg, clean):
-				abort(req_t, err, 400, userMsg, clean);
+				abort(req_t, err, CRIT, 400, userMsg, clean);  // security errors are CRIT even if common
 			}
 		} catch (err:Dynamic) {
-			abort(req_t, err, 500);
+			abort(req_t, err, CRIT, 500, true);  // unexpected errors are CRIT
 		}
 
 		shortId = requestId = null;
 	}
 
-	static function abort(req_t:Float, err:Dynamic, status:Int, ?userMessage:String, clean=false)
+	static function abort(req_t:Float, err:Dynamic, level:LogLevel, status:Int, ?userMessage:String, clean=false)
 	{
 		try
 			Web.setReturnCode(status)
@@ -226,7 +227,7 @@ class Server {
 		catch (_:Dynamic)
 			trace(WARNING + 'could not return error view anymore');
 		var stack = StringTools.trim(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
-		trace(ERR + 'error after ${since(req_t)} ms: $err', stack);
+		trace(level + 'error after ${since(req_t)} ms: $err', stack);
 		if (!clean) {
 			if (ManagedModule.cacheEnabled)
 				ManagedModule.uncache();
