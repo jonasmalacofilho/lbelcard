@@ -15,6 +15,7 @@ More features for long-term unassisted operation.
  - Preload the otf fonts used
  - Prefetch the ReCAPTCHA script on index
  - Fix extra word in /novo/confirma
+ - Fix typo in /novo/status
 
 
 ## Patch release: v1.1.4
