@@ -30,11 +30,13 @@ class Index {
 	#if dev
 	public function doError(?msg : String)
 	{
+		Web.setReturnCode(200);
 		Sys.println(views.Base.render("ERRO", views.Error.render.bind(msg)));
 	}
 
 	public function doEmail(name:String, email:String, url:String)
 	{
+		Web.setReturnCode(200);
 		Sys.println('<html><meta charset="utf-8">' + views.Email.render(name, email, url));
 	}
 	#end
