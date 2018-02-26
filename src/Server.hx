@@ -186,6 +186,9 @@ class Server {
 
 			Web.setHeader("X-Powered-By", poweredBy);
 			Web.setHeader("X-Request-ID", requestId);
+			Web.setHeader("Content-Type", "text/html; charset=utf-8");  // overwritten when necessary
+			Web.setHeader("Cache-Control: no-cache");  // overwritten when necessary
+
 			var d = new eweb.Dispatch(uri, params, method);
 			d.dispatch(new route.Index());
 			sys.db.Manager.cleanup();

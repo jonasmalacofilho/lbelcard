@@ -17,6 +17,7 @@ More features for long-term unassisted operation.
  - Fix extra word in /novo/confirma
  - Fix typo in /novo/status
  - Set X-Powered-By on responses
+ - Set default content-type (html) and cache-control (never)
 
 
 ## Patch release: v1.1.4
