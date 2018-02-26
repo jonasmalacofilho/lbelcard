@@ -88,6 +88,12 @@
             });
 
         </script>
+
+				<!--prefetch (!=preload) the recaptcha fetcher-->
+				(:if ~/o cartão de negócios do consultor/i.match(title):)
+					(:*only do this for /index (with hack)*:)
+					<link rel="preload" href="https://www.google.com/recaptcha/api.js" as="script">
+				(:end:)
     </head>
     <body>
         <!-- Following Menu -->

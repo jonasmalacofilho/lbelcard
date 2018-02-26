@@ -13,6 +13,7 @@ More features for long-term unassisted operation.
  - Prefix all errors with ERR or greater, even if DispatchError
  - Notice requests as successful after sucess from `confirmar-pagamento`
  - Preload the otf fonts used
+ - Prefetch the ReCAPTCHA script on index
 
 
 ## Patch release: v1.1.4
