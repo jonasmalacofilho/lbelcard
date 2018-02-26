@@ -12,7 +12,6 @@ More features for long-term unassisted operation.
  - Simplify the output of trace location
  - Prefix all errors with ERR or greater, even if DispatchError
  - Notice requests as successful after sucess from `confirmar-pagamento`
- - Preload the otf fonts used
  - Prefetch the ReCAPTCHA script on index
  - Fix extra word in /novo/confirma
  - Fix typo in /novo/status
