@@ -4,13 +4,12 @@
 
 (: do var err = switch(card) {case Failed(err, s): err; default: null;} :)
 
-
 (:if !card.match(CardRequested | Failed(AcessoUserOrDataError(_)|AcessoPermanentError(_)|SendGridError(_), _)):)
 <script>
-    $(document).ready(function()
-    {
-        setTimeout(function(){window.location.reload();}, 10000);
-    });
+	$(document).ready(function()
+	{
+		setTimeout(function(){window.location.reload();}, 10000);
+	});
 </script>
 (:end:)
 
@@ -18,140 +17,141 @@
 	<div class="ui text container">
 		<h3 class="ui dividing header">Progresso da solicitação</h3>
 		<p>Aqui você pode acompanhar a solicitação do seu L'BEL Card.</p>
-		<p>Analisaremos seus dados e encomendaremos a fabricação do seu cartão.  Se encontramos algum problema com as suas informações pessoais, você poderá corrigí-las e tentar novamente.</p>
+		<p>Analisaremos seus dados e encomendaremos a fabricação do seu cartão.  Se encontramos algum problema com as
+		suas informações pessoais, você poderá corrigí-las e tentar novamente.</p>
 		<p>Esse processo pode levar alguns minutos, mas não se preocupe: essa página se atualiza automaticamente.</p>
 	</div>
 </div>
 
 <div class="ui vertical segment">
-    <div class="ui text container">
-        <div class="ui four stackable steps">
-            <div class="step (:compare(card,AwaitingBearerData).trim():)">
-                <i class="(:icon(card,AwaitingBearerData).trim():) icon"></i>
-                <div class="content">
-                    <div class="title">Dados</div>
-                    
-                </div>
-            </div>
+	<div class="ui text container">
+		<div class="ui four stackable steps">
+			<div class="step (:compare(card,AwaitingBearerData).trim():)">
+				<i class="(:icon(card,AwaitingBearerData).trim():) icon"></i>
+				<div class="content">
+					<div class="title">Dados</div>
 
-            <div class="step (:compare(card,AwaitingBearerConfirmation).trim():)">
-                <i class="(:icon(card,AwaitingBearerConfirmation).trim():) icon"></i>
-                <div class="content">
-                    <div class="title">Confirmação</div>
-                    
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="step (:compare(card, AcessoCard(null)).trim():) negative">
-                <i class="(:icon(card,AcessoCard(null)).trim():) icon"></i>
-                <div class="content">
-                    <div class='title'>Análise</div>
-                    
-                </div>
-            </div>
+			<div class="step (:compare(card,AwaitingBearerConfirmation).trim():)">
+				<i class="(:icon(card,AwaitingBearerConfirmation).trim():) icon"></i>
+				<div class="content">
+					<div class="title">Confirmação</div>
 
-            <div class="step (:compare(card, CardRequested).trim():)">
-                <i class="(:icon(card,CardRequested).trim():) icon"></i>
-                <div class="content">
-                <div class="title">Concluído</div>
-                
-                </div>
-            </div>
-        </div>
-    </div>
-</div>    
+				</div>
+			</div>
 
-    (: if err != null && (err.match(AcessoUserOrDataError(_) | AcessoPermanentError(_) | SendGridError(_))) :)
-        
-        <div class="ui vertical segment">
-            <div class="ui text container">
-                <div class="ui red message">
-                    <div class="header">Não foi possível solicitar seu cartão</div>
-                    (: switch card :)
-                        (: case Failed(AcessoUserOrDataError(res), _) :)
-                            <p>Erro validando seus dados:</p>
-                            (: if res.FieldErrors != null && res.FieldErrors.length > 0 :)
-                                <ul>
-                                (: for r in res.FieldErrors :)
-                                    <li>(:translate(r.Message):)</li>
-                                (: end :)
-                                </ul>
-                            (:else:)
-                            <p>(:translate(res.Message):)</p>
-                            (:end:)
-														<p>Você pode tentar novamente.</p>
-												(: case Failed(AcessoPermanentError({ ResultCode:82, Message:"Erro_tipo_cliente_nao_permitido" }), AcessoCard(SolicitarAdesaoCliente)) :)
-														<p>Infelizmente ainda não conseguimos emitir cartões para estrangeiros.</p>
-														<p>Se você também possui nacionalidade brasileira, você pode tentar novamente com ela.</p>
-                        (: case other :)
-														<p>Você pode tentar novamente or voltar a esta página mais tarde.</p>
-                    (: end :)
-                </div>
-            </div>
-        </div>
-    (:else:) (:end:)
+			<div class="step (:compare(card, AcessoCard(null)).trim():) negative">
+				<i class="(:icon(card,AcessoCard(null)).trim():) icon"></i>
+				<div class="content">
+					<div class='title'>Análise</div>
+
+				</div>
+			</div>
+
+			<div class="step (:compare(card, CardRequested).trim():)">
+				<i class="(:icon(card,CardRequested).trim():) icon"></i>
+				<div class="content">
+				<div class="title">Concluído</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	(: if err != null && (err.match(AcessoUserOrDataError(_) | AcessoPermanentError(_) | SendGridError(_))) :)
+
+		<div class="ui vertical segment">
+			<div class="ui text container">
+				<div class="ui red message">
+					<div class="header">Não foi possível solicitar seu cartão</div>
+					(: switch card :)
+						(: case Failed(AcessoUserOrDataError(res), _) :)
+							<p>Erro validando seus dados:</p>
+							(: if res.FieldErrors != null && res.FieldErrors.length > 0 :)
+								<ul>
+								(: for r in res.FieldErrors :)
+									<li>(:translate(r.Message):)</li>
+								(: end :)
+								</ul>
+							(:else:)
+							<p>(:translate(res.Message):)</p>
+							(:end:)
+							<p>Você pode tentar novamente.</p>
+						(: case Failed(AcessoPermanentError({ ResultCode:82, Message:"Erro_tipo_cliente_nao_permitido" }), AcessoCard(SolicitarAdesaoCliente)) :)
+							<p>Infelizmente ainda não conseguimos emitir cartões para estrangeiros.</p>
+							<p>Se você também possui nacionalidade brasileira, você pode tentar novamente com ela.</p>
+						(: case other :)
+							<p>Você pode tentar novamente or voltar a esta página mais tarde.</p>
+					(: end :)
+				</div>
+			</div>
+		</div>
+	(:else:) (:end:)
 
 (:end:)
 
 (: static function compare(cur : CardRequestState, baseline : CardRequestState) :)
-    
-    (: switch(cur) :)
-    (: case Failed(err,s) :)
-        (: do cur = s :)
-    (: case v :)
-    (:end:)
 
-    (: do var curIndex = Type.enumIndex(cur) :)
-    (: do var baseIndex = Type.enumIndex(baseline) :)
+	(: switch(cur) :)
+		(: case Failed(err,s) :)
+			(: do cur = s :)
+		(: case v :)
+	(:end:)
 
-    (: if (curIndex > baseIndex || curIndex == Type.enumIndex(CardRequestState.CardRequested)) :)
-        completed
-    (: else if (curIndex == baseIndex) :)
-        active
-    (: else if (curIndex < baseIndex) :)
-        disabled
-    (:else:) (:end:)
+	(: do var curIndex = Type.enumIndex(cur) :)
+	(: do var baseIndex = Type.enumIndex(baseline) :)
+
+	(: if (curIndex > baseIndex || curIndex == Type.enumIndex(CardRequestState.CardRequested)) :)
+		completed
+	(: else if (curIndex == baseIndex) :)
+		active
+	(: else if (curIndex < baseIndex) :)
+		disabled
+	(:else:) (:end:)
 (:end:)
 
 (: static function icon(cur : CardRequestState, baseline : CardRequestState) :)
-    (: do var isErr = false :)
-    (: switch(cur) :)
-    (: case Failed(err,s) :)
-        (: if err.match(AcessoPermanentError(_) | AcessoUserOrDataError(_) | SendGridError(_)) :)
-            (: do isErr = true :)
-        (:end:)
-        (: do cur = s :)
-    (: case v :)
-    (:end:)
+	(: do var isErr = false :)
+	(: switch(cur) :)
+		(: case Failed(err,s) :)
+			(: if err.match(AcessoPermanentError(_) | AcessoUserOrDataError(_) | SendGridError(_)) :)
+				(: do isErr = true :)
+			(:end:)
+			(: do cur = s :)
+		(: case v :)
+	(:end:)
 
-    (: if isErr && baseline != CardRequested :)
-        red remove
-    (: else :)
-        (: switch baseline :)
-            (: case AwaitingBearerData :)
-                add user
-            (: case AwaitingBearerConfirmation :)
-                info circle
-            (: case AcessoCard(_) :)
-                zoom in
-            (: case CardRequested if(!isErr) :)
-                checkmark
-            (: case CardRequested if(isErr) :)
-                remove
-            (: case CardRequested :)
-            (: case Failed(_),SendEmail:)
-        (:end:)
-    (:end:)
+	(: if isErr && baseline != CardRequested :)
+		red remove
+	(: else :)
+		(: switch baseline :)
+			(: case AwaitingBearerData :)
+				add user
+			(: case AwaitingBearerConfirmation :)
+				info circle
+			(: case AcessoCard(_) :)
+				zoom in
+			(: case CardRequested if(!isErr) :)
+				checkmark
+			(: case CardRequested if(isErr) :)
+				remove
+			(: case CardRequested :)
+			(: case Failed(_),SendEmail:)
+		(:end:)
+	(:end:)
 
 
 (:end:)
 
 (:static function translate(message:String):)
 	(:switch message:)
-  (:case "O tamanho do campo deve ser entre 1 e 5":)
-    O número do endereço deve ter entre 1 e 5 caracteres
-	(:case other:)
-		(:other:)
+		(:case "O tamanho do campo deve ser entre 1 e 5":)
+			O número do endereço deve ter entre 1 e 5 caracteres
+		(:case other:)
+			(:other:)
 	(:end:)
 (:end:)
 

@@ -1,65 +1,65 @@
 (: static function render (name : String, email : String, url : String) :)
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-    <body style="font-family: sans-serif; color: #666;">
-        <table style="width:600px;" align="center">
-            <tbody>
-                <tr style="height:45px;width:600px;background-color:rgb(75, 46, 104)">
-                    <td>
-                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:15px;margin-left:15px;">
-                    </td>
-                </tr>
-                <tr>
-                    <table style="width:540px" align="center">
-                        <tbody>
-                            <tr>
-                                <td style="padding-top:32px;font-size:15px">
-                                    Olá (:name:),
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:20px;font-size:15px;">
-                                    Recebemos o pedido de seu L'BEL Card!
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:15px;font-size:15px">
-                                    Parabéns!  O L'BEL Card é mais uma opção para você receber suas 
-                                    bonificações e facilitar a administração dos seus negócios!
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:15px;font-size:15px">
-                                    Obrigado!
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td style="padding-top:15px;padding-bottom:20px;font-size:15px">
-                                    Clique <a href="(:url:)">aqui</a> para acompanhar sua solicitação!
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </tr>
-            </tbody>
-        </table>
-        <table width="600px" align="center" cellspacing="0">
-            <tbody style="margin-top:50px;background-color:rgb(75, 46, 104);color:#FFFFFF;padding:0px;border:none;margin:0px;">
-                <tr style="height:75px;">
-                    <td style="width:92px">
-                        <img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:30px;margin-left:15px;">
-                    </td>
-                    <td style="font-size:10px;"> 
-                        <a href="http://lbel.com.br/contato/" style="color:#FFFFFF;margin-left:10px;">BELCORP</a>
-                        <br>
-                        <a href="tel:08007788992" style="color:#FFFFFF;margin-left:10px;">SAC 0800 77 88 99 2</a>
-                        <br>
-                        <a href="mailto:sac.belcorp@belcorp.biz" style="color:#FFFFFF;margin-left:10px;">sac.belcorp@belcorp.biz</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </body>
+	<body style="font-family: sans-serif; color: #666;">
+		<table style="width:600px;" align="center">
+			<tbody>
+				<tr style="height:45px;width:600px;background-color:rgb(75, 46, 104)">
+					<td>
+						<img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:15px;margin-left:15px;">
+					</td>
+				</tr>
+				<tr>
+					<table style="width:540px" align="center">
+						<tbody>
+							<tr>
+								<td style="padding-top:32px;font-size:15px">
+									Olá (:name:),
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-top:20px;font-size:15px;">
+									Recebemos o pedido de seu L'BEL Card!
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-top:15px;font-size:15px">
+									Parabéns!  O L'BEL Card é mais uma opção para você receber suas bonificações e
+									facilitar a administração dos seus negócios!
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-top:15px;font-size:15px">
+									Obrigado!
+								</td>
+							</tr>
+
+							<tr>
+								<td style="padding-top:15px;padding-bottom:20px;font-size:15px">
+									Clique <a href="(:url:)">aqui</a> para acompanhar sua solicitação!
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</tr>
+			</tbody>
+		</table>
+		<table width="600px" align="center" cellspacing="0">
+			<tbody style="margin-top:50px;background-color:rgb(75, 46, 104);color:#FFFFFF;padding:0px;border:none;margin:0px;">
+				<tr style="height:75px;">
+					<td style="width:92px">
+						<img src="https://lbelcard.com.br/img/lbel_img_logo_branco.png" style="height:30px;margin-left:15px;">
+					</td>
+					<td style="font-size:10px;">
+						<a href="http://lbel.com.br/contato/" style="color:#FFFFFF;margin-left:10px;">BELCORP</a>
+						<br>
+						<a href="tel:08007788992" style="color:#FFFFFF;margin-left:10px;">SAC 0800 77 88 99 2</a>
+						<br>
+						<a href="mailto:sac.belcorp@belcorp.biz" style="color:#FFFFFF;margin-left:10px;">sac.belcorp@belcorp.biz</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
 </html>
 (:end:)

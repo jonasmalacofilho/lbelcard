@@ -1,44 +1,43 @@
 (: static function UF(?selected : String) :)
-<!-- TODO: Set selected val -->
 <select name="UFOrgao" id="ufemissor" class="ui fluid dropdown search">
-    <option value="AC" (:if selected == "AC":)selected(:end:)>Acre</option>
-    <option value="AL" (:if selected == "AL":)selected(:end:)>Alagoas</option>
-    <option value="AM" (:if selected == "AM":)selected(:end:)>Amazonas</option>
-    <option value="AP" (:if selected == "AP":)selected(:end:)>Amapá</option>
-    <option value="BA" (:if selected == "BA":)selected(:end:)>Bahia</option>
-    <option value="CE" (:if selected == "CE":)selected(:end:)>Ceará</option>
-    <option value="DF" (:if selected == "DF":)selected(:end:)>Distrito Federal</option>
-    <option value="ES" (:if selected == "ES":)selected(:end:)>Espírito Santo</option>
-    <option value="MA" (:if selected == "MA":)selected(:end:)>Maranhão</option>
-    <option value="MG" (:if selected == "MG":)selected(:end:)>Minas Gerais</option>
-    <option value="MS" (:if selected == "MS":)selected(:end:)>Mato Grosso do Sul</option>
-    <option value="MT" (:if selected == "MT":)selected(:end:)>Mato Grosso</option>
-    <option value="PA" (:if selected == "PA":)selected(:end:)>Pará</option>
-    <option value="PE" (:if selected == "PE":)selected(:end:)>Pernambuco</option>
-    <option value="PI" (:if selected == "PI":)selected(:end:)>Piauí</option>
-    <option value="PR" (:if selected == "PR":)selected(:end:)>Paraná</option>
-    <option value="RJ" (:if selected == "RJ":)selected(:end:)>Rio de Janeiro</option>
-    <option value="RN" (:if selected == "RN":)selected(:end:)>Rio Grande do Norte</option>
-    <option value="RO" (:if selected == "RO":)selected(:end:)>Rondônia</option>
-    <option value="RR" (:if selected == "RR":)selected(:end:)>Roraima</option>
-    <option value="RS" (:if selected == "RS":)selected(:end:)>Rio Grande do Sul</option>
-    <option value="SC" (:if selected == "SC":)selected(:end:)>Santa Catarina</option>
-    <option value="SE" (:if selected == "SE":)selected(:end:)>Sergipe</option>
-    <option value="SP" (:if selected == "SP":)selected(:end:)>São Paulo</option>
-    <option value="TO" (:if selected == "TO":)selected(:end:)>Tocantins</option>
-    <option value='GO' (:if selected == "GO":)selected(:end:)>Goiás</option>
-    <option value='PB' (:if selected == "PB":)selected(:end:)>Paraíba</option>
+	<option value="AC" (:if selected == "AC":)selected(:end:)>Acre</option>
+	<option value="AL" (:if selected == "AL":)selected(:end:)>Alagoas</option>
+	<option value="AM" (:if selected == "AM":)selected(:end:)>Amazonas</option>
+	<option value="AP" (:if selected == "AP":)selected(:end:)>Amapá</option>
+	<option value="BA" (:if selected == "BA":)selected(:end:)>Bahia</option>
+	<option value="CE" (:if selected == "CE":)selected(:end:)>Ceará</option>
+	<option value="DF" (:if selected == "DF":)selected(:end:)>Distrito Federal</option>
+	<option value="ES" (:if selected == "ES":)selected(:end:)>Espírito Santo</option>
+	<option value="MA" (:if selected == "MA":)selected(:end:)>Maranhão</option>
+	<option value="MG" (:if selected == "MG":)selected(:end:)>Minas Gerais</option>
+	<option value="MS" (:if selected == "MS":)selected(:end:)>Mato Grosso do Sul</option>
+	<option value="MT" (:if selected == "MT":)selected(:end:)>Mato Grosso</option>
+	<option value="PA" (:if selected == "PA":)selected(:end:)>Pará</option>
+	<option value="PE" (:if selected == "PE":)selected(:end:)>Pernambuco</option>
+	<option value="PI" (:if selected == "PI":)selected(:end:)>Piauí</option>
+	<option value="PR" (:if selected == "PR":)selected(:end:)>Paraná</option>
+	<option value="RJ" (:if selected == "RJ":)selected(:end:)>Rio de Janeiro</option>
+	<option value="RN" (:if selected == "RN":)selected(:end:)>Rio Grande do Norte</option>
+	<option value="RO" (:if selected == "RO":)selected(:end:)>Rondônia</option>
+	<option value="RR" (:if selected == "RR":)selected(:end:)>Roraima</option>
+	<option value="RS" (:if selected == "RS":)selected(:end:)>Rio Grande do Sul</option>
+	<option value="SC" (:if selected == "SC":)selected(:end:)>Santa Catarina</option>
+	<option value="SE" (:if selected == "SE":)selected(:end:)>Sergipe</option>
+	<option value="SP" (:if selected == "SP":)selected(:end:)>São Paulo</option>
+	<option value="TO" (:if selected == "TO":)selected(:end:)>Tocantins</option>
+	<option value='GO' (:if selected == "GO":)selected(:end:)>Goiás</option>
+	<option value='PB' (:if selected == "PB":)selected(:end:)>Paraíba</option>
 </select>
 (: end :)
 
 (: static function message(msg : String):)
-    <div class="ui vertical segment">
-        <div class="ui container text negative message">
-            <i class="close icon"></i>
-            <div class="header">
-                Erro:
-            </div>
-            <p>(:msg:)</p>
-        </div>
-    </div>
+	<div class="ui vertical segment">
+		<div class="ui container text negative message">
+			<i class="close icon"></i>
+			<div class="header">
+				Erro:
+			</div>
+			<p>(:msg:)</p>
+		</div>
+	</div>
 (:end:)

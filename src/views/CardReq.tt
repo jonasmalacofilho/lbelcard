@@ -3,225 +3,227 @@
 <!-- JQuery Mask -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
 <script>
-    js.CardReq.init();
+	js.CardReq.init();
 </script>
 <div class="ui text container">
 
 <h3 class="ui dividing header">Cadastro</h3>
-<p>O primeiro passo para solicitar o seu cartão é o cadastramento
-                            de informações para que possamos identificar e 
-                               entrar em contato com você.
-                               </p><p>
-                               Por favor preencha todos os campos das fichas abaixo e clique em 
-                               "Prosseguir" quando terminar, você poderá confirmar as informações 
-                               ainda antes do envio. </p>
+
+<p>
+	O primeiro passo para solicitar o seu cartão é o cadastramento de informações para que possamos identificar e entrar
+	em contato com você.
+</p>
+<p>
+	Por favor preencha todos os campos das fichas abaixo e clique em "Prosseguir" quando terminar, você poderá confirmar
+	as informações ainda antes do envio.
+</p>
 
 <form method="POST" action="/novo/dados" class="ui form error">
 
-    <div class="ui segment">
-        <h3 class="ui dividing header">Identificação</h3>
+	<div class="ui segment">
+		<h3 class="ui dividing header">Identificação</h3>
 
-            <!-- Full name -->
-            <div class="field">
-                <label>nome completo</label>
-                <input type="text" name="NomeCompleto" autocomplete="name" placeholder="Nome Completo" maxlength="100" required autofocus/>
-            </div>
+			<!-- Full name -->
+			<div class="field">
+				<label>nome completo</label>
+				<input type="text" name="NomeCompleto" autocomplete="name" placeholder="Nome Completo" maxlength="100" required autofocus/>
+			</div>
 
-            <div class="two fields">
-                <!-- Sex -->
-                <div class="field">
-                    <label>sexo</label>
-                    <select name="TpSexo">
-                        <option value="0">não informado</option>
-                        <option value="1">masculino</option>
-                        <option value="2">feminino</option>
-                    </select>
-                </div>
+			<div class="two fields">
+				<!-- Sex -->
+				<div class="field">
+					<label>sexo</label>
+					<select name="TpSexo">
+						<option value="0">não informado</option>
+						<option value="1">masculino</option>
+						<option value="2">feminino</option>
+					</select>
+				</div>
 
-                <!-- Birth date -->
-                <div class="field">
-                    <label>data de nascimento</label>
-                    <div class="ui calendar">
-                        <div class="ui input left icon">
-                            <i class="time icon"></i>
-                            <input type="text" name="DtNascimento" autocomplete="lbelcard-birthday" id='DtNascimento'>
-                        </div>
-                    </div>
-                </div>
-            </div>
+				<!-- Birth date -->
+				<div class="field">
+					<label>data de nascimento</label>
+					<div class="ui calendar">
+						<div class="ui input left icon">
+							<i class="time icon"></i>
+							<input type="text" name="DtNascimento" autocomplete="lbelcard-birthday" id='DtNascimento'>
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <!-- Mom's name -->
-            <div class="field">
-                <label>nome completo de sua mãe</label>
-                <input type="text" name="NomeMae" autocomplete="lbelcard-mother-name" placeholder="Nome da mãe" maxlength="100" required/>
-            </div>
-    </div>
+			<!-- Mom's name -->
+			<div class="field">
+				<label>nome completo de sua mãe</label>
+				<input type="text" name="NomeMae" autocomplete="lbelcard-mother-name" placeholder="Nome da mãe" maxlength="100" required/>
+			</div>
+	</div>
 
-    <div class="ui segment">
-        <h3 class="ui dividing header">Telefone e endereço</h3>
+	<div class="ui segment">
+		<h3 class="ui dividing header">Telefone e endereço</h3>
 
-         <h4 class="ui">telefone celular</h4>
+		<h4 class="ui">telefone celular</h4>
 
-        <!-- Phone info -->
-        <div class="fields">
+		<!-- Phone info -->
+		<div class="fields">
 
 
-            (:*<div class="three two field wide">
-                <label>DDI</label>*:)
-                <input type="hidden" name="DDI" value="55" maxlength="3" readonly/>
-            (:*</div>*:)
-            <div class="two field wide">
-                <label>DDD</label>
-                <input type="number" name="DDD" autocomplete="tel-area-code" placeholder="XX" maxlength="2"/>
-            </div>
+			(:*<div class="three two field wide">
+				<label>DDI</label>*:)
+				<input type="hidden" name="DDI" value="55" maxlength="3" readonly/>
+			(:*</div>*:)
+			<div class="two field wide">
+				<label>DDD</label>
+				<input type="number" name="DDD" autocomplete="tel-area-code" placeholder="XX" maxlength="2"/>
+			</div>
 
-            <div class="six field wide">
-                <label>número</label>
-                <input type="text" name="NumeroTel" autocomplete="tel-local" placeholder="XXXXX-XXXX" maxlength="11" id="cel"/>
-            </div>
+			<div class="six field wide">
+				<label>número</label>
+				<input type="text" name="NumeroTel" autocomplete="tel-local" placeholder="XXXXX-XXXX" maxlength="11" id="cel"/>
+			</div>
 
-            <input type='hidden' name='TpTelefone' value='0' readonly/>
+			<input type='hidden' name='TpTelefone' value='0' readonly/>
 
-        </div>
+		</div>
 
-        <h4 class="ui">Endereço</h4>
+		<h4 class="ui">Endereço</h4>
 
-        <div class='ui dimmer' id="loader">
-            <div class='ui centered text loader'>Carregando seu Endereço</div>
-        </div>
+		<div class='ui dimmer' id="loader">
+			<div class='ui centered text loader'>Carregando seu Endereço</div>
+		</div>
 
-        <div class="fields">
-            <div class="eight wide field">
-                <label>CEP</label>
-                <input type="text" name="CEP" autocomplete="postal-code" id="CEP" maxlength="8" placeholder="XXXXX-XXX" title="Preencha este campo primeiro para autocompletar as informações">
-            </div>
+		<div class="fields">
+			<div class="eight wide field">
+				<label>CEP</label>
+				<input type="text" name="CEP" autocomplete="postal-code" id="CEP" maxlength="8" placeholder="XXXXX-XXX" title="Preencha este campo primeiro para autocompletar as informações">
+			</div>
 
-            <div class="eight wide field">
-                <label>tipo de endereço</label>
-                <select name="TpEndereco">
-                    <option value="0">Residencial</option>
-                    <option value="1">Comercial</option>
-                    <option value="2">Outros</option>
-                </select>
-            </div>
-        </div>
+			<div class="eight wide field">
+				<label>tipo de endereço</label>
+				<select name="TpEndereco">
+					<option value="0">Residencial</option>
+					<option value="1">Comercial</option>
+					<option value="2">Outros</option>
+				</select>
+			</div>
+		</div>
 
-        <div class="fields">
-            <div class="ten wide field">
-                <label>logradouro (rua, praça, etc.)</label>
-                <input type="text" name="Logradouro" autocomplete="lbelcard-logradouro" id="logradouro"/>
-            </div>
+		<div class="fields">
+			<div class="ten wide field">
+				<label>logradouro (rua, praça, etc.)</label>
+				<input type="text" name="Logradouro" autocomplete="lbelcard-logradouro" id="logradouro"/>
+			</div>
 
-            <div class="two wide field">
-                <label>número</label>
-                <input type="text" name="NumeroEnd" autocomplete="lbelcard-logradouro-numero" maxlength="10" />
-            </div>
+			<div class="two wide field">
+				<label>número</label>
+				<input type="text" name="NumeroEnd" autocomplete="lbelcard-logradouro-numero" maxlength="10" />
+			</div>
 
-            <div class="four wide field">
-                <label>complemento</label>
-                <input type="text" name="Complemento" autocomplete="lbelcard-complemento" maxlength="20" />
-            </div>
+			<div class="four wide field">
+				<label>complemento</label>
+				<input type="text" name="Complemento" autocomplete="lbelcard-complemento" maxlength="20" />
+			</div>
 
-        </div>
+		</div>
 
-        <div class="fields">
-            <div class="seven wide field">
-                <label>bairro</label>
-                <input type="text" name="Bairro" autocomplete="lbelcard-neighborhood" id="bairro"/>
-            </div>
+		<div class="fields">
+			<div class="seven wide field">
+				<label>bairro</label>
+				<input type="text" name="Bairro" autocomplete="lbelcard-neighborhood" id="bairro"/>
+			</div>
 
-            <div class="seven wide field">
-                <label>cidade</label>
-                <input type="text" name="Cidade" id="cidade" readonly/>
-            </div>
+			<div class="seven wide field">
+				<label>cidade</label>
+				<input type="text" name="Cidade" id="cidade" readonly/>
+			</div>
 
-            <div class="two wide field">
-                <label>UF</label>
-                <input type="text" name="UF" id="uf" readonly/>
-            </div>
-        </div>
+			<div class="two wide field">
+				<label>UF</label>
+				<input type="text" name="UF" id="uf" readonly/>
+			</div>
+		</div>
 
-    </div>
+	</div>
 
-    <div class="ui segment">
+	<div class="ui segment">
 
-        <h3 class="ui dividing header">E-mail e documentos</h3>
-        <div class="fields">
-            <div class="eight wide field">
-                <label>e-mail</label>
-                <div class="ui input left icon">
-                    <i class="mail outline icon"></i>
-                    <input type="email" name="Email" autocomplete="email" placeholder="E-Mail" maxlength="125"/>
-                </div>
-            </div>
+		<h3 class="ui dividing header">E-mail e documentos</h3>
+		<div class="fields">
+			<div class="eight wide field">
+				<label>e-mail</label>
+				<div class="ui input left icon">
+					<i class="mail outline icon"></i>
+					<input type="email" name="Email" autocomplete="email" placeholder="E-Mail" maxlength="125"/>
+				</div>
+			</div>
 
-            <div class="eight wide field">
-                <label>CPF</label>
-                <input type="text" name="CodCliente" autocomplete="lbelcard-cpf" placeholder="XXX.XXX.XXX-XX" id="CPF">
-            </div>
+			<div class="eight wide field">
+				<label>CPF</label>
+				<input type="text" name="CodCliente" autocomplete="lbelcard-cpf" placeholder="XXX.XXX.XXX-XX" id="CPF">
+			</div>
 
-            <input type='hidden' name='TpCliente' value='0' readonly/>
-						(:*
-            <div class="five wide field">
-                <label>nacionalidade</label>
-                <select name="TpCliente">
-                    <option value="0">brasileira</option>
-                    <option value="2">estrangeira</option>
-                </select>
-            </div>
-						*:)
-        </div>
+			<input type='hidden' name='TpCliente' value='0' readonly/>
+			(:*
+			<div class="five wide field">
+				<label>nacionalidade</label>
+				<select name="TpCliente">
+					<option value="0">brasileira</option>
+					<option value="2">estrangeira</option>
+				</select>
+			</div>
+			*:)
+		</div>
 
-        <!-- Begin that nasty document (RG) block! -->
-        <h4 class="ui">documento de identificação</h4>
-        
-        <div class="two fields">
-            <div class="field">
-                <label>número</label>
-                <input type="text" name="NumDocumento" autocomplete="lbelcard-document"/>
-            </div>
+		<!-- Begin that nasty document (RG) block! -->
+		<h4 class="ui">documento de identificação</h4>
 
-            <div class="field">
-                <label>data de emissão</label>
-                <div class="ui calendar">
-                <div class="ui input left icon">
-                    <i class="time icon"></i>
-                    <input type="text" name="DtExpedicao" autocomplete="lbelcard-document-date" id="DtExpedicao">
-                </div>
-                </div>
-            </div>
-        </div>
+		<div class="two fields">
+			<div class="field">
+				<label>número</label>
+				<input type="text" name="NumDocumento" autocomplete="lbelcard-document"/>
+			</div>
 
-        <div class="fields">
-            <!-- DOC TYPE (RG;RNE;Pass) -->
-            <div class="four wide field">
-                <label>tipo</label>
-                <select name="TpDocumento" id="tpdoc" class="ui fluid dropdown search">
-                    <option value="0">RG</option>
-                    <option value="1">RNE</option>
-                    <option value="2">Passaporte</option>
-                </select>
-            </div>
+			<div class="field">
+				<label>data de emissão</label>
+				<div class="ui calendar">
+				<div class="ui input left icon">
+					<i class="time icon"></i>
+					<input type="text" name="DtExpedicao" autocomplete="lbelcard-document-date" id="DtExpedicao">
+				</div>
+				</div>
+			</div>
+		</div>
 
-            <div class="four wide field">
-                <label>órgão emissor</label>
-                <input type="text" name="OrgaoExpedidor" autocomplete="lbelcard-document-agency" placeholder="" maxlength="20" id="docnum"/>
-            </div>
+		<div class="fields">
+			<!-- DOC TYPE (RG;RNE;Pass) -->
+			<div class="four wide field">
+				<label>tipo</label>
+				<select name="TpDocumento" id="tpdoc" class="ui fluid dropdown search">
+					<option value="0">RG</option>
+					<option value="1">RNE</option>
+					<option value="2">Passaporte</option>
+				</select>
+			</div>
 
-            <div class="four wide field">
-                <label for="UFOrgao">estado emissor</label>
-                    (: views.Components.UF() :)
-            </div>
+			<div class="four wide field">
+				<label>órgão emissor</label>
+				<input type="text" name="OrgaoExpedidor" autocomplete="lbelcard-document-agency" placeholder="" maxlength="20" id="docnum"/>
+			</div>
 
-            <div class="four wide field">
-                <label>país emissor</label>
-                <input type="text" name="PaisOrgao" autocomplete="lbelcard-document-country" value="Brasil" maxlength="30"/>
-            </div>
-        </div>
+			<div class="four wide field">
+				<label for="UFOrgao">estado emissor</label>
+					(: views.Components.UF() :)
+			</div>
 
-        <button class="ui button fundo3 inverted fluid">Prosseguir</button>
+			<div class="four wide field">
+				<label>país emissor</label>
+				<input type="text" name="PaisOrgao" autocomplete="lbelcard-document-country" value="Brasil" maxlength="30"/>
+			</div>
+		</div>
 
-    </div>
+		<button class="ui button fundo3 inverted fluid">Prosseguir</button>
+
+	</div>
 </form>
 
 </div>

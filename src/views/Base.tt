@@ -1,184 +1,182 @@
 (: static function render(title : String, content : Void-> tink.template.Html, ?message : String) :)
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
+	<head>
+		<meta charset="utf-8" />
 
-        <!-- Design stuff -->
+		<!-- Design stuff -->
 
-         <!-- Standard Meta -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-        <!-- Site Properties -->
-        <title>(:title:) - L'BEL Card</title>
+		<!-- Standard Meta -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<!-- Site Properties -->
+		<title>(:title:) - L'BEL Card</title>
 
-        <!--jquery-->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+		<!--jquery-->
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-        <!--semantic-ui-->
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
-        <!-- TODO: GA, google-analitics-->
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		<!--semantic-ui-->
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+		<!-- TODO: GA, google-analitics-->
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-77667300-12', 'auto');
-            ga('send', 'pageview');
-        </script>
+			ga('create', 'UA-77667300-12', 'auto');
+			ga('send', 'pageview');
+		</script>
 
-        <script src='/haxe.js'></script>
+		<script src='/haxe.js'></script>
 
-        <!--top bar color-->
-        <meta name="theme-color" content="#ffffff">
+		<!--top bar color-->
+		<meta name="theme-color" content="#ffffff">
 
-        <!--favicon -->
-        <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192"  href="/img/favicon/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-        <link rel="manifest" href="/img/favicon/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
+		<!--favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="/img/favicon/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+		<link rel="manifest" href="/img/favicon/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
 
-        <link rel="stylesheet" type="text/css" href="/custom.css">
-				<!--preload the otf fonts actually used-->
-				<link rel="preload" href="/font/Polaris-Book.otf" as="font">
-				<link rel="preload" href="/font/CaeciliaLTPro-75Bold.otf" as="font">
+		<link rel="stylesheet" type="text/css" href="/custom.css">
+		<!--preload the otf fonts actually used-->
+		<link rel="preload" href="/font/Polaris-Book.otf" as="font">
+		<link rel="preload" href="/font/CaeciliaLTPro-75Bold.otf" as="font">
 
-        <script>
-        $(document)
-            .ready(function() {
+		<script>
+		$(document)
+			.ready(function() {
 
-            // fix menu when passed
-            $('#inicio')
-                .visibility({
-                once: false,
-                onBottomPassed: function() {
-                    $('.fixed.menu').transition('fade in');
-                },
-                onBottomPassedReverse: function() {
-                    $('.fixed.menu').transition('fade out');
-                }
-                });
+			// fix menu when passed
+			$('#inicio')
+				.visibility({
+				once: false,
+				onBottomPassed: function() {
+					$('.fixed.menu').transition('fade in');
+				},
+				onBottomPassedReverse: function() {
+					$('.fixed.menu').transition('fade out');
+				}
+				});
 
-            // create sidebar and attach to menu open
-            $('.ui.sidebar')
-                .sidebar('setting', {transition: 'overlay'})
-                .sidebar('setting', {mobileTransition: 'overlay'})
-                .sidebar('attach events', '.toc.item');
+			// create sidebar and attach to menu open
+			$('.ui.sidebar')
+				.sidebar('setting', {transition: 'overlay'})
+				.sidebar('setting', {mobileTransition: 'overlay'})
+				.sidebar('attach events', '.toc.item');
 
-            $('.message .close').on('click', function() 
-            {
-                $(this).closest('.message').transition('fade');
-            });
+			$('.message .close').on('click', function()
+			{
+				$(this).closest('.message').transition('fade');
+			});
 
-            });
+			});
 
-        </script>
+		</script>
 
-				<!--prefetch (!=preload) the recaptcha fetcher-->
-				(:if ~/o cartão de negócios do consultor/i.match(title):)
-					(:*only do this for /index (with hack)*:)
-					<link rel="preload" href="https://www.google.com/recaptcha/api.js" as="script">
-				(:end:)
-    </head>
-    <body>
-        <!-- Following Menu -->
-        <div class="ui borderless massive top fixed hidden menu inverted fundo3">
-            <div class="ui container">
-                <a class="toc item">
-                    <i class="sidebar icon"></i>
-                </a>
-                (:views.Menu.render(true):)
-                <div class="right item">
-                    <img src="/img/lbel_img_logo_branco.png"  style="height: 20px; width: 96px" />
-                </div>
-            </div>
-        </div>
-            
-        <!-- Sidebar Menu -->
-        <div class="ui vertical sidebar menu">
-            (:views.Menu.render(false):)
-        </div>
+		<!--prefetch (!=preload) the recaptcha fetcher-->
+		(:if ~/o cartão de negócios do consultor/i.match(title):)
+		(:*only do this for /index (with hack)*:)
+		<link rel="preload" href="https://www.google.com/recaptcha/api.js" as="script">
+		(:end:)
+	</head>
+	<body>
+		<!-- Following Menu -->
+		<div class="ui borderless massive top fixed hidden menu inverted fundo3">
+			<div class="ui container">
+				<a class="toc item">
+					<i class="sidebar icon"></i>
+				</a>
+				(:views.Menu.render(true):)
+				<div class="right item">
+					<img src="/img/lbel_img_logo_branco.png"  style="height: 20px; width: 96px" />
+				</div>
+			</div>
+		</div>
 
-        <!-- Content -->    
-        <div class="pusher" style="display: flex; min-height: 100vh; flex-direction: column;">
-            
-            <!-- Sidebar -->
-            <div class="ui vertical center aligned segment">
-                <div class="ui container" id="inicio">
-                    <div class="ui massive secondary menu">
-                        <a class="toc item">
-                        <i class="sidebar icon"></i>
-                        </a>
-                        (:views.Menu.render(true):)
-                        <div class="right item">
-                            <img src="/img/lbel_img_logo_254.png" style="height: 20px; width: 96px" />
-                        </div>
-                    </div> <!--secondary menu-->
-                </div>
-            </div>
+		<!-- Sidebar Menu -->
+		<div class="ui vertical sidebar menu">
+			(:views.Menu.render(false):)
+		</div>
+
+		<!-- Content -->
+		<div class="pusher" style="display: flex; min-height: 100vh; flex-direction: column;">
+
+			<!-- Sidebar -->
+			<div class="ui vertical center aligned segment">
+				<div class="ui container" id="inicio">
+					<div class="ui massive secondary menu">
+						<a class="toc item">
+						<i class="sidebar icon"></i>
+						</a>
+						(:views.Menu.render(true):)
+						<div class="right item">
+							<img src="/img/lbel_img_logo_254.png" style="height: 20px; width: 96px" />
+						</div>
+					</div> <!--secondary menu-->
+				</div>
+			</div>
 
 						<div style="flex:1; padding-bottom:40px">
-            (:if message != null && message.length > 0:)
-                (: views.Components.message(message) :)
-            (:end:)
-            
-            (:if content != null:)
-                (:content():)
-            (:end:)
+			(:if message != null && message.length > 0:)
+				(: views.Components.message(message) :)
+			(:end:)
+
+			(:if content != null:)
+				(:content():)
+			(:end:)
 						</div>
-            
 
-
-            <!-- Footer -->
-            <div class="ui vertical footer segment inverted fundo3">
-                <div class="ui container">
-                    <div class="ui stackable equal height stackable grid">
-                        <div class="five wide column center aligned">
-                            <h4 class="ui header fontgp2 inverted">Redes sociais</h4>
-                            <div class="ui link list fontgp2 inverted">
-                            <a href="https://twitter.com/lbelbrasil" class="item"><i class="world icon"></i>lbel.com.br</a>
-                            <a href="https://www.facebook.com/lbelevoce/" class="item"><i class="facebook icon"></i>/lbelevoce</a>
-                            <a href="https://www.youtube.com/user/lbelbrasil" class="item"><i class="youtube icon"></i>/lbelbrasil</a>
-                            <a href="https://instagram.com/lbelbrasil/" class="item"><i class="instagram icon"></i>/lbelbrasil</a>
-                            </div>
-                        </div>
-                        <div class="six wide column center aligned">
-                            <h4 class="ui header fontgp2 inverted">L'BEL Card</h4>
-                            <p class="fontgp2 inverted">O SEU CARTÃO DE NEGÓCIOS!</p>
-                        </div>
-                        <div class="five wide column center aligned">
-                            <h4 class="ui header fontgp2 inverted">SAC L'BEL </h4>
-                            <div class="ui link list fontgp2 inverted">
-                                <a href="tel:08007788992" class="item"><i class="phone icon"></i>0800-77-88-992 (ligação gratuíta)</a>
-                                <a href="tel:30045560" class="item"><i class="mobile icon"></i>3004-5560 (custo de ligação local)</a>
-                                <a href="mailto:sac.belcorp@belcorp.biz" class="item"><i class="mail outline icon"></i>sac.belcorp@belcorp.biz</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui container center aligned" style="margin-top:50px;">
-                    <h5>Copyright © 2017–2018 L'BEL</h5>
-                    <h6>
-                    <a style="color:#FFF;" href="http://protocubo.io" target="_blank">Desenvolvido pela Protocubo</a>
-                    </h6>
-                </div>
-            </div>
-        </div>
-    </body>
+			<!-- Footer -->
+			<div class="ui vertical footer segment inverted fundo3">
+				<div class="ui container">
+					<div class="ui stackable equal height stackable grid">
+						<div class="five wide column center aligned">
+							<h4 class="ui header fontgp2 inverted">Redes sociais</h4>
+							<div class="ui link list fontgp2 inverted">
+							<a href="https://twitter.com/lbelbrasil" class="item"><i class="world icon"></i>lbel.com.br</a>
+							<a href="https://www.facebook.com/lbelevoce/" class="item"><i class="facebook icon"></i>/lbelevoce</a>
+							<a href="https://www.youtube.com/user/lbelbrasil" class="item"><i class="youtube icon"></i>/lbelbrasil</a>
+							<a href="https://instagram.com/lbelbrasil/" class="item"><i class="instagram icon"></i>/lbelbrasil</a>
+							</div>
+						</div>
+						<div class="six wide column center aligned">
+							<h4 class="ui header fontgp2 inverted">L'BEL Card</h4>
+							<p class="fontgp2 inverted">O SEU CARTÃO DE NEGÓCIOS!</p>
+						</div>
+						<div class="five wide column center aligned">
+							<h4 class="ui header fontgp2 inverted">SAC L'BEL </h4>
+							<div class="ui link list fontgp2 inverted">
+								<a href="tel:08007788992" class="item"><i class="phone icon"></i>0800-77-88-992 (ligação gratuíta)</a>
+								<a href="tel:30045560" class="item"><i class="mobile icon"></i>3004-5560 (custo de ligação local)</a>
+								<a href="mailto:sac.belcorp@belcorp.biz" class="item"><i class="mail outline icon"></i>sac.belcorp@belcorp.biz</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui container center aligned" style="margin-top:50px;">
+					<h5>Copyright © 2017–2018 L'BEL</h5>
+					<h6>
+					<a style="color:#FFF;" href="http://protocubo.io" target="_blank">Desenvolvido pela Protocubo</a>
+					</h6>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
 (:end:)

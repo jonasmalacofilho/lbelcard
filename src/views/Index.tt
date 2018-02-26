@@ -1,135 +1,116 @@
 (: static function render() :)
-
-
-<!-- Holy wall of text -->
-
 <div class="ui container">
-    <div class="ui vertical stripe segment">
-        <img class="ui image fluid" src="img/meucartaolandscape9.jpg">		 
-    </div> <!--ui vertical stripe segment-->
+	<div class="ui vertical stripe segment">
+		<img class="ui image fluid" src="img/meucartaolandscape9.jpg">
+	</div> <!--ui vertical stripe segment-->
 </div>
 
 <div class="ui vertical stripe segment">
-    <div class="ui text container">
-        <p class="fontgp2">
-       
-        Um cartão de crédito pré-pago, oferecido com exclusividade
-        para os consultores L'BEL em mais uma iniciativa para 
-        apoiar ainda mais os seus negócios!
+	<div class="ui text container">
+		<p class="fontgp2">
+			Um cartão de crédito pré-pago, oferecido com exclusividade para os consultores L'BEL em mais uma iniciativa
+			para apoiar ainda mais os seus negócios!
+		</p>
 
-       </p>
+		<ul class="fontgp2">
+			<li>Único que tem a marca L'BEL</li>
+			<li>Mais uma opção para recebimento de suas bonificações</li>
+			<li>Aceito em todos os estabelecimentos credenciados na rede Mastercard</li>
+			<li>Cartão internacional</li>
+		</ul>
 
-       <ul class="fontgp2">
-           <li> Único que tem a marca L'BEL</li>
-           <li> Mais uma opção para recebimento de suas bonificações</li>
-           <li> Aceito em todos os estabelecimentos credenciados na rede Mastercard</li>
-           <li> Cartão internacional</li>
-      </ul>
-
-      <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
-          <a class="ui massive button fundo3 cor0" href="/novo">Peça já!<i class="right arrow icon"></i></a>
-      </div>
+		<div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
+			<a class="ui massive button fundo3 cor0" href="/novo">Peça já!<i class="right arrow icon"></i></a>
+		</div>
 </div> <!--ui vertical stripe segment-->
 
-
-    
 <div class="ui vertical stripe segment" id="detalhes">
-    <div class="ui container">
-        <div class="ui horizontal divider fontc3 cor3">
-        DETALHES
-        </div>
-    </div>
+	<div class="ui container">
+		<div class="ui horizontal divider fontc3 cor3">
+		DETALHES
+		</div>
+	</div>
 
-    <div class="ui container text">
-         
-     <img class="ui medium right floated image rounded" src="img/card-front.jpg">
-        <p class="fontgp2">
-        O cartão de crédito pré-pago é a forma de dispor
-        de um cartão de crédito sem comprovação de renda. 
-        Com ele, você dispõe de um  meio de pagamento
-        para as todas as situações onde um cartão de crédito
-        é necessário: seja em lojas, restaurantes, postos de
-        combustível ou serviços online.
-        </p>
-        <p class="fontgp2">
-        Além de receber sua bonificação pelo cartão, você pode recarregar o crédito (adicionar dinheiro) das seguintes formas formas:
-        </p>
-        <ul class="fontgp2">
-            <li> débito a partir conta corrente</li>
-            <li> depósito identificado</li>
-            <li> transferência bancária (DOC/TED)</li>
-            <li> gerando boletos bancários para você ou outras pessoas pagarem </li>
-            <li> caixas de supermercados:
-        Extra, Pão de Açúcar, Walmart e Lojas Americanas </li> 
-        </ul>
-        <p class="fontgp2">
-        Você gasta os créditos utilizando o cartão de crédito normalmente. Também pode sacar o dinheiro em caixas Banco24Horas e transferir o crédito para outro cartão.
-        </p> 
-        <img class="ui medium right floated image rounded" src="img/card-back.jpg">
-        <p class="fontgp2">
-        <span class="fontc3">Mas atenção,</span> você só pode gastar o que o que for carregado no cartão. Consulte o saldo e controle o movimento de depósitos e despesas através do extrato no website 
-        </p> 
-        <p class="fontgp2 cor2">
-        <a href="https://cliente.acessocard.com.br/belcorp">https://cliente.acessocard.com.br/belcorp</a>.
-        </p> 
-        <p class="fontgp2 cor2">
-        A Belcorp fez uma parceria com a Acessocard, para oferecer a emissão do L'BEL Card aos nossos consultores.
-        </p> 
-        <p class="fontc3">
-        Custos e tempo de entrega:
-        </p> 
-        <ul class="fontgp2">
-            <li>Custo do cartão de R$ 4,99 – debitado de sua próxima bonificação.</li>
-            <li>Custo de manutenção de R$5,00/mês caso haja crédito no seu cartão pré-pago – valor debitado do cartão. </li>
-            <li>Caso não haja crédito, não haverá cobrança de custo de manutenção.</li>
-            <li>Entrega feita em aproximadamente 10 dias úteis.</li>
-        </ul>
-      <div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
-          <a class="ui massive button fundo3 cor0" href="/novo">Peça seu L'BEL Card<i class="right arrow icon"></i></a>
-      </div>
-    </div>
+	<div class="ui container text">
+
+	<img class="ui medium right floated image rounded" src="img/card-front.jpg">
+		<p class="fontgp2">
+			O cartão de crédito pré-pago é a forma de dispor de um cartão de crédito sem comprovação de renda.  Com ele,
+			você dispõe de um	meio de pagamento para as todas as situações onde um cartão de crédito é necessário:
+			seja em lojas, restaurantes, postos de combustível ou serviços online.
+		</p>
+		<p class="fontgp2">
+			Além de receber sua bonificação pelo cartão, você pode recarregar o crédito (adicionar dinheiro) das
+			seguintes formas formas:
+		</p>
+		<ul class="fontgp2">
+			<li> débito a partir conta corrente</li>
+			<li> depósito identificado</li>
+			<li> transferência bancária (DOC/TED)</li>
+			<li> gerando boletos bancários para você ou outras pessoas pagarem</li>
+			<li> caixas de supermercados: Extra, Pão de Açúcar, Walmart e Lojas Americanas</li>
+		</ul>
+		<p class="fontgp2">
+			Você gasta os créditos utilizando o cartão de crédito normalmente.  Também pode sacar o dinheiro em caixas
+			Banco24Horas e transferir o crédito para outro cartão.
+		</p>
+		<img class="ui medium right floated image rounded" src="img/card-back.jpg">
+		<p class="fontgp2">
+			<span class="fontc3">Mas atenção,</span> você só pode gastar o que o que for carregado no cartão. Consulte o
+			saldo e controle o movimento de depósitos e despesas através do extrato no website
+		</p>
+		<p class="fontgp2 cor2">
+			<a href="https://cliente.acessocard.com.br/belcorp">https://cliente.acessocard.com.br/belcorp</a>.
+		</p>
+		<p class="fontgp2 cor2">
+			A Belcorp fez uma parceria com a Acessocard, para oferecer a emissão do L'BEL Card aos nossos consultores.
+		</p>
+		<p class="fontc3">
+			Custos e tempo de entrega:
+		</p>
+		<ul class="fontgp2">
+			<li>Custo do cartão de R$ 4,99 – debitado de sua próxima bonificação.</li>
+			<li>Custo de manutenção de R$5,00/mês caso haja crédito no seu cartão pré-pago – valor debitado do cartão. </li>
+			<li>Caso não haja crédito, não haverá cobrança de custo de manutenção.</li>
+			<li>Entrega feita em aproximadamente 10 dias úteis.</li>
+		</ul>
+		<div class="ui vertical center aligned segment" style="margin: 0 0 2em;">
+			<a class="ui massive button fundo3 cor0" href="/novo">Peça seu L'BEL Card<i class="right arrow icon"></i></a>
+		</div>
+	</div>
 </div>
 
 <!-- another section just to be consistent with my list -->
 <div class="ui vertical stripe segment" id="facilidades">
-    <div class="ui container">
-        <div class="ui horizontal divider fontc3 cor3">
-            FACILIDADES
-        </div>
-    </div>
+	<div class="ui container">
+		<div class="ui horizontal divider fontc3 cor3">
+			FACILIDADES
+		</div>
+	</div>
 
-    <div class="ui container text">
-      <p class="fontgp2">
-         O cartão PRÉ-PAGO L'BEL Card é uma solução para facilitar o seu dia-a-dia.
-         </p> 
-         <p class="fontgp2">
-         Você terá mais uma opção para recebimento de suas bonificações! 
-         </p> 
-         <p class="fontgp2">
-         Em breve quem recebe o pagamento de bonificação por ordem de pagamento (OP),
-         poderá optar por receber esse valor pelo cartão pré-pago L’BEL e não precisará ir 
-         até uma agência bancária. 
-         </p> 
-         <p class="fontgp2">
-         Lembrando ainda que você poderá realizar o saque do valor de seu cartão em qualquer
-         caixa eletrônico da rede Banco24horas e até transferir para uma conta corrente que você queira.
-         </p> 
-         <p class="fontgp2">
-         É uma alternativa para administrar melhor o seu negócio.  
-         </p> 
-         
-         <div class="ui vertical center aligned segment" style="margin: 0 0 2em">
-            <a class="ui massive button fundo3 cor0" href="/novo">Solicite o seu!<i class="right arrow icon"></i></a>
-         </div>
+	<div class="ui container text">
+		<p class="fontgp2">
+			O cartão PRÉ-PAGO L'BEL Card é uma solução para facilitar o seu dia-a-dia.
+		</p>
+		<p class="fontgp2">
+			Você terá mais uma opção para recebimento de suas bonificações!
+		</p>
+		<p class="fontgp2">
+			Em breve quem recebe o pagamento de bonificação por ordem de pagamento (OP), poderá optar por receber esse
+			valor pelo cartão pré-pago L’BEL e não precisará ir até uma agência bancária.
+		</p>
+		<p class="fontgp2">
+			Lembrando ainda que você poderá realizar o saque do valor de seu cartão em qualquer caixa eletrônico da rede
+			Banco24horas e até transferir para uma conta corrente que você queira.
+		</p>
+		<p class="fontgp2">
+			É uma alternativa para administrar melhor o seu negócio.
+		</p>
 
-        <!--
-         <div class="ui vertical stripe segment">
-             <div class="ui vertical center aligned segment" style="margin: 0 0 2em">
-                 <img class="medium center float image" src="img/card-front.jpg">		 
-              </div> <!--ui container-->
-         </div> <!--ui vertical stripe segment-->
-    </div>
+		<div class="ui vertical center aligned segment" style="margin: 0 0 2em">
+			<a class="ui massive button fundo3 cor0" href="/novo">Solicite o seu!<i class="right arrow icon"></i></a>
+		</div>
+	</div>
 </div>
 
- 
 (:end:)

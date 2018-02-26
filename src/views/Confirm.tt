@@ -2,123 +2,124 @@
 (:static function render(d : acesso.Data.DadosDoUsuario) :)
 <div class="ui text container">
 
-    <h3 class="ui dividing header">Confirmação</h3>
-    <p>
-    Por favor, confira as informações cadastrais abaixo.
-    </p> <p>
-    Se estiverem erradas clique em "Voltar"
-    para corrigí-las.
-    </p> <p>
-    Se estiverem corretas clique em "Enviar" e aguarde o
-    um email de confirmação.
-    </p>
-    <div class="ui segments borderless">
-        <div class="ui segment">
-            <h2 class="ui header cor3">Dados cadastrais</h2>
-        </div>
+	<h3 class="ui dividing header">Confirmação</h3>
+	<p>
+		Por favor, confira as informações cadastrais abaixo.
+	</p>
+	<p>
+		Se estiverem erradas clique em "Voltar" para corrigí-las.
+	</p>
+	<p>
+		Se estiverem corretas clique em "Enviar" e aguarde o um email de confirmação.
+	</p>
 
-        <div class="ui segments">
-            <div class="ui segment">
-                <h3 class="ui sub header cor3">Identificação</h3>
-            </div>
+	<div class="ui segments borderless">
+		<div class="ui segment">
+			<h2 class="ui header cor3">Dados cadastrais</h2>
+		</div>
 
-            <div class="ui segment">
-                <p><b>nome:</b> (:d.NomeCompleto:) </p>
-            </div>
-            <div class="ui segment">
-                <p><b>nome da mãe:</b> (:d.NomeMae:)</p>
-            </div>
+		<div class="ui segments">
+			<div class="ui segment">
+				<h3 class="ui sub header cor3">Identificação</h3>
+			</div>
 
-            <div class="ui horizontal segments">
-                <div class="ui segment">
-                    <p><b>sexo:</b> (: switch d.TpSexo :) (:case Nao_informado:) não informado (: case Masculino :) masculino (: case Feminino :) feminino (:end:)
-                </div>
-                <div class="ui segment">
-                    <p><b>data de nascimento:</b> (:d.DtNascimento.getDate().format("%d/%m/%Y"):)</p>
-                </div>
-            </div>
-        </div>
+			<div class="ui segment">
+				<p><b>nome:</b> (:d.NomeCompleto:) </p>
+			</div>
+			<div class="ui segment">
+				<p><b>nome da mãe:</b> (:d.NomeMae:)</p>
+			</div>
 
-        <div class="ui segments">
+			<div class="ui horizontal segments">
+				<div class="ui segment">
+					<p><b>sexo:</b> (: switch d.TpSexo :) (:case Nao_informado:) não informado (: case Masculino :) masculino (: case Feminino :) feminino (:end:)
+				</div>
+				<div class="ui segment">
+					<p><b>data de nascimento:</b> (:d.DtNascimento.getDate().format("%d/%m/%Y"):)</p>
+				</div>
+			</div>
+		</div>
 
-            <div class="ui segment">
-                <h3 class="ui sub header cor3">Telefone e endereço</h3>
-            </div>
+		<div class="ui segments">
 
-            <div class="ui segment">
-                <p><b>telefone:</b> +(:d.Celular.DDI:) ((:d.Celular.DDD:)) (:d.Celular.Numero:)</p>
-            </div>
+			<div class="ui segment">
+				<h3 class="ui sub header cor3">Telefone e endereço</h3>
+			</div>
 
-            <div class="ui segment">
-                <h3 class="ui sub header cor3">Endereço (:switch d.Endereco.TpEndereco:)(:case Residencial:)Residencial(:case Comercial:)Comercial(:case Outros:)Outros(:end:):</h3>
-            </div>
+			<div class="ui segment">
+				<p><b>telefone:</b> +(:d.Celular.DDI:) ((:d.Celular.DDD:)) (:d.Celular.Numero:)</p>
+			</div>
 
-            <div class="ui segment">
-                <p>(:d.Endereco.Logradouro:), (:d.Endereco.Numero:)(:if d.Endereco.Complemento != null && d.Endereco.Complemento != "":), (:d.Endereco.Complemento:)(:end:)</p>
-            </div>
-            <div class="ui horizontal segments">
-                <div class="ui segment">
-                <p>(:d.Endereco.Bairro:), (:d.Endereco.Cidade:), (:d.Endereco.UF:)<span style="float:right">
-                </div>
-                <div class="ui segment">
-                    <b>CEP:</b> (:d.Endereco.CEP:)</span></p>
-                </div>
-            </div>
-        </div>
+			<div class="ui segment">
+				<h3 class="ui sub header cor3">Endereço (:switch d.Endereco.TpEndereco:)(:case Residencial:)Residencial(:case Comercial:)Comercial(:case Outros:)Outros(:end:):</h3>
+			</div>
 
-        <div class="ui segments">
+			<div class="ui segment">
+				<p>(:d.Endereco.Logradouro:), (:d.Endereco.Numero:)(:if d.Endereco.Complemento != null && d.Endereco.Complemento != "":), (:d.Endereco.Complemento:)(:end:)</p>
+			</div>
+			<div class="ui horizontal segments">
+				<div class="ui segment">
+				<p>(:d.Endereco.Bairro:), (:d.Endereco.Cidade:), (:d.Endereco.UF:)<span style="float:right">
+				</div>
+				<div class="ui segment">
+					<b>CEP:</b> (:d.Endereco.CEP:)</span></p>
+				</div>
+			</div>
+		</div>
 
-            <div class="ui segment">
-                <h3 class="ui sub header cor3">E-mail e documentos</h3>
-            </div>
+		<div class="ui segments">
 
-            <div class="ui horizontal segments">
-                <div class="ui segment">
-                    <p><b>e-mail:</b> (:d.Email:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>CPF:</b> (:d.CodCliente:)</p>
-                </div>
-            </div>
+			<div class="ui segment">
+				<h3 class="ui sub header cor3">E-mail e documentos</h3>
+			</div>
 
-						(:*
-            <div class="ui segment">
-                <p><b>nacionalidade:</b> (: switch d.TpCliente:)(:case Nacional_pessoa_fisica:)brasileira(:case Nacional_pessoa_juridica:)pessoa jurídica brasileira(:case Estrangeiro:)estrangeira(:end:)</p>
-            </div>
-						*:)
+			<div class="ui horizontal segments">
+				<div class="ui segment">
+					<p><b>e-mail:</b> (:d.Email:)</p>
+				</div>
+				<div class="ui segment">
+					<p><b>CPF:</b> (:d.CodCliente:)</p>
+				</div>
+			</div>
 
-            <div class="ui horizontal segments">
-                <div class="ui segment">
-                    <p><b>documento:</b> (:switch d.Documento.TpDocumento:)(:case RG:)RG(:case RNE:)RNE(:case Passaporte:)passaporte(:end:) (:d.Documento.NumDocumento:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>data de emissão:</b> (: d.Documento.DtExpedicao.getDate().format('%d/%m/%Y'):)</p>
-                </div>
-            </div>
-            <div class="ui horizontal segments">
-                <div class="ui segment">
-                    <p><b>orgão emissor:</b> (:d.Documento.OrgaoExpedidor:)/(:d.Documento.UFOrgao:)</p>
-                </div>
-                <div class="ui segment">
-                    <p><b>país emissor:</b> (:d.Documento.PaisOrgao:)</p>
-                </div>
-            </div>
-        </div>
-    </div>
+			(:*
+			<div class="ui segment">
+				<p><b>nacionalidade:</b> (: switch d.TpCliente:)(:case Nacional_pessoa_fisica:)brasileira(:case Nacional_pessoa_juridica:)pessoa jurídica brasileira(:case Estrangeiro:)estrangeira(:end:)</p>
+			</div>
+			*:)
 
-    <form method="POST" class="ui form" onsubmit="this.submit.disabled = true; return true;">
-        <div class="ui two buttons">
-            <button type="button" class="ui button labeled icon" onclick="window.history.back();">
-                <i class="arrow left icon"></i>
-                Voltar
-            </button>
+			<div class="ui horizontal segments">
+				<div class="ui segment">
+					<p><b>documento:</b> (:switch d.Documento.TpDocumento:)(:case RG:)RG(:case RNE:)RNE(:case Passaporte:)passaporte(:end:) (:d.Documento.NumDocumento:)</p>
+				</div>
+				<div class="ui segment">
+					<p><b>data de emissão:</b> (: d.Documento.DtExpedicao.getDate().format('%d/%m/%Y'):)</p>
+				</div>
+			</div>
+			<div class="ui horizontal segments">
+				<div class="ui segment">
+					<p><b>orgão emissor:</b> (:d.Documento.OrgaoExpedidor:)/(:d.Documento.UFOrgao:)</p>
+				</div>
+				<div class="ui segment">
+					<p><b>país emissor:</b> (:d.Documento.PaisOrgao:)</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-            <button name="submit" type="submit" class="ui button inverted fundo3 right labeled icon" style="box-shadow:0 0 0 0 #FFF !important">
-                <i class="save icon"></i>
-                Confirmar
-            </button>
-        </div>
-    </form>
+	<form method="POST" class="ui form" onsubmit="this.submit.disabled = true; return true;">
+		<div class="ui two buttons">
+			<button type="button" class="ui button labeled icon" onclick="window.history.back();">
+				<i class="arrow left icon"></i>
+				Voltar
+			</button>
+
+			<button name="submit" type="submit" class="ui button inverted fundo3 right labeled icon" style="box-shadow:0 0 0 0 #FFF !important">
+				<i class="save icon"></i>
+				Confirmar
+			</button>
+		</div>
+	</form>
 </div>
 
 (:end:)

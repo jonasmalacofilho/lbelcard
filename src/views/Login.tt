@@ -7,55 +7,54 @@
 (:end:)
 <!-- TODO: Fix this: -->
 <script>
-    var ondatacallback = function(response)
-    {
-        var cur = $('#recaptcha');
-        cur.val(response);
-        cur.blur();
-    }
-
-    var onresetcallback = function(response)
-    {
-        var cur = $('#recaptcha');
-        cur.val('');
-        cur.blur();
-    }
-    js.Login.init();
+	var ondatacallback = function(response)
+	{
+		var cur = $('#recaptcha');
+		cur.val(response);
+		cur.blur();
+	}
+	var onresetcallback = function(response)
+	{
+		var cur = $('#recaptcha');
+		cur.val('');
+		cur.blur();
+	}
+	js.Login.init();
 </script>
 <div class='ui text container'>
-    <form class='ui form' method="post">
-    <div class='ui segment'>
-        <h3 class="ui dividing header">Verificação</h3>
-        <p> 
-        O cartão L'BEL Card é exclusivo para os consultores L'BEL.
-        Antes de iniciarmos o processo, precisamos validar seu
-        número de consultor. 
-        </p><p>
-        Por favor, preencha os campos abaixo e clique em "Continuar"
-        </p>   
-        <div class="field">
-            <label>número de consultor L'BEL</label>
-            <input type='number' name='belNumber' autocomplete="lbelcard-consultant" required autofocus>
-        </div>
+	<form class='ui form' method="post">
+		<div class='ui segment'>
+			<h3 class="ui dividing header">Verificação</h3>
+			<p>
+				O cartão L'BEL Card é exclusivo para os consultores L'BEL.	Antes de iniciarmos o processo, precisamos
+				validar seu número de consultor.
+			</p>
+			<p>
+				Por favor, preencha os campos abaixo e clique em "Continuar"
+			</p>
+			<div class="field">
+				<label>número de consultor L'BEL</label>
+				<input type='number' name='belNumber' autocomplete="lbelcard-consultant" required autofocus>
+			</div>
 
-        <div class="field">
-            <label>CPF (apenas números)</label>
-            <input id="CPF" type="text" name="cpf" autocomplete="lbelcard-cpf" required>
-        </div>
+			<div class="field">
+				<label>CPF (apenas números)</label>
+				<input id="CPF" type="text" name="cpf" autocomplete="lbelcard-cpf" required>
+			</div>
 
-        (: if recaptcha != null :)
-        <div class="field padded">
-            <div class="g-recaptcha" data-sitekey="(:recaptcha.siteKey:)" data-callback="ondatacallback" data-expired-callback="onresetcallback"></div>
-            <input type="hidden" name="recaptcha" id="recaptcha">
-            <br/>
-        </div>
-        (: end :)
+			(: if recaptcha != null :)
+			<div class="field padded">
+				<div class="g-recaptcha" data-sitekey="(:recaptcha.siteKey:)" data-callback="ondatacallback" data-expired-callback="onresetcallback"></div>
+				<input type="hidden" name="recaptcha" id="recaptcha">
+				<br/>
+			</div>
+			(: end :)
 
-        <button class="ui button fundo3 inverted fluid large submit" type="submit">
-          <i class="sign in icon"></i> Continuar
-        </button>
-    </div>
-    </form>
+			<button class="ui button fundo3 inverted fluid large submit" type="submit">
+				<i class="sign in icon"></i> Continuar
+			</button>
+		</div>
+		</form>
 </div>
 (:end:)
 
