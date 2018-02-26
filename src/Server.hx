@@ -9,8 +9,10 @@ class Server {
 	public static var schemaVersion(default,null) = 2;
 #if dev
 	public static var userAgent = 'LBELCard-dev (localhost) Neko Haxe';  // TODO add neko and haxe versions [automatically]
+	public static var poweredBy = 'LBELCard-dev';
 #else
 	public static var userAgent = 'LBELCard/$serverVersion (lbelcard.com.br) Neko Haxe';  // TODO add neko and haxe versions [automatically]
+	public static var poweredBy = 'LBELCard/$serverVersion';
 #end
 
 	static var stderr = Sys.stderr();
@@ -182,6 +184,7 @@ class Server {
 				uri = "/";
 			trace('begin: $method $uri from $ip ($requestId)');
 
+			Web.setHeader("X-Powered-By", poweredBy);
 			Web.setHeader("X-Request-ID", requestId);
 			var d = new eweb.Dispatch(uri, params, method);
 			d.dispatch(new route.Index());

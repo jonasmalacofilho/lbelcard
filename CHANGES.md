@@ -16,6 +16,7 @@ More features for long-term unassisted operation.
  - Prefetch the ReCAPTCHA script on index
  - Fix extra word in /novo/confirma
  - Fix typo in /novo/status
+ - Set X-Powered-By on responses
 
 
 ## Patch release: v1.1.4
