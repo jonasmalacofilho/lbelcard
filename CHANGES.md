@@ -12,6 +12,7 @@ More features for long-term unassisted operation.
  - Simplify the output of trace location
  - Prefix all errors with ERR or greater, even if DispatchError
  - Notice requests as successful after sucess from `confirmar-pagamento`
+ - Preload the otf fonts used
 
 
 ## Patch release: v1.1.4

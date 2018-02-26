@@ -54,7 +54,10 @@
         <meta name="theme-color" content="#ffffff">
 
         <link rel="stylesheet" type="text/css" href="/custom.css">
-        
+				<!--preload the otf fonts actually used-->
+				<link rel="preload" href="/font/Polaris-Book.otf" as="font">
+				<link rel="preload" href="/font/CaeciliaLTPro-75Bold.otf" as="font">
+
         <script>
         $(document)
             .ready(function() {
