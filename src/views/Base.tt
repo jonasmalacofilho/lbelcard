@@ -92,10 +92,12 @@
 		<link rel="prefetch" href="https://www.google.com/recaptcha/api.js" as="script">
 		(:end:)
 
-		<!--preload the fonts the know about before hand-->
+		<!--preload fonts we know about before hand-->
+		<link rel="preload" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin" as="style" crossorigin>
+		<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/themes/default/assets/fonts/icons.woff2" as="font" crossorigin>
 		<link rel="preload" href="/font/Polaris-Book.otf" as="font" crossorigin>
 		<link rel="preload" href="/font/CaeciliaLTPro-75Bold.otf" as="font" crossorigin>
-		<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/themes/default/assets/fonts/icons.woff2" as="font" crossorigin>
+
 		<!--preconnect to speed up google fonts-->
 		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 	</head>
