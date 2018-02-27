@@ -18,6 +18,7 @@ More features for long-term unassisted operation.
  - Set X-Powered-By on responses
  - Set default content-type (html) and cache-control (never)
  - Set missing status=200 to some dev-only responses
+ - Speed up font loading with preload and preconnect
 
 
 ## Patch release: v1.1.4

@@ -91,6 +91,13 @@
 		<!--prefetch (!=preload) the recaptcha fetcher-->
 		<link rel="prefetch" href="https://www.google.com/recaptcha/api.js" as="script">
 		(:end:)
+
+		<!--preload the fonts the know about before hand-->
+		<link rel="preload" href="/font/Polaris-Book.otf" as="font">
+		<link rel="preload" href="/font/CaeciliaLTPro-75Bold.otf" as="font">
+		<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/themes/default/assets/fonts/icons.woff2" as="font" crossorigin>
+		<!--preconnect to speed up google fonts-->
+		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 	</head>
 	<body>
 		<!-- Following Menu -->
