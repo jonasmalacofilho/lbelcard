@@ -25,6 +25,10 @@ The process is not very automated, as the format has yet to stabilize and there 
 
 As of late September 2018, the process looks like:
 
+```
+$ sqlite3 main.db3
+```
+
 ```sql
 .headers on
 .timer on
@@ -47,18 +51,14 @@ SELECT count(*) FROM BelUser;
 COMMIT;
 ```
 
-Updates to `BelUser` are automatically logged in `BelUserUpdateLog`.
+Changes to `BelUser` are automatically logged in `BelUserUpdateLog`, through the use of a recently installed trigger.  Note: the trigger only executes for `INSERT`.
 
-```
+```sql
 CREATE TABLE BelUserUpdateLog(belNumber INTEGER, cpf TEXT, applied INTEGER);
 CREATE TRIGGER BelUserLogInserts AFTER INSERT ON BelUser FOR EACH ROW BEGIN INSERT INTO BelUserUpdateLog VALUES (NEW.belNumber, NEW.cpf, datetime('now')); END;
 ```
 
-For reference, the process used to perform some additional validation steps, as well as forbade updates (by default):
-
-```
-$ sqlite3 main.db3
-```
+Finally, for reference, the process used to perform some additional validation steps, as well as forbade updates (by default):
 
 ```sql
 .headers on
