@@ -17,16 +17,22 @@ haxe dev.hxml
 docs/dev-server
 ```
 
-## Monthy database update
+## Monthly database update
 
-Every month L'BEL sends the updated data for their consultants and this must be uploaded to the server.
+_As of late September 2018..._
 
-The process is not very automated, as the format has yet to stabilize and there is quite a lock of checking involved.
+Every month L'BEL sends the updated data for their consultants and this must be
+uploaded to the server.
 
-As of late September 2018, the process looks like:
+The file should a valid CSV file with UNIX-style line-endings and no header or
+empty lines.  Each row should consist of two values, comma separated: integer
+`belNumber` (conta) and non-padded integer `cpf`.
+
+After uploading this file to the server, log in and go through:
 
 ```
-$ sqlite3 main.db3
+# cd /var/lbelcard
+# sqlite3 main.db3
 ```
 
 ```sql
@@ -40,7 +46,7 @@ SELECT count(*) FROM BelUser;
 -- import the new data into a temperary table;
 -- you must check that all data has been imported
 CREATE TEMPORARY TABLE newdata(conta INTEGER PRIMARY KEY, ncpf);
-.import <path>.csv newdata
+.import <path> newdata
 SELECT count(*) from newdata;
 
 -- normalize the cpf and insert (or replace) it for each belNumber/conta
@@ -51,20 +57,21 @@ SELECT count(*) FROM BelUser;
 COMMIT;
 ```
 
-Changes to `BelUser` are automatically logged in `BelUserUpdateLog`, through the use of a recently installed trigger.  Note: the trigger only executes for `INSERT`.
+Changes to `BelUser` are automatically logged in `BelUserUpdateLog`, through
+the use of a recently installed trigger.  Note: the trigger only executes for
+`INSERT`.
 
 ```sql
 CREATE TABLE BelUserUpdateLog(belNumber INTEGER, cpf TEXT, applied INTEGER);
 CREATE TRIGGER BelUserLogInserts AFTER INSERT ON BelUser FOR EACH ROW BEGIN INSERT INTO BelUserUpdateLog VALUES (NEW.belNumber, NEW.cpf, datetime('now')); END;
 ```
 
-Finally, for reference, the process used to perform some additional validation steps, as well as forbade updates (by default):
+Finally, for reference, the process used to perform some additional validation
+steps, as well as forbade updates (by default).  This was deemed unnecessary
+after the our contact at L'BEL changed to be Marilia.  However, it remains
+listed here in case it is needed in the future.
 
 ```sql
-.headers on
-.timer on
-.separator ,
-
 -- import the new data into the auxiliary database; data should eventually go
 -- into Consultores, there is a sequence of views that perform know validation
 -- and fixing steps, and the valid consultants are exported through _BelUsers
@@ -82,4 +89,3 @@ SELECT versao, count(*) total, count(belnumber) valid
 INSERT OR IGNORE INTO BelUser SELECT * FROM bel._BelUsers;
 ```
 
-This was deemed unnecessary after the our contact at L'BEL changed to be Marilia.
