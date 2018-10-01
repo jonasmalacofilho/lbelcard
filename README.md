@@ -23,7 +23,38 @@ Every month L'BEL sends the updated data for their consultants and this must be 
 
 The process is not very automated, as the format has yet to stabilize and there is quite a lock of checking involved.
 
-As of September 2018, the process looks like the following:
+As of late September 2018, the process looks like:
+
+```sql
+.headers on
+.timer on
+.separator ,
+
+BEGIN TRANSACTION;
+SELECT count(*) FROM BelUser;
+
+-- import the new data into a temperary table;
+-- you must check that all data has been imported
+CREATE TEMPORARY TABLE newdata(conta INTEGER PRIMARY KEY, ncpf);
+.import <path>.csv newdata
+SELECT count(*) from newdata;
+
+-- normalize the cpf and insert (or replace) it for each belNumber/conta
+INSERT OR REPLACE INTO BelUser SELECT conta, substr('00000000000' || ncpf, -11, 11) FROM newdata;
+SELECT count(*) FROM BelUser;
+
+-- if all went well,
+COMMIT;
+```
+
+Updates to `BelUser` are automatically logged in `BelUserUpdateLog`.
+
+```
+CREATE TABLE BelUserUpdateLog(belNumber INTEGER, cpf TEXT, applied INTEGER);
+CREATE TRIGGER BelUserLogInserts AFTER INSERT ON BelUser FOR EACH ROW BEGIN INSERT INTO BelUserUpdateLog VALUES (NEW.belNumber, NEW.cpf, datetime('now')); END;
+```
+
+For reference, the process used to perform some additional validation steps, as well as forbade updates (by default):
 
 ```
 $ sqlite3 main.db3
@@ -51,3 +82,4 @@ SELECT versao, count(*) total, count(belnumber) valid
 INSERT OR IGNORE INTO BelUser SELECT * FROM bel._BelUsers;
 ```
 
+This was deemed unnecessary after the our contact at L'BEL changed to be Marilia.
