@@ -28,6 +28,15 @@ The file should a valid CSV file with UNIX-style line-endings and no header or
 empty lines.  Each row should consist of two values, comma separated: integer
 `belNumber` (conta) and non-padded integer `cpf`.
 
+Manual checking of the file is recommended.  Additionally, the following Vim
+commands might be useful:
+
+```
+set nobomb
+set fileencoding=utf-8
+set ff=unix
+```
+
 After uploading this file to the server, log in and go through:
 
 ```
