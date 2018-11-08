@@ -54,9 +54,10 @@ SELECT count(*) FROM BelUser;
 
 -- import the new data into a temperary table;
 -- you must check that all data has been imported
-CREATE TEMPORARY TABLE newdata(conta INTEGER PRIMARY KEY, ncpf);
+CREATE TEMPORARY TABLE newdata(conta, ncpf);
 .import <path> newdata
 SELECT count(*) from newdata;
+SELECT count(distinct conta) from newdata;  -- if different, decide whether to verify or ignore
 
 -- normalize the cpf and insert (or replace) it for each belNumber/conta
 INSERT OR REPLACE INTO BelUser SELECT conta, substr('00000000000' || ncpf, -11, 11) FROM newdata;
