@@ -32,9 +32,9 @@ Manual checking of the file is recommended.  Additionally, the following Vim
 commands might be useful:
 
 ```
-set nobomb
-set fileencoding=utf-8
-set ff=unix
+setlocal nobomb
+setlocal fileencoding=utf-8
+setlocal ff=unix
 ```
 
 After uploading this file to the server, log in and go through:
