@@ -17,7 +17,9 @@ haxe dev.hxml
 docs/dev-server
 ```
 
-## Monthly database update
+## Periodic maintenance
+
+### Updates to the list of authorized users
 
 _As of late September 2018..._
 
@@ -37,6 +39,12 @@ setlocal fileencoding=utf-8
 setlocal ff=unix
 ```
 
+Then, rsync the file to the server:
+
+```
+# rsync -P <local path> root@lbelcard.com.br:/var/lbelcard/consultores-<date>.csv
+```
+
 After uploading this file to the server, log in and go through:
 
 ```
@@ -48,6 +56,7 @@ After uploading this file to the server, log in and go through:
 .headers on
 .timer on
 .separator ,
+.changes on
 
 BEGIN TRANSACTION;
 SELECT count(*) FROM BelUser;
@@ -99,3 +108,50 @@ SELECT versao, count(*) total, count(belnumber) valid
 INSERT OR IGNORE INTO BelUser SELECT * FROM bel._BelUsers;
 ```
 
+### Backup of most important data
+
+Make a backup of the `main.db3` database:
+
+```
+# cd /var/lbelcard
+# sqlite3 main.db3 ".backup backup.db"
+```
+
+On the constodian machine, rsync that file to a safe(ish) place:
+
+```
+# rsync -P root@lbelcard.com.br:/var/lbelcard/backup.db <backup folder>/
+```
+
+Finally, open the backup and run an integrity check:
+
+```
+$ sqlite3 <backup folder>/backup.db
+> PRAGMA integrity_check;
+```
+
+### System maintenace
+
+You should know what each command bellow does.
+
+```
+<connect>
+
+# free -h
+<check>
+# df -h
+<check>
+# htop
+<check>
+
+# apt-get update && apt-get dist-upgrade && apt-get autoremove
+<check>
+# systemctl stop nginx && letsencrypt renew --standalone --force-renewal ; systemctl start nginx
+<check>
+
+# reboot
+<reconnect>
+
+# systemctl status nginx robrt tora
+<check>
+```
