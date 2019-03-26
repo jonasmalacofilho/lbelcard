@@ -10,7 +10,8 @@ Open-sourced (see #24).
  - Remove third-party copyrighted material
  - Replace old credentials with placeholders
  - Remove deprecated and outdated development script for Windows
- - Add copyright disclaimer and license under AGPL v3+
+ - **Add copyright disclaimer and license under AGPL v3+**
+ - Fix build issues with latest development versions of Haxe v4
 
 
 ## Long-term unassisted operation: v1.2.0
