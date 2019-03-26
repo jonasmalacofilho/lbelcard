@@ -1,7 +1,7 @@
-# Web application to request pre-paid credit cards through AcessoCard
-_L'BEL Card_
+# L'BEL Card
 
-This repository contains all code used to run the L'BEL Card hotsite for over a
+This repository contains all code used to run the L'BEL Card hotsite, a web
+application to request pre-paid credit cards through AcessoCard, for over a
 year.
 
 The codebase contains real world examples of:
