@@ -26,32 +26,32 @@
 <div class="ui vertical segment">
 	<div class="ui text container">
 		<div class="ui four stackable steps">
-			<div class="step (:compare(card,AwaitingBearerData).trim():)">
-				<i class="(:icon(card,AwaitingBearerData).trim():) icon"></i>
+			<div class="step (:compare(card,AwaitingBearerData).toString().trim():)">
+				<i class="(:icon(card,AwaitingBearerData).toString().trim():) icon"></i>
 				<div class="content">
 					<div class="title">Dados</div>
 
 				</div>
 			</div>
 
-			<div class="step (:compare(card,AwaitingBearerConfirmation).trim():)">
-				<i class="(:icon(card,AwaitingBearerConfirmation).trim():) icon"></i>
+			<div class="step (:compare(card,AwaitingBearerConfirmation).toString().trim():)">
+				<i class="(:icon(card,AwaitingBearerConfirmation).toString().trim():) icon"></i>
 				<div class="content">
 					<div class="title">Confirmação</div>
 
 				</div>
 			</div>
 
-			<div class="step (:compare(card, AcessoCard(null)).trim():) negative">
-				<i class="(:icon(card,AcessoCard(null)).trim():) icon"></i>
+			<div class="step (:compare(card, AcessoCard(null)).toString().trim():) negative">
+				<i class="(:icon(card,AcessoCard(null)).toString().trim():) icon"></i>
 				<div class="content">
 					<div class='title'>Análise</div>
 
 				</div>
 			</div>
 
-			<div class="step (:compare(card, CardRequested).trim():)">
-				<i class="(:icon(card,CardRequested).trim():) icon"></i>
+			<div class="step (:compare(card, CardRequested).toString().trim():)">
+				<i class="(:icon(card,CardRequested).toString().trim():) icon"></i>
 				<div class="content">
 				<div class="title">Concluído</div>
 
