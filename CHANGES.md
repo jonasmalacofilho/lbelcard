@@ -3,7 +3,7 @@ _Summary of the changes in each version, from latest to earliest_
 
 ## Open-sourced: v1.3.0
 
-Under development.
+26 March 2019.
 
 Open-sourced (see #24).
 
@@ -12,6 +12,7 @@ Open-sourced (see #24).
  - Remove deprecated and outdated development script for Windows
  - **Add copyright disclaimer and license under AGPL v3+**
  - Fix build issues with latest development versions of Haxe v4
+ - Automatically build on Travis CI with both Haxe stable and latest
 
 
 ## Long-term unassisted operation: v1.2.0
