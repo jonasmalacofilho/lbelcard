@@ -1,4 +1,5 @@
 # Changelog
+_Summary of the changes in each version, from latest to earliest_
 
 ## Open-sourced: v1.3.0
 
@@ -6,9 +7,10 @@ Under development.
 
 Open-sourced (see #24).
 
- - Remove copyrighted material
+ - Remove third-party copyrighted material
  - Replace old credentials with placeholders
  - Remove deprecated and outdated development script for Windows
+ - Add copyright disclaimer and license under AGPL v3+
 
 
 ## Long-term unassisted operation: v1.2.0
@@ -30,6 +32,9 @@ More features for long-term unassisted operation.
  - Set default content-type (html) and cache-control (never)
  - Set missing status=200 to some dev-only responses
  - Speed up font loading with preload and preconnect
+
+This version ran without issues on L'BEL Card until 27 February 2019, when
+requesting new cards was disabled.
 
 
 ## Patch release: v1.1.4
