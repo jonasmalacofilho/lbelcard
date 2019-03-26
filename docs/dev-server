@@ -25,8 +25,9 @@ set -x
 cd $PWD
 mkdir -p runtime
 export MAIN_DB=sqlite3://runtime/main.db3
-export ACESSO_USERNAME=user.belcorp.acesso@gmail.com
-export ACESSO_PRODUCT=CBLBELSQID12V
+export ACESSO_USERNAME=random.address@company.com
+export ACESSO_PRODUCT=ABCDEF123456Z
+export SENDGRID_KEY=SG.xxxxxxxxxxxxxx_xxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxx
 export SENDGRID_KEY=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
 if [ -f runtime/nginx.pid ]; then
 	nginx -c docs/nginx.conf -p '' -s reload
