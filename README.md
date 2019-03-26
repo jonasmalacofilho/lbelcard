@@ -1,5 +1,7 @@
 # L'BEL Card
 
+[![Build Status](https://travis-ci.org/protocubo/lbelcard.svg?branch=master)](https://travis-ci.org/protocubo/lbelcard)
+
 This repository contains all code used to run the L'BEL Card hotsite, a web
 application to request pre-paid credit cards through AcessoCard, for over a
 year.
