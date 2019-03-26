@@ -1,8 +1,19 @@
 # Changelog
 
-## Patch release: v1.2.0
+## Open-sourced: v1.3.0
 
-To be released.
+Under development.
+
+Open-sourced (see #24).
+
+ - Remove copyrighted material
+ - Replace old credentials with placeholders
+ - Remove deprecated and outdated development script for Windows
+
+
+## Long-term unassisted operation: v1.2.0
+
+February 27th, 2018.
 
 More features for long-term unassisted operation.
 
