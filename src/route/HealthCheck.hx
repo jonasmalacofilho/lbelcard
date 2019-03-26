@@ -156,7 +156,7 @@ class HealthCheck {
 				$responseCode == 200 && $created != null && $created > recently && $timing != null);
 		var timings = [];
 		for (i in recentCalls) {
-			var res = try haxe.Json.parse(i.responseData) catch (_:Dynamic) {};
+			var res:Dynamic = try haxe.Json.parse(i.responseData) catch (_:Dynamic) {};
 			if (res == null || res.ResultCode != 0 ||
 					(res.ResultCode == 1 && StringTools.endsWith(i.url, "solicitar-adesao-cliente")))
 				continue;
