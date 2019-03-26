@@ -16,7 +16,7 @@ Open-sourced (see #24).
 
 ## Long-term unassisted operation: v1.2.0
 
-February 27th, 2018.
+27 February 2018.
 
 More features for long-term unassisted operation.
 
@@ -40,7 +40,7 @@ requesting new cards was disabled.
 
 ## Patch release: v1.1.4
 
-January 12th, 2018.
+12 January 2018.
 
 Prepare for long-term operation.
 
@@ -60,7 +60,7 @@ Prepare for long-term operation.
 
 ## Patch release: v1.1.3
 
-January 11th, 2018.
+11 January 2018.
 
 Critical fix.
 
@@ -73,7 +73,7 @@ Also:
 
 ## Patch release: v1.1.2
 
-January 9th, 2018.
+9 January 2018.
 
  - Activate failsafe against requesting more than one card per user
  - Change the status page slightly: we usually recover from permanent errors
@@ -85,7 +85,7 @@ Also:
 
 ## Patch release: v1.1.1
 
-January 9th, 2018.
+9 January 2018.
 
 Fix UF handling throughout the request form.
 
@@ -98,7 +98,7 @@ Fix UF handling throughout the request form.
 
 ## Database reliability and data inspection improvements: v1.1.0
 
-January 7th, 2018.
+7 January 2018.
 
 Minor upgrade to the v1.0.x series that records schema versions and saves
 creation and last update timestamps for CardRequest and RemoteCallLog in the
@@ -125,7 +125,7 @@ Also:
 
 ## Patch release: v1.0.3
 
-January 4th, 2018.
+4 January 2018.
 
 Fixes after first day of heavy load.
 
@@ -144,7 +144,7 @@ Also:
 
 ## Patch release: v1.0.2
 
-January 2nd, 2018...  Happy new year!
+2 January 2018...  Happy new year!
 
 Fix call parameter per request from Acesso Card.
 
@@ -153,7 +153,7 @@ Fix call parameter per request from Acesso Card.
 
 ## Patch release: v1.0.1
 
-December 28th, 2017.
+28 December 2017.
 
 Small fixes to improve both user and bot experiences.
 
@@ -165,7 +165,7 @@ Small fixes to improve both user and bot experiences.
 
 ## Release to the general public: v1.0.0
 
-December 20th, 2017.
+20 December 2017.
 
 Fully functional server, open to the general public.
 
@@ -179,7 +179,7 @@ invitations.
 
 ## Third release candidate: v1.0.0-rc3
 
-December 20th, 2017.
+20 December 2017.
 
  - Log the human-attributed system version during init
  - Prevent accidental double request confirmation (closes #4)
@@ -195,7 +195,7 @@ December 20th, 2017.
 
 ## Second release candidate: v1.0.0-rc2
 
-December 19th, 2017.
+19 December 2017.
 
  - Fix typo in the main form
  - Add server version to the User-Agent string
@@ -216,7 +216,7 @@ December 19th, 2017.
 
 ## First release candidate: v1.0.0-rc1
 
-December 12th, 2017.
+12 December 2017.
 
 Fully functional server.
 
