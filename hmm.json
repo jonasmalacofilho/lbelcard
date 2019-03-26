@@ -20,6 +20,13 @@
       "url": "https://github.com/jonasmalacofilho/eweb.hx"
     },
     {
+      "name": "jQueryExtern",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/andyli/jQueryExternForHaxe/"
+    },
+    {
       "name": "record-macros",
       "type": "git",
       "dir": null,

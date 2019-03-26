@@ -1,6 +1,8 @@
 package js;
-import js.jquery.JQuery;
+
+import Date in HaxeDate;
 import js.jquery.Helper.*;
+import js.jquery.JQuery;
 import webmaniabr.*;
 using StringTools;
 
@@ -134,7 +136,7 @@ class CardReq
 				});
 	}
 
-	static function parseDate(text:String):Date
+	static function parseDate(text:String):HaxeDate
 	{
 		var emsg = 'Invalid date <$text>';
 		var pat = ~/^\s*((\d\d)\/(\d\d)\/(\d\d\d\d))\s*$/;
@@ -143,7 +145,7 @@ class CardReq
 		var year = Std.parseInt(pat.matched(4));
 		var month = Std.parseInt(pat.matched(3));
 		var day = Std.parseInt(pat.matched(2));
-		var now = Date.now();
+		var now = HaxeDate.now();
 		var computed =
 			switch [year, month, day] {
 			case [year, _, _] if (year < 1900 || year > now.getFullYear()):
@@ -157,7 +159,7 @@ class CardReq
 			case [_, 4|6|9|11, 31], [_, 2, 30|31]:
 				throw '$emsg: there is no ${pat.matched(1)} (day incompatible with month)';
 			case _:
-				new Date(year, month - 1, day, 0, 0, 0);
+				new HaxeDate(year, month - 1, day, 0, 0, 0);
 			};
 		if (DateTools.format(computed, "%d/%m/%Y") != pat.matched(1))
 			throw 'Assert failed: ${pat.matched(1)} => $computed';

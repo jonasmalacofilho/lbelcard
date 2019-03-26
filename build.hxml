@@ -17,6 +17,7 @@
 -cp include
 -cp src
 -lib assertion
+-lib jQueryExtern
 -lib webmaniabr-correios
 
 -main MainJS
