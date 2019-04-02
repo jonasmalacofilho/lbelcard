@@ -30,9 +30,9 @@ interesting read.
 
 Dependencies:
 
- - programming language: [Haxe v4][haxe]
+ - programming language: [Haxe][haxe] (v3.4.7 stable or v4.0.0 preview/rc)
  - runtime: [Neko][neko]
- - library management: [Haxe Module Manager (hmm)][hmm]
+ - library management: [hmm][hmm]
  - application server: [Tora][tora]
  - database: [SQLite][sqlite]
 
