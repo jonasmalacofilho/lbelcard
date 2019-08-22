@@ -35,8 +35,10 @@
     },
     {
       "name": "tink_template",
-      "type": "haxelib",
-      "version": null
+      "type": "git",
+      "dir": null,
+      "ref": "handle-haxe4-function-kind",
+      "url": "https://github.com/jonasmalacofilho/tink_template"
     },
     {
       "name": "tora",
