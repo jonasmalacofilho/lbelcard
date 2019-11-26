@@ -17,14 +17,12 @@ The codebase contains real world examples of:
 This system was used to power `lbelcard.com.br`, continuously, from 12 December
 2017 until 27 February 2019.
 
-On 28 February 2019 the website was replaced with an informational-only [static
-page][hotsite] and new credit cards can no longer be requested.  By then 1590
+On 28 February 2019 the website was replaced with an informational-only static
+page and new credit cards can no longer be requested.  By then 1590
 requests had been successfully processed.
 
 The [changelog](CHANGES.md) shows how the system evolved over time, and is a
 interesting read.
-
-[hotsite]: https://lbelcard.com.br
 
 ## Building and running locally
 
